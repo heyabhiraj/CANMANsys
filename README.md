@@ -26,7 +26,7 @@ This pure PHP web application equips organizations with the tools to efficiently
 **Getting Started**
 
 **Prerequisites:**
-
+- Tailwind css
 - PHP 7.4 or later ([https://www.php.net/](https://www.php.net/))
 - MySQL 8.0 or later database server ([https://www.mysql.com/](https://www.mysql.com/))
 - Text editor or preferred code editor
