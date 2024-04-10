@@ -1,105 +1,229 @@
-<?php 
-if(!isset($_REQUEST['tablename'])){
+<?php
+if (!isset($_REQUEST['tablename'])) {
     die("No table found");
+
 }
 
-$tableName = $_REQUEST['tablename']    ;
+$tableName = $_REQUEST['tablename']; 
 // Include necessary files for configuration and table functions
-    include("config.php");
-   
+include("config.php");
+
 
 // Include file containing table aliases if needed
-    include("table_alias.php");      
-    include("table_functions.php");   
+include("table_alias.php");
+include("table_functions.php");
 
 // Fetch column names of the specified table
-    // $columnNames = getColumnNames($tableName);  
-    // $columnNames is a 1D array of all the names of attributes
+// $columnNames = getColumnNames($tableName);  
+// $columnNames is a 1D array of all the names of attributes
 
 // Uncomment the line below to display column names (for debugging purposes)
-    // showColumnNames($columnNames);
+// showColumnNames($columnNames);
 
 // Initialize variables
 $rows = [];
 $where = "";    //where clause for the query
 
 // Retrieve records from the specified table
-$rows = getRecords($tableName, $where);
+$limit = 10;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;;
+$rows = getRecords($tableName, $where, $limit, $page);
 
 // Filter and rename columns for display according to available aliases
-$columnNames = getFilteredColumns($tableName);
+$columnNames = getFilteredColumns($tableName,$showAliases);
 $columnRenames = renameColumns($columnNames);
 
 // Uncomment the line below to display column names (for debugging purposes)
-    // showColumnNames($columnNames);
+// showColumnNames($columnNames);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show <?php echo $tableAliases[$tableName];?> </title>
-    <link rel="stylesheet" href="style.scss">
+    <title>Show <?php echo $tableAliases[$tableName]; ?> </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 </head>
-<body>
-    <table border="1" width="100">
-        <thead>
-            <th>Serial No.</th>
-            <!-- Printing column aliases  -->
-            <?php foreach($columnRenames as $col) {
-                
-                $hidden = isHidden($col);
-                echo '<th '.$hidden.'>'. $col .'</th>';
-             } ?>
 
-            <th colspan="2">Options</th>
-        </thead>
+<body>
+
+    <div class="flex h-screen justify-center items-center">
+
+        <div class="relative overflow-x-auto shadow-lg sm:rounded-lg">
         
-        <!-- Loop to print n number of rows -->
-        
-            <?php for($n = 0; $n < count($rows); $n++) { ?>
-            <tr> 
-                    <td><?php echo $n+1; ?>  </td>
-                <!-- Loop to print i number of columns -->
-                <?php for($i = 0; $i < count($columnNames); $i++) { 
-                     // Hide id column from display 
-                    if($hidden = isHidden($columnNames[$i]) )
-                     $id = $rows[$n][$columnNames[$i]];
+        <!-- Title -->
+        <h2 class="font-bold text-center text-2xl text-yellow-700 border-b"><?php echo $tableAliases[$tableName];?> </h2>
+        <!-- Search Box  -->
+        <div class="m-2 p-5 relative w-auto">
+            <input type="search" id="search" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search ..." required />
+        </div>
+
+        <!-- Table Starts Here -->
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-100">
+                <!-- Column Names -->
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Serial No.</th>
+                        <!-- Printing column aliases  -->
+                        <?php foreach ($columnRenames as $col) {
+                            $hidden = isHidden($col);
+                            echo '<th scope="col" class="px-6 py-3"' . $hidden . '>' . $col . '</th>';
+                        } ?>
+
+                        <th scope="col" class="px-6 py-3">Options</th>
+                    </tr>
+                </thead>
+
+
+                <!-- Search data  -->
+                <tbody id="table-data" >
+                    </tr>
+                    <!-- Pagination -->
+                    <?php $ni = ($page - 1) * $limit + 1;
+
+                    // Loop to print n number of rows    // $rows is a 2D array of the whole table
+                    for ($n = 0; $n < count($rows); $n++) { ?>
+
+                        <!-- Row  -->
+                        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <!-- Col 1 Serial No. -->
+                            <td class="text-center"><?php echo $ni;  $ni++; ?> </td>
+
+                            <!-- Loop to print i number of columns -->
+                            <?php for ($i = 0; $i < count($columnNames); $i++) {
+                                // Hide id column from display 
+                                if ($hidden = isHidden($columnNames[$i]))
+                                    $id = $rows[$n][$columnNames[$i]];     // storing the id to use in operations
+
+                                
+                                // checking for foreign keys
+                                if (in_array($columnNames[$i], $foreignKey) !== false) { 
+                                        $form = new form();
+                                        $values = $form->getCategoryValues($columnNames[$i]);
+                                        $fk = $rows[$n][$columnNames[$i]];
+                                        // print fk_name using fk_id as index $fk
+                                        echo '<td class="text-center">' . $values[$fk] . '</td>';
+                                    }
+                                else if (isUploadFile($columnNames[$i])){
+                                    $file =  $rows[$n][$columnNames[$i]];
+                                    $link = '../img/'.$file;
+                                    echo '<td class="text-center"'."".'> <button onclick=openPopup("'.$link.'")>'. "$file" . '</button></td>';
+
+                                }
+                                else
+                                    //  Print elements from assoc array 
+                                    echo '<td class="text-center"'.$hidden.'>' .  $rows[$n][$columnNames[$i]] . '</td>';
+                            } ?>
+                            <!-- Options Column -->
+                            <td class="flex items-center px-6 py-4">
+                                <!-- Edit -->
+                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="table_edit.php?<?php echo "tablename=" . $tableName . "&id=" . $id; ?>">Edit</a>
+                                <!-- Delete -->
+                                <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" 
+                                onclick='DeleteConfirm(<?php echo "($id),$id"; ?>)'>Delete</button>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+
+            </table>
+
+
+            <!-- Table Navigation -->
+            <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
+
+                <!-- Add more entries -->
+                <?php if(!in_array($tableName,$blockEntries)) echo
+                '<a href="table_Insert.php?tablename='.$tableName.'" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Add + </a>';?>
+                
+                <!-- If multiple pages -->
+               <?php
+                $totalPages = calculatePaginationInfo($tableName, $where, $limit);
+                
+                if ($totalPages > 1) {  ?> 
+
+                    <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                        <?php
+                        if ($page > 1) {
+                            echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' href='table_Show.php?tablename=$tableName&page=" . ($page - 1) . "'>Previous</a></li>";
+                        } ?>
+                    <?php
+                    // Page number links
+                    for ($i = 1; $i <= $totalPages; $i++) {
+                        $activeClass = ($i == $page) ? "active" : "";
+                        echo "<li class='$activeClass'><a class='flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white' href='table_Show.php?tablename=$tableName&page=" . $i . "'>" . $i . "</a></li>";
+                    }
+                    if ($page < $totalPages) {
+                        echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' href='table_Show.php?tablename=$tableName&page=" . ($page + 1) . "'>Next</a></li>";
+                    }
 
                     // 
-                    if(in_array($columnNames[$i],$foreignKey)!==false){{
-                            $form = new form();
-                            $values= $form->getCategoryValues();
-                            // print category_name using category_id as index
-                            $k= $rows[$n][$columnNames[$i]];
-                        echo '<td '.$hidden.'>'.$values[$k].'</td>';
-                    }}
-                    
-                    
-                    else
-                    //  Print elements from assoc array 
-                    echo '<td '.$hidden.'>'.$rows[$n][$columnNames[$i]].'</td>';
+                   
                 } ?> 
                   
-                <td><a href="table_edit.php?<?php echo "tablename=".$tableName."&id=".$id;?>">Edit</a></td>
-                <td><button class=del onclick="DeleteConfirm(<?php echo "$n,$id"; ?>)" >Delete</button></td>
-                </li>
-            </tr>
-            <?php } ?>
+               
+            <?php  ?>
         
-    </table>
+            </nav>
+        </div>
+    </div>
+    <script>
+        function DeleteConfirm(ni, id) {
 
-    <script> function DeleteConfirm(n,id) {
+            ni++;
+            let url = "table_save.php?<?php echo "tablename=$tableName&pagename=Del&id="; ?>";
+            if (confirm("Are you sure to delete this item no. " + ni + "?"))
+                window.location.href = url + id;
+            else
+                // Force a hard reload (clear cache) if supported by the browser
+                window.location.reload(true);
+        }
+    </script>
 
-        n++;
-    let url = "table_save.php?<?php echo "tablename=$tableName&pagename=Del&id=";?>";
-      if(confirm("Are you sure to delete this item no. "+n+"?"))
-      window.location.href=url+id;
-        else
-      // Force a hard reload (clear cache) if supported by the browser
-    window.location.reload(true);
-     }
-</script>
+    <script>
+        $(document).ready(function() {
+            $("#search").keyup(function() {
+                var search_term = $(this).val();
+                // alert(search_term);
+                if (search_term != "") {
+                    $.ajax({
+                        url: "search.php?tablename=<?php echo $tableName;?>",
+                        type: "POST",
+                        data: {
+                            search: search_term
+                        },
+                        success: function(data) {
+                            $("#table-data").html(data);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error("Error:", textStatus, errorThrown);
+                            // Optional: Display an error message to the user
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
+    <script>
+        function openPopup(url) {
+            // Define the URL and properties of the popup window
+
+            var width = 500;
+            var height = 500;
+            var left = (window.innerWidth - width) / 2;
+            var top = (window.innerHeight - height) / 2;
+            var features = "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
+
+            // Open the popup window
+            window.open(url, "_blank", features);
+        }
+    </script>
 </body>
+
 </html>

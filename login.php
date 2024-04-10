@@ -13,7 +13,7 @@ if (isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Log in</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,8 +31,13 @@ if (isset($_SESSION['user_id'])) {
                         echo "<p class='text-center text-red-500'>".$_SESSION['error']."</p>";
                         unset($_SESSION['error']); //Clear Error after display
                     }
+                    if(isset($_SESSION['rsuccess'])){
+                        echo "<p class='text-center text-green-500'>".$_SESSION['rsuccess']."</p>";
+                        unset($_SESSION['rsuccess']); //Clear Success after display
+                    }
+
                     ?>
-                    <form method="POST" action="verify.php">
+                    <form method="POST" action="auth.php">
                         <div class="mb-5">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-600">Email</label>
 

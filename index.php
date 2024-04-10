@@ -14,7 +14,7 @@
     <div class="h-20 p-5">
 <div class="flex p-5 mb-1 items-center justify-around bg-white ">
   <!-- Left side Logo -->
-    <h1 class="text-4xl text-yellow-600 drop-shadow-lg"> CANMANsys </h1>
+    <h1 class="text-4xl text-yellow-600 drop-shadow-lg"> <a href="">CANMANsys </a></h1>
   
   <!-- Right side buttons -->
   <div class="flex items-center">
@@ -24,18 +24,21 @@
 </div>
 <div class=" bg-orange-100 rounded-lg h-700 w-auto p-10 drop-shadow-lg">
 
-<div class="flex justify-around">
-    <div class="mt-20">
-   <h2 class="text-4xl"> 0rder Food Anytime...</h2>
-   <p class="p-3">A premium Restaurant site</p>
-   <div class="align-center drop-shadow-md">
-  <input type="text-center" placeholder="Search..." class="border-2 border-gray-300 bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
-</div>
-   </div>
-   <div class="image drop-shadow-xl">
-<img src="img.svg">
-</div>
-</div>
+<div class="flex flex-wrap justify-center">
+        <div class="w-full md:w-1/2 p-4">
+          <div class=" items-center justify-center">
+            <h2 class="text-4xl"> 0rder Food Anytime...</h2>
+            <p class="p-3">A Canteen Management System</p>
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 p-4">
+          <div class="rounded-lg flex items-center justify-center">
+          <div class="object-fit drop-shadow-xl">
+          <img src="img.svg">
+        </div>
+          </div>
+        </div>
+      </div>
 </div>
 <div>
 </body>

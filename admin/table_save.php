@@ -17,6 +17,12 @@ $record = [];
 if(!isset($_REQUEST['tablename'])){
     die("Table Name Query Not Found");
 }
+if(isset($_FILES['file'])){
+    $name = $_FILES['file']['name'];
+    $cleanFileName = preg_replace("/[^a-zA-Z0-9-_\.]/", "", $name);
+    $file = $_FILES['file']['tmp_name'];
+    move_uploaded_file($file,"../img/".$cleanFileName);
+}
 
 
     $tableName = $_REQUEST['tablename'];
@@ -29,7 +35,7 @@ if(!isset($_REQUEST['tablename'])){
     $save = new Save();
 
     // Stores all the columns of the table
-    $columnNames = getFilteredColumns($tableName);
+    $columnNames = getFilteredColumns($tableName,$inputAliases);
     $columnRenames = renameColumns($columnNames);
 
     switch($pageName){
@@ -38,7 +44,7 @@ if(!isset($_REQUEST['tablename'])){
             
             echo "<script>
             alert('Record Inserted.');
-            window.location.href='table_insert.php?tablename=$tableName';
+            window.location.href='table_show.php?tablename=$tableName';
             </script>";
             
 
@@ -56,15 +62,20 @@ if(!isset($_REQUEST['tablename'])){
         case 'Del':
             try{
                 $save->deleteRecord($tableName,$columnNames);
+                echo "<script>
+                alert('Record Deleted.');
+                window.location.href='table_show.php?tablename=$tableName';
+                </script>";
+                
             }
             catch(Exception $e){
+                echo "<br><br>".$e."<br><br>";
+
+                echo "<a href=\"index.php\">Home</a>";
+
+
 
             }
-                echo "<script>
-            alert('Record Deleted.');
-            window.location.href='table_show.php?tablename=$tableName';
-            </script>";
-            
 
         break;
     } 
@@ -79,7 +90,7 @@ if(!isset($_REQUEST['tablename'])){
 
 
 
-// header("Location: table_insert.php");
+// header("Location: index.php");
 
 
 
@@ -104,22 +115,22 @@ if(!isset($_REQUEST['tablename'])){
 
 
 
-/* For reference */
-/**
-    *
-    $name = $_POST['Name'];
-    $email = $_POST['Email'];
-    $phone = $_POST['Phone'];
-    $address = $_POST['Address'];
-    $gender = $_POST['Gender'];
-    $dob = $_POST['DOB'];
-    $blood_group = $_POST['blood_group'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
-    $image = $_FILES['image']['name'];
-    $image_tmp = $_FILES['image']['tmp_name'];
-        move_uploaded_file($image_tmp,"images/$image");
+// /* For reference */
+// /**
+//     *
+//     $name = $_POST['Name'];
+//     $email = $_POST['Email'];
+//     $phone = $_POST['Phone'];
+//     $address = $_POST['Address'];
+//     $gender = $_POST['Gender'];
+//     $dob = $_POST['DOB'];
+//     $blood_group = $_POST['blood_group'];
+//     $password = $_POST['password'];
+//     $confirm_password = $_POST['confirm_password'];
+//     $image = $_FILES['image']['name'];
+//     $image_tmp = $_FILES['image']['tmp_name'];
+//         move_uploaded_file($image_tmp,"images/$image");
         
     
-    */
+//     */
 ?>
