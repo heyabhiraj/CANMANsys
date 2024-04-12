@@ -1,5 +1,7 @@
 <?php
 
+
+
 $where = "";        //for storing where clause of the query
 
 
@@ -29,7 +31,6 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
                 'item_status' => 'Status',
                 'item_description'=>'Description',
                 'prep_time' => 'Preparation Time',
-                'item_image' => 'Image',
             ];
             break;
 
@@ -46,9 +47,12 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
         case 'registered_user':
             $showAliases = [
                 'user_id' => 'Id',
-                'user_name' => 'Name',
-                'user_email' => 'Email',         
-                'user_phone' => 'Phone',
+                'fname' => 'first',
+                'lname' => 'last',
+                'email' => 'Email',         
+                'phone' => 'Phone',
+                'user_status' => 'Status',
+                'user_role' => 'Role',
 
             ];
             break;
@@ -58,8 +62,7 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
                     'order_id' => 'Id',
                     'item_id' => 'item',
                     'user_id' => 'email',
-                    'order_amount' => 'Order Amount',
-                    'order_status' => 'Status',
+                    'order_amount' => 'Order Amount (₹)',
                     'item_quantity' => 'Quantity',
                     'order_notes' => 'Notes',
                 ];
@@ -122,9 +125,12 @@ $inputAliases = [];       // same as above but for insert/edit
         case 'registered_user':
             $inputAliases = [
                 'user_id' => 'Id',
-                'user_name' => 'Name',
-                'user_email' => 'Email',         
-                'user_phone' => 'Phone',
+                'fname' => 'First Name',
+                'lname' => 'Last Name',
+                'email' => 'Email',         
+                'phone' => 'Phone',
+                'user_role' => 'Role',
+                'user_status' => 'Status',
 
             ];
 
@@ -133,7 +139,8 @@ $inputAliases = [];       // same as above but for insert/edit
                 $inputAliases = [
                     'order_id' => 'Id',
                     'item_id' => 'Item',
-                    'order_amount' => 'Order Amount',
+                    'order_amount' => 'Order Amount (₹)',
+                    'item_quantity' => 'Quantity',
                     'order_status' => 'Status',
                     'order_notes' => 'Notes',
                 ];
@@ -149,7 +156,7 @@ $inputAliases = [];       // same as above but for insert/edit
 $tableAliases = [
     'item_category' => 'Food Category',
     'item_list' => 'Food Item',
-    'item_schedule' => 'Serve Schedule',
+    'item_schedule' => 'Menu Schedule',
     'registered_user' => 'Users',
     'item_order' => 'Orders',
 ];
@@ -196,7 +203,7 @@ $categoryColumnList = []; // Stores the relevant column name to be fetched using
             case 'item_order':
                 $categoryColumnList = [
                     'item_list' => 'item_name',
-                    'registered_user' => 'user_email'
+                    'registered_user' => 'email'
                 ];
                 break;
             case 'item_schedule':

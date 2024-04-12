@@ -39,6 +39,8 @@ include('../admin/function.php');
       include('../navbar.php');
       ?>
 
+
+
 <div class="mb-4">
   <select name="food-type" class="block px-3 py-2 rounded-md text-sm font-medium bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
     <option value="all">All</option>
@@ -50,8 +52,7 @@ include('../admin/function.php');
       <div class="flex flex-wrap justify-center">
         
       <?php
-      $foodtype ;
-      $rows = nvegMenuItem();
+      $rows = getDayMenu();
         foreach ( $rows as $i){ ?>
         <div class="w-full md:w-1/4 p-4">
           <div class="sm:flex bg-white border border-gray-200 rounded-lg shadow flex-col"> 

@@ -183,14 +183,12 @@ $columnRenames = renameColumns($columnNames);
                 // Force a hard reload (clear cache) if supported by the browser
                 window.location.reload(true);
         }
-    </script>
 
-    <script>
         $(document).ready(function() {
             $("#search").keyup(function() {
                 var search_term = $(this).val();
                 // alert(search_term);
-                if (search_term != "") {
+                if (search_term.length >= 0) {
                     $.ajax({
                         url: "search.php?tablename=<?php echo $tableName;?>",
                         type: "POST",
@@ -198,17 +196,18 @@ $columnRenames = renameColumns($columnNames);
                             search: search_term
                         },
                         success: function(data) {
-                            $("#table-data").html(data);
+                            $("#table-data").html(data).show();
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.error("Error:", textStatus, errorThrown);
                             // Optional: Display an error message to the user
                         }
                     });
-                }
-
+                } 
             });
         });
+
+
     </script>
     <script>
         function openPopup(url) {

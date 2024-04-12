@@ -61,7 +61,7 @@ function sessionData($data){
                             </div>
                             <div class="flex mb-3 justify-around">
                             <input type="text" placeholder="Optional "  value="<?php sessionData("cabin"); ?>" name="faculty-cabin" class="block w-full p-3 mr-2 rounded bg-gray-200 border border-transparent focus:outline-none ">
-                            <input type="text" placeholder="Optional " value="<?php sessionData("ext"); ?>"name="faculty-ext " class="block w-full p-3 ml-2 rounded bg-gray-200 border border-transparent focus:outline-none ">
+                            <input type="text" placeholder="Optional " value="<?php sessionData("ext"); ?>"name="faculty-ext" class="block w-full p-3 ml-2 rounded bg-gray-200 border border-transparent focus:outline-none ">
                             </div>
                         <div class="mb-3">
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-600">Password</label>

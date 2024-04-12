@@ -35,14 +35,18 @@ function TotalSaleValue(){
 function LatestOrder(){
     global $conn;
   // SQL query to get column information
-    $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id ORDER BY item_order.created_at DESC LIMIT 5";
+    $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id ORDER BY item_order.created_at DESC LIMIT 4";
     $res = $conn->query($sql) or die("Could not get Orders");
     if($res->num_rows>0){
         $rows = $res->fetch_all(); 
+    } else {
+      $rows = "No Current orders";
     }
     return $rows;
 }
-// print_r($rows = LatestOrder());
+
+
+
 
 function vegMenuItem(){
   global $conn;
@@ -55,6 +59,8 @@ function vegMenuItem(){
   return $rows;
 }
 
+
+
 function nvegMenuItem(){
   global $conn;
 // SQL query to get column information
@@ -62,7 +68,35 @@ function nvegMenuItem(){
   $res = $conn->query($sql) or die("Could not get Menu");
   if($res->num_rows>0){
       $rows = $res->fetch_all(); 
+  } else{
+    echo "NO Menu";
   }
   return $rows;
 }
 
+/**
+ *
+ * @param $day Today "Monday"
+ */
+function getDayMenu(){
+  global $conn;
+
+  $sql = "SELECT i.item_name AS item_name, s.*  -- Select item name and all schedule details\n"
+
+  . "FROM item_schedule AS s\n"
+
+  . "INNER JOIN item_list AS i ON s.item_id = i.item_id  -- Join with item table for name\n"
+
+  . "WHERE s.schedule_day = DAYNAME(CURDATE());";
+  $res = $conn->query($sql) or die("Could not get Menu");
+  if($res->num_rows>0){
+      $rows = $res->fetch_all(); 
+  } else{
+    echo "NO Menu";
+  }
+  return $rows;
+
+
+
+
+}

@@ -108,7 +108,7 @@ $row = Graphdata();
         <!-- latest user  -->
 
     <div class="w-auto md:w-1/2 p-4">
-      <div class="rounded-lg flex items-center justify-center">
+      <div class="rounded-lg items-center">
           <div class="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
             <div class="flex justify-between mb-4">
               <h5 class="text-xl font-bold text-gray-900 mr-15">Latest Orders</h5>
@@ -121,6 +121,14 @@ $row = Graphdata();
               <?php $rows = LatestOrder();
                     foreach ( $rows as $i){ ?>
                 <li class="py-3 sm:py-4">
+                <div class="flex justify-between">
+                      <span class="items-center text-base font-semibold">
+                      <?php echo $i[24];  ?>
+                    </span>
+                    <div class="ml-10 items-center text-base font-semibold text-green-600">
+                    ₹ <?php echo $i[1];  ?>
+                    </div>
+                      </div>
                   <div class="flex items-center">
                       <p class="text-sm font-medium text-gray-900">
                       <?php echo $i[12] ." ". $i[13]; ?>
@@ -129,14 +137,7 @@ $row = Graphdata();
                       <?php echo $i[15];  ?>
                       </p>
                   </div>
-                      <div class="flex justify-between">
-                      <span class="ml-10 items-center text-base font-semibold">
-                      <?php echo $i[24];  ?>
-                    </span>
-                    <div class="ml-10 items-center text-base font-semibold text-green-600">
-                    ₹<?php echo $i[1];  ?>
-                    </div>
-                      </div>
+
                 </li>
                     <?php } ?>
               </ul>
