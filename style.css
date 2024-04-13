@@ -1,4 +1,8 @@
-@import url(https://db.onlinewebfonts.com/c/fd6fa80f1e3345834599de891cca3f4c?family=OCR+A+Extended);
+
+@font-face {
+  font-family: 'OCR A Extended';
+  src: local('OCR A Extended'), url(./fonts/OCRAEXT.TTF) format('ttf');
+}
 
 body {
     font-family: 'OCR A Extended';
