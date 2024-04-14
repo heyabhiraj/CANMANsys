@@ -6,7 +6,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 include('./admin/function.php');
 
-$items = getDayMenu();
+ $items = getDayMenu();
+
 
 
 // Add item to cart
@@ -37,7 +38,22 @@ if (isset($_POST['add_to_cart']) && isset($_POST['item_id']) && isset($_POST['qu
 }
 
 
+    // Get filter option from query string
+    $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
 
+    // Filter items based on the selected option
+    switch ($filter) {
+        case 'veg':
+            $items = vegMenuItem();
+            break;
+        case 'nonveg':
+            $items = nvegMenuItem();
+            break;
+        case 'all':
+        default:
+            $items = getDayMenu();
+            break;
+    }
 ?>
 
 
@@ -53,7 +69,6 @@ if (isset($_POST['add_to_cart']) && isset($_POST['item_id']) && isset($_POST['qu
   <script src="script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body>
   <div class="h-20 p-5">
     <div class="flex p-5 mb-1 items-center justify-around bg-white ">
@@ -70,15 +85,15 @@ if (isset($_POST['add_to_cart']) && isset($_POST['item_id']) && isset($_POST['qu
       <?php
       include('./navbar.php');
       ?>
-
-
-
       <div class="mb-4">
-        <select name="food-type" class="block px-3 py-2 rounded-md text-sm font-medium bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          <option value="all">All</option>
-          <option value="veg">Veg</option>
-          <option value="non-veg">Non-Veg</option>
+      <form action="menu.php" method="get">
+        <select name="filter" class="px-2 py-2 rounded-md text-sm font-medium bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <option value="all"<?php if ($filter === 'all') echo 'selected'; ?>>All</option>
+            <option value="veg"<?php if ($filter === 'veg') echo 'selected'; ?>>Veg</option>
+            <option value="nonveg"<?php if ($filter === 'nonveg') echo 'selected'; ?>>Non-Veg</option>
         </select>
+        <button class="p-1 bg-black text-white rounded-md" type="submit">Filter</button>
+    </form>
       </div>
 
       <div class="flex flex-wrap justify-center">
@@ -105,5 +120,4 @@ if (isset($_POST['add_to_cart']) && isset($_POST['item_id']) && isset($_POST['qu
     </div>
   </div>
 </body>
-
 </html>
