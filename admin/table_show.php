@@ -21,7 +21,7 @@ include("table_functions.php");
 // showColumnNames($columnNames);
 
 // Initialize variables
-$rows = [];
+$rows = [];     
 $where = "";    //where clause for the query
 
 // Retrieve records from the specified table
@@ -35,6 +35,7 @@ $columnRenames = renameColumns($columnNames);
 
 // Uncomment the line below to display column names (for debugging purposes)
 // showColumnNames($columnNames);
+
 
 ?>
 
@@ -56,7 +57,7 @@ $columnRenames = renameColumns($columnNames);
 
         <div class="relative overflow-x-auto shadow-lg sm:rounded-lg">
         
-        <!-- Title -->
+        <!-- Title of the table -->
         <h2 class="font-bold text-center text-2xl text-yellow-700 border-b"><?php echo $tableAliases[$tableName];?> </h2>
         <!-- Search Box  -->
         <div class="m-2 p-5 relative w-auto">
@@ -65,12 +66,12 @@ $columnRenames = renameColumns($columnNames);
 
         <!-- Table Starts Here -->
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-100">
-                <!-- Column Names -->
+                <!-- Column Names/ Headings -->
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">Serial No.</th>
-                        <!-- Printing column aliases  -->
-                        <?php foreach ($columnRenames as $col) {
+                        <!-- Printing headings/ column aliases  -->
+                        <?php foreach ($columnRenames as $field => $col) {
                             $hidden = isHidden($col);
                             echo '<th scope="col" class="px-6 py-3"' . $hidden . '>' . $col . '</th>';
                         } ?>
@@ -85,9 +86,11 @@ $columnRenames = renameColumns($columnNames);
                     </tr>
                     <!-- Pagination -->
                     <?php $ni = ($page - 1) * $limit + 1;
+                        
 
                     // Loop to print n number of rows    // $rows is a 2D array of the whole table
-                    for ($n = 0; $n < count($rows); $n++) { ?>
+                    for ($n = 0; $n < count($rows); $n++) {  $id = ""; 
+                                $name = "'".$rows[$n][$nameField]."'";  ?>
 
                         <!-- Row  -->
                         <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -98,8 +101,7 @@ $columnRenames = renameColumns($columnNames);
                             <?php for ($i = 0; $i < count($columnNames); $i++) {
                                 // Hide id column from display 
                                 if ($hidden = isHidden($columnNames[$i]))
-                                    $id = $rows[$n][$columnNames[$i]];     // storing the id to use in operations
-
+                                    $id = $rows[$n][$columnNames[$i]];    // storing the id to use in operations
                                 
                                 // checking for foreign keys
                                 if (in_array($columnNames[$i], $foreignKey) !== false) { 
@@ -122,10 +124,11 @@ $columnRenames = renameColumns($columnNames);
                             <!-- Options Column -->
                             <td class="flex items-center px-6 py-4">
                                 <!-- Edit -->
-                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="table_edit.php?<?php echo "tablename=" . $tableName . "&id=" . $id; ?>">Edit</a>
+                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" 
+                                href="table_edit.php?<?php echo "tablename=" . $tableName . "&id=" . $id; ?>">Edit</a>
                                 <!-- Delete -->
                                 <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" 
-                                onclick='DeleteConfirm(<?php echo "($id),$id"; ?>)'>Delete</button>
+                                onclick="DeleteConfirm(<?php echo $name.','.$id;?>)">Delete</button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -173,22 +176,23 @@ $columnRenames = renameColumns($columnNames);
         </div>
     </div>
     <script>
-        function DeleteConfirm(ni, id) {
+        function DeleteConfirm(name, id) {
 
-            ni++;
             let url = "table_save.php?<?php echo "tablename=$tableName&pagename=Del&id="; ?>";
-            if (confirm("Are you sure to delete this item no. " + ni + "?"))
+            if (confirm("Are you sure to delete this record '" + name + "'?"))
                 window.location.href = url + id;
             else
                 // Force a hard reload (clear cache) if supported by the browser
                 window.location.reload(true);
         }
+    </script>
 
+    <script>
         $(document).ready(function() {
             $("#search").keyup(function() {
                 var search_term = $(this).val();
                 // alert(search_term);
-                if (search_term.length >= 0) {
+                if (search_term != "") {
                     $.ajax({
                         url: "search.php?tablename=<?php echo $tableName;?>",
                         type: "POST",
@@ -196,18 +200,17 @@ $columnRenames = renameColumns($columnNames);
                             search: search_term
                         },
                         success: function(data) {
-                            $("#table-data").html(data).show();
+                            $("#table-data").html(data);
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.error("Error:", textStatus, errorThrown);
                             // Optional: Display an error message to the user
                         }
                     });
-                } 
+                }
+
             });
         });
-
-
     </script>
     <script>
         function openPopup(url) {

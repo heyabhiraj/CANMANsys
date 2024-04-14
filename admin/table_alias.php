@@ -1,7 +1,5 @@
 <?php
 
-
-
 $where = "";        //for storing where clause of the query
 
 
@@ -19,6 +17,7 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
                 'category_image' => 'Image'
 
             ];
+            $nameField = 'category_name';
 
             break;
 
@@ -32,6 +31,7 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
                 'item_description'=>'Description',
                 'prep_time' => 'Preparation Time',
             ];
+            $nameField = 'item_name';
             break;
 
         case 'item_schedule':
@@ -42,19 +42,19 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
                 'item_id' => 'Item Name',
 
             ];
+            $nameField = 'item_id';
             break;
             
         case 'registered_user':
             $showAliases = [
                 'user_id' => 'Id',
-                'fname' => 'first',
-                'lname' => 'last',
+                'fname' => 'First Name',
+                'lname' => 'Last Name',
                 'email' => 'Email',         
                 'phone' => 'Phone',
-                'user_status' => 'Status',
-                'user_role' => 'Role',
 
             ];
+            $nameField = 'fname';
             break;
 
             case 'item_order':
@@ -62,10 +62,12 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
                     'order_id' => 'Id',
                     'item_id' => 'item',
                     'user_id' => 'email',
-                    'order_amount' => 'Order Amount (₹)',
+                    'order_amount' => 'Order Amount',
+                    'order_status' => 'Status',
                     'item_quantity' => 'Quantity',
                     'order_notes' => 'Notes',
                 ];
+                $nameField = 'item_id';
             break;
 
         /**
@@ -125,12 +127,9 @@ $inputAliases = [];       // same as above but for insert/edit
         case 'registered_user':
             $inputAliases = [
                 'user_id' => 'Id',
-                'fname' => 'First Name',
-                'lname' => 'Last Name',
-                'email' => 'Email',         
-                'phone' => 'Phone',
-                'user_role' => 'Role',
-                'user_status' => 'Status',
+                'user_name' => 'Name',
+                'user_email' => 'Email',         
+                'user_phone' => 'Phone',
 
             ];
 
@@ -139,8 +138,7 @@ $inputAliases = [];       // same as above but for insert/edit
                 $inputAliases = [
                     'order_id' => 'Id',
                     'item_id' => 'Item',
-                    'order_amount' => 'Order Amount (₹)',
-                    'item_quantity' => 'Quantity',
+                    'order_amount' => 'Order Amount',
                     'order_status' => 'Status',
                     'order_notes' => 'Notes',
                 ];
@@ -156,7 +154,7 @@ $inputAliases = [];       // same as above but for insert/edit
 $tableAliases = [
     'item_category' => 'Food Category',
     'item_list' => 'Food Item',
-    'item_schedule' => 'Menu Schedule',
+    'item_schedule' => 'Serve Schedule',
     'registered_user' => 'Users',
     'item_order' => 'Orders',
 ];
@@ -203,11 +201,11 @@ $categoryColumnList = []; // Stores the relevant column name to be fetched using
             case 'item_order':
                 $categoryColumnList = [
                     'item_list' => 'item_name',
-                    'registered_user' => 'email'
+                    'registered_user' => 'user_email'
                 ];
                 break;
             case 'item_schedule':
-            $foreignKey = [
+            $categoryColumnList = [
                 'item_list' => 'item_name'
             ];
             break;

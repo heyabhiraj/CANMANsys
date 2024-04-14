@@ -1,6 +1,7 @@
 <?php
-require_once('access.php');
 include("config.php");
+
+
 
 ?>
 <!DOCTYPE html>
@@ -10,11 +11,8 @@ include("config.php");
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Select Table</title>
+        <!-- <link rel="stylesheet" href=""> -->
         <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- for redirect to dashboard  -->
-        <script> location.href = 'dashboard.php';</script>
-
 </head>
 
 <body>
@@ -25,20 +23,21 @@ include("config.php");
 
 
                                 <!-- Select the Table Name -->
-                                <select class="outline" name="table" id="">
+                                <select class="outline block margin-50" name="table" id="">
                                         <option value="null" selected disabled>Select Table</option>
                                         <?php
                                         foreach ($tables as $table) {
+
                                         ?>
                                                 <option value="<?php echo $table; ?>">
                                                         <?php echo $table; ?> <br> <br>
+
                                                 </option>
 
                                         <?php } ?>
                                 </select>
-
                                 <!--Submit Buttons Takes You The Respective Page-->
-                                <input class="px-3 py-2 bg-gray-300 rounded" type="submit" value="Insert" name="operation">
+                                <input class="px-3 py-2 bg-gray-300 rounded " type="submit" value="Insert" name="operation">
                                 <input class="px-3 py-2 bg-black text-white rounded" type="submit" value="show" name="operation">
                         </form>
                 </div>

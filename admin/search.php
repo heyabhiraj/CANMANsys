@@ -22,6 +22,7 @@ $searchResults = searchbar($conn, $search ,$tableName, $columnNames);
 if ($searchResults !== false) {
   // Display search results
   foreach ($searchResults as $row) {
+    $name = "'".$row[$nameField]."'";  
     $id=$row[$columnNames[0]];
     echo "<tr class='bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>";
 
@@ -49,7 +50,8 @@ if ($searchResults !== false) {
 
    echo"<td class='flex items-center px-6 py-4'>
     <a class='font-medium text-blue-600 dark:text-blue-500 hover:underline' href='table_edit.php?tablename=$tableName&id=$id'>Edit</a>
-    <button class='font-medium text-red-600 dark:text-red-500 hover:underline ms-3' onclick='DeleteConfirm($id,$id)'>Delete</button>
+    <button class='font-medium text-red-600 dark:text-red-500 hover:underline ms-3' 
+    onclick=\"DeleteConfirm($name,$id)\">Delete</button>
 </td></tr>";
 
   }

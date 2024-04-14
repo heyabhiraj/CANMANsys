@@ -7,7 +7,7 @@ else
 include("config.php");
 include("table_alias.php");
 include("table_functions.php");
-print_r($tableName);
+// print_r($tableName);
 if(in_array($tableName,$blockEntries))
 die("Direct insertion not allowed in the selected table");
 
@@ -48,11 +48,13 @@ $required =  isRequired($tableName,$columnNames[0]);
         $value = "";
         foreach($columnNames as $column){
             
+            
             //skip id column
             if(isHidden($column))
             continue;
             
             $form->createLabel($column,$inputAliases[$column]);
+            
             
             $form->createInput($tableName,$column,$value);
       
@@ -61,7 +63,7 @@ $required =  isRequired($tableName,$columnNames[0]);
     <button class="bg-black rounded p-3 text-white mt-5" type="submit" value="Insert">Insert</button>
     </form>
     
-    <center><div id="home"> <a href="index.php">Home</a>
+    <center><div id="home"> <a href="index.php">Home</a> |
     <a href="table_show.php?tablename=<?php echo $tableName;?>">Show</a></div></center>
 
     </form>

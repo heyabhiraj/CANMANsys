@@ -5,7 +5,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   exit;
 }
 
-include('../admin/function.php');
+include('./admin/function.php');
 ?>
 
 
@@ -17,7 +17,7 @@ include('../admin/function.php');
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - <?php echo $_SESSION['fname']; ?> </title>
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="style.css">
   <script src="../script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -36,7 +36,7 @@ include('../admin/function.php');
     </div>
     <div class="bg-orange-100 rounded-lg h-900 w-auto p-10 drop-shadow-lg">
       <?php
-      include('../navbar.php');
+      include('./navbar.php');
       ?>
 
 
@@ -59,8 +59,8 @@ include('../admin/function.php');
             <img class="self-center p-5 rounded-lg" src="../img.svg" alt="image" />
             <div class="px-5 pb-5">
               <h5 class="text-xl font-semibold tracking-tight text-gray-900"><?php echo $i[1];  ?></h5>
-              <p class="text-sm font-medium text-gray-900"><?php echo $i[2];  ?></p>
-              <div class="flex w-full items-center justify-between px-3 py-1 rounded-lg"> <span class="text-xl font-bold text-green-700"><?php echo $i[3];  ?></span>
+              <p class="text-sm font-medium text-gray-900"> <?php echo $i[2];  ?></p>
+              <div class="flex w-full items-center justify-between px-3 py-1 rounded-lg"> <span class="text-xl font-bold text-green-700">₹ <?php echo $i[3];  ?></span>
                 <a href="#" class="text-white bg-black hover:bg-gray-600 rounded-lg text-sm px-5 py-2.5 text-center">Add to cart</a>
               </div>
             </div>
