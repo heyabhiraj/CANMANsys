@@ -6,6 +6,83 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 include('./admin/function.php');
+
+$items = getDayMenu();
+
+// Function to remove item from cart
+function removeFromCart($itemId)
+{
+  foreach ($_SESSION['cart'] as $key => $cartItem) {
+    if ($cartItem['id'] == $itemId) {
+      unset($_SESSION['cart'][$key]);
+      return;
+    }
+  }
+}
+// Function to get total quantity of items in cart
+function getTotalQuantity()
+{
+  $totalQuantity = 0;
+  if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $cartItem) {
+      $totalQuantity += $cartItem['quantity'];
+    }
+  }
+  return $totalQuantity;
+}
+// Function to calculate subtotal of items in the cart
+function calculateSubtotal($cartItems)
+{
+  $subtotal = 0;
+  foreach ($cartItems as $cartItem) {
+    $subtotal += $cartItem['item'][3] * $cartItem['quantity'];
+  }
+  return $subtotal;
+}
+
+// Function to calculate total including taxes and shipping (if applicable)
+function calculateTotal($subtotal)
+{
+  // Add taxes, shipping costs, or any other additional fees to the subtotal
+  $total = $subtotal;
+  return $total;
+}
+
+// Check if item removal request is received
+if (isset($_POST['remove_item']) && isset($_POST['item_id'])) {
+  $itemId = $_POST['item_id'];
+  removeFromCart($itemId);
+  // Redirect back to cart page to reflect changes
+  header('Location: cart.php');
+  exit;
+}
+
+
+// Initialize cart items array
+$cartItems = array();
+
+// Check if cart session variable exists
+if (isset($_SESSION['cart'])) {
+  // Loop through cart items and retrieve details from $items array
+  foreach ($_SESSION['cart'] as $cartItem) {
+    foreach ($items as $item) {
+      if ($item[0] == $cartItem['id']) {
+        $cartItems[] = array('item' => $item, 'quantity' => $cartItem['quantity']);
+        break;
+      }
+    }
+  }
+}
+
+
+
+// Calculate subtotal
+$subtotal = calculateSubtotal($cartItems);
+
+// Calculate total
+$total = calculateTotal($subtotal);
+
+
 ?>
 
 
@@ -18,21 +95,12 @@ include('./admin/function.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - <?php echo $_SESSION['fname']; ?> </title>
   <link rel="stylesheet" href="style.css">
-  <script src="../script.js"></script>
+  <script src="script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<style>
-    @layer utilities {
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
-</style>
 
 <body>
-<div class="h-20 p-5">
+  <div class="h-20 p-5">
     <div class="flex p-5 mb-1 items-center justify-around bg-white ">
       <!-- Left side Logo -->
       <h1 class="text-4xl text-yellow-600 drop-shadow-lg"> <a href="">CANMANsys </a></h1>
@@ -48,43 +116,59 @@ include('./admin/function.php');
       include('./navbar.php');
       ?>
 
-    <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-      <div class="rounded-lg md:w-2/3">
-        <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-          <img src="img.svg" alt="product-image" class="w-full rounded-lg sm:w-40" />
-          <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-            <div class="mt-5 sm:mt-0">
-                
-              <h2 class="text-lg font-bold text-gray-900">Pizza </h2>
-              <p class="mt-1 text-xs text-gray-700">seasoned and grilled to perfection.</p>
-            </div>
-            <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">                
-            <div class="flex justify-end">   
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 hover:text-red-500">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg></div> 
-              <div class="flex items-center border-gray-100">
-                <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50"> - </span>
-                <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value="1" min="1" />
-                <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-black hover:text-blue-50"> + </span>
-              </div>
-                <p class="text-xl text-center font-bold text-green-700">₹ 50</p>
-            </div>
-          </div>
-        </div>
-<!-- product  -->
+      <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+
+        <div class="rounded-lg md:w-2/3">
+          <?php if (empty($cartItems)) : ?>
+            <p>Your cart is empty...</p>
+            <a href="menu.php">
+              <p class="w-50 mt-10 text-white text-center bg-black p-1 rounded-md"> Click to ADD more items</p>
+            </a>
+          <?php else : ?>
+            <a href="menu.php">
+              <p class="mb-8">
+                < Back to menu</p>
+            </a>
+            <?php foreach ($cartItems as $cartItem) : ?>
+              <form action="cart.php" method="post">
+                <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+                  <img src="img.svg" alt="product-image" class="w-full rounded-lg sm:w-40" />
+                  <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+                    <div class="mt-5 sm:mt-0">
+                      <h2 class="text-lg font-bold text-gray-900"><?= $cartItem['item'][1]; ?> </h2>
+                      <p class="mt-1 text-xs text-gray-700"><?= $cartItem['item'][2]; ?> </p>
+                    </div>
+                    <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                      <div class="flex justify-end">
+                        <input type="hidden" name="item_id" value="<?= $cartItem['item'][0]; ?>">
+                        <button type="submit" name="remove_item">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 hover:text-red-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg></button>
+                      </div>
+                      <div class="flex items-center border-gray-100">
+                        <button class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50" onclick="decrementQuantity(this)"> - </button>
+                        <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value="<?= $cartItem['quantity']; ?>" min="1" />
+                        <button class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-black hover:text-blue-50" onclick="incrementQuantity(this)"> + </button>
+                      </div>
+                      <p class="text-xl text-center font-bold text-green-700">₹ <?= $cartItem['item'][3]; ?> </p>
+                    </div>
+                  </div>
+              </form>
+        </div><?php endforeach; ?>
+    <?php endif; ?>
       </div>
       <!-- Sub total -->
-      <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
-        <div class="mb-2 flex justify-between">
+      <div class="mt-10 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+        <div class="m-2 flex justify-between">
           <p class="text-gray-700">Subtotal</p>
-          <p class="text-gray-700">₹ 50</p>
+          <p class="text-gray-700">₹ <?= $subtotal; ?></p>
         </div>
         <hr class="my-4" />
         <div class="flex justify-between">
           <p class="text-lg font-bold">Total</p>
           <div class="">
-          <p class="text-xl font-bold text-green-700">₹ 50</p>
+            <p class="text-xl font-bold text-green-700">₹ <?= $total; ?></p>
             <p class="text-sm text-gray-700">including Tax</p>
           </div>
         </div>
@@ -92,4 +176,7 @@ include('./admin/function.php');
       </div>
     </div>
   </div>
+
 </body>
+
+</html>

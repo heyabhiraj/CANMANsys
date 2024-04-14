@@ -90,7 +90,5 @@ function getDayMenu(){
   }
   return $rows;
 
-
-
-
 }
+
