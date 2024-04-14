@@ -36,17 +36,7 @@ if (isset($_POST['add_to_cart']) && isset($_POST['item_id']) && isset($_POST['qu
   exit;
 }
 
-// Function to get total quantity of items in cart
-function getTotalQuantity()
-{
-  $totalQuantity = 0;
-  if (isset($_SESSION['cart'])) {
-    foreach ($_SESSION['cart'] as $cartItem) {
-      $totalQuantity += $cartItem['quantity'];
-    }
-  }
-  return $totalQuantity;
-}
+
 
 ?>
 
@@ -94,7 +84,6 @@ function getTotalQuantity()
       <div class="flex flex-wrap justify-center">
 
         <?php
-        $items = getDayMenu();
         foreach ($items as $item) : ?>
           <div class="w-full md:w-1/4 p-5">
             <div class="sm:flex bg-white border border-gray-200 rounded-lg shadow flex-col">

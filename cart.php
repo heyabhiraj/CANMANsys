@@ -19,17 +19,7 @@ function removeFromCart($itemId)
     }
   }
 }
-// Function to get total quantity of items in cart
-function getTotalQuantity()
-{
-  $totalQuantity = 0;
-  if (isset($_SESSION['cart'])) {
-    foreach ($_SESSION['cart'] as $cartItem) {
-      $totalQuantity += $cartItem['quantity'];
-    }
-  }
-  return $totalQuantity;
-}
+
 // Function to calculate subtotal of items in the cart
 function calculateSubtotal($cartItems)
 {
@@ -58,6 +48,15 @@ if (isset($_POST['remove_item']) && isset($_POST['item_id'])) {
 }
 
 
+// Check if an item's quantity should be updated
+if (isset($_POST['update_quantity']) && isset($_POST['item_id']) && isset($_POST['quantity'])) {
+  $itemId = $_POST['item_id'];
+  $quantity = $_POST['quantity'];
+  updateCartItemQuantity($itemId, $quantity);
+}
+
+
+
 // Initialize cart items array
 $cartItems = array();
 
@@ -73,7 +72,6 @@ if (isset($_SESSION['cart'])) {
     }
   }
 }
-
 
 
 // Calculate subtotal
@@ -130,7 +128,7 @@ $total = calculateTotal($subtotal);
                 < Back to menu</p>
             </a>
             <?php foreach ($cartItems as $cartItem) : ?>
-              <form action="cart.php" method="post">
+              
                 <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
                   <img src="img.svg" alt="product-image" class="w-full rounded-lg sm:w-40" />
                   <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
@@ -139,7 +137,7 @@ $total = calculateTotal($subtotal);
                       <p class="mt-1 text-xs text-gray-700"><?= $cartItem['item'][2]; ?> </p>
                     </div>
                     <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                      <div class="flex justify-end">
+                      <div class="flex justify-end"><form action="cart.php" method="post">
                         <input type="hidden" name="item_id" value="<?= $cartItem['item'][0]; ?>">
                         <button type="submit" name="remove_item">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 hover:text-red-500">
@@ -147,9 +145,9 @@ $total = calculateTotal($subtotal);
                           </svg></button>
                       </div>
                       <div class="flex items-center border-gray-100">
-                        <button class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50" onclick="decrementQuantity(this)"> - </button>
-                        <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value="<?= $cartItem['quantity']; ?>" min="1" />
-                        <button class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-black hover:text-blue-50" onclick="incrementQuantity(this)"> + </button>
+                      <button class="rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50" type="submit" name="update_quantity" onclick="decrementQuantity(this)">-</button>
+                        <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" name="quantity" value="<?= $cartItem['quantity']; ?>">
+                        <button class="rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50" type="submit" name="update_quantity" onclick="incrementQuantity(this)">+</button>
                       </div>
                       <p class="text-xl text-center font-bold text-green-700">₹ <?= $cartItem['item'][3]; ?> </p>
                     </div>
@@ -176,7 +174,21 @@ $total = calculateTotal($subtotal);
       </div>
     </div>
   </div>
+  <script>
+        function incrementQuantity(button) {
+            var input = button.previousElementSibling;
+            var value = parseInt(input.value);
+            input.value = isNaN(value) ? 1 : value + 1;
+        }
 
+        function decrementQuantity(button) {
+            var input = button.nextElementSibling;
+            var value = parseInt(input.value);
+            if (!isNaN(value) && value > 1) {
+                input.value = value - 1;
+            }
+        }
+    </script>
 </body>
 
 </html>

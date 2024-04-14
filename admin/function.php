@@ -92,3 +92,27 @@ function getDayMenu(){
 
 }
 
+// Function to get total quantity of items in cart
+function getTotalQuantity()
+{
+  $totalQuantity = 0;
+  if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $cartItem) {
+      $totalQuantity += $cartItem['quantity'];
+    }
+  }
+  return $totalQuantity;
+}
+
+function updateCartItemQuantity($itemId, $quantity) {
+  // Check if cart session variable exists
+  if (isset($_SESSION['cart'])) {
+      // Loop through cart items and update quantity of matching item
+      foreach ($_SESSION['cart'] as &$cartItem) {
+          if ($cartItem['id'] == $itemId) {
+              $cartItem['quantity'] = $quantity;
+              break;
+          }
+      }
+  }
+}
