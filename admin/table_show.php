@@ -55,14 +55,26 @@ $columnRenames = renameColumns($columnNames);
 
     <div class="flex h-screen justify-center items-center">
 
-        <div class="relative overflow-x-auto shadow-lg sm:rounded-lg">
+        <div class="relative overflow-x-auto shadow-lg sm:rounded-lg p-5">
         
         <!-- Title of the table -->
         <h2 class="font-bold text-center text-2xl text-yellow-700 border-b"><?php echo $tableAliases[$tableName];?> </h2>
         <!-- Search Box  -->
-        <div class="m-2 p-5 relative w-auto">
-            <input type="search" id="search" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search ..." required />
+
+        <div class="m-2 relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
         </div>
+        <input type="text" id="search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." />
+        <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" mr-1 w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-white">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+        </div>
+    </div>
+<!-- search 2 -->
 
         <!-- Table Starts Here -->
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-100">
@@ -192,7 +204,7 @@ $columnRenames = renameColumns($columnNames);
             $("#search").keyup(function() {
                 var search_term = $(this).val();
                 // alert(search_term);
-                if (search_term != "") {
+                if (search_term.length >= 0) {
                     $.ajax({
                         url: "search.php?tablename=<?php echo $tableName;?>",
                         type: "POST",
@@ -207,6 +219,7 @@ $columnRenames = renameColumns($columnNames);
                             // Optional: Display an error message to the user
                         }
                     });
+                } else {
                 }
 
             });

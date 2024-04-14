@@ -54,6 +54,7 @@ include('./admin/function.php');
           <img src="img.svg" alt="product-image" class="w-full rounded-lg sm:w-40" />
           <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
             <div class="mt-5 sm:mt-0">
+                
               <h2 class="text-lg font-bold text-gray-900">Pizza </h2>
               <p class="mt-1 text-xs text-gray-700">seasoned and grilled to perfection.</p>
             </div>
