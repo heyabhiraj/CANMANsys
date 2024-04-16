@@ -123,7 +123,39 @@ function updateCartItemQuantity($itemId, $quantity)
     }
   }
 }
-function saveOrderDetails($cartItems, $paymentMode, $orderNotes)
+// Billing function to generate bill id 
+
+function BillingData($paymentMode)
+{
+
+  global  $conn;
+  // Get the current date and time
+  $currentDateTime = date("Y-m-d H:i:s");
+  $userid = $_SESSION['user_id'];
+  $total = $_POST['total'];
+  $status = 'paid';
+
+  // Insert order details into the database
+  $sql = "INSERT INTO order_payment (user_id, payable_amount, payment_mode, paid_at, payment_status) VALUES (?, ?, ?, ?, ?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("idsss", $userid, $total, $paymentMode, $currentDateTime, $status);
+  // Execute the prepared statement for each item in the cart
+  if ($stmt->execute() === TRUE) {
+    // Get the ID of the last inserted record (bill_id)
+    $billId = $conn->insert_id;
+    return $billId;
+  } else {
+    echo "Error inserting order details: " . $stmt->error;
+  }
+}
+
+
+
+
+
+// save order details 
+// @2darray $cartItems 
+function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
 {
 
   global  $conn;
@@ -138,9 +170,9 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes)
 
   // Insert order details into the database
   $sql = "INSERT INTO item_order (order_amount,item_id, user_id, order_status, created_at, modified_at, payment_mode, order_notes, item_quantity, bill_id) 
-          VALUES (?, ? ,?, 'Pending', ?, ?, ?, ?, ?, 1)";
+          VALUES (?, ? ,?, 'Pending', ?, ?, ?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("dsssssss", $totalAmount, $itemId, $userid, $currentDateTime, $currentDateTime, $paymentMode, $orderNotes, $totalQuantity);
+  $stmt->bind_param("dssssssss", $totalAmount, $itemId, $userid, $currentDateTime, $currentDateTime, $paymentMode, $orderNotes, $totalQuantity, $billId);
 
   // Execute the prepared statement for each item in the cart
   foreach ($cartItems as $cartItem) {
@@ -151,8 +183,6 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes)
     $totalAmount = $cartItem['item'][3] * $cartItem['quantity'];
     $totalQuantity = $cartItem['quantity'];
     $stmt->execute();
-    
-  } return $cartItems;
-  
-  
+  }
+  return $cartItems;
 }

@@ -14,15 +14,15 @@ $items = getDayMenu();
 if (isset($_SESSION['cart'])) {
     // Loop through cart items and retrieve details from $items array
     foreach ($_SESSION['cart'] as $cartItem) {
-      foreach ($items as $item) {
-        if ($item[0] == $cartItem['id']) {
-          $cartItems[] = array('item' => $item, 'quantity' => $cartItem['quantity']);
-          break;
+        foreach ($items as $item) {
+            if ($item[0] == $cartItem['id']) {
+                $cartItems[] = array('item' => $item, 'quantity' => $cartItem['quantity']);
+                break;
+            }
         }
-      }
     }
-  }
-  if (isset($_POST['place_order'])) {
+}
+if (isset($_POST['place_order'])) {
     // Get necessary details for placing the order
     $paymentMode = $_POST['paymentmode'];
     $orderNotes = $_POST['ordernotes'];
@@ -72,12 +72,13 @@ unset($_SESSION['cart']);
                 </svg>
             </div>
             <h1 class="text-3xl text-center">Congratulations !</h1>
-
-<?php $data=saveOrderDetails($cartItems, $paymentMode, $orderNotes); 
-            foreach ($data as $item){
-            echo "<div class='flex items-center justify-center m-2'><p class='text-lg text-bold text-center'>" . $item['item'][1] ."    X</p>";
-            echo "<p class='text-lg text-bold ml-3 text-center'>"   . $item['quantity'] ."</p> </div>";
-        }?>
+            <?php
+            $billId = BillingData($paymentMode);
+            $data = saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId);
+            foreach ($data as $item) {
+                echo "<div class='flex items-center justify-center m-2'><p class='text-lg text-bold text-center'>" . $item['item'][1] . "    X</p>";
+                echo "<p class='text-lg text-bold ml-3 text-center'>"   . $item['quantity'] . "</p> </div>";
+            } ?>
             <p class="text-md text-center">Your 0rder is placed Successfully...<a class="underline" href="./myorders.php"> View 0rders </a></p>
         </div>
     </div>
