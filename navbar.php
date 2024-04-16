@@ -1,5 +1,5 @@
 <?php
-
+include_once('./admin/function.php');
 // checking for not been accessed directly.............
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header("Location: login.php");
@@ -40,8 +40,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a href="./home.php" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Home</a>
             <a href="./menu.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-600 hover:text-white">Menu</a>
-            <a href="./order.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-600 hover:text-white">My 0rders</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-600 hover:text-white">Contact Us</a>
+            <a href="./myorders.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-600 hover:text-white">My 0rders</a>
           </div>
         </div>
       </div>

@@ -78,7 +78,7 @@ if (isset($_POST['add_to_cart']) && isset($_POST['item_id']) && isset($_POST['qu
       <!-- Right side buttons -->
       <div class="flex items-center">
 
-        <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="../Logout.php"'>Log0ut</button>
+        <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>Log0ut</button>
       </div>
     </div>
     <div class="bg-orange-100 rounded-lg h-900 w-auto p-10 drop-shadow-lg">
