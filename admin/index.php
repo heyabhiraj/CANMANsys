@@ -1,57 +1,35 @@
 <?php
-include("config.php");
-
-
-
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['Role'] !== 'admin') {
+        header("Location: ../login.php");
+        exit;
+} else {
+        header("Location: dashboard.php");
+        exit;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Select Table</title>
-        <!-- <link rel="stylesheet" href=""> -->
+        <title>Welcome</title>
+        <link rel="stylesheet" href="../style.css">
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-        <div class="flex h-screen justify-center items-center">
+        <div class="h-20 p-5 ">
+                <div class="flex p-5 mb-1 items-center justify-around bg-white border-b border-gray-200">
+                        <!-- Left side Logo -->
+                        <h1 class="text-4xl text-yellow-600 drop-shadow-lg"><a href="">CANMANsys </a> </h1>
 
-                <div class="">
-                        <form class="" action="" method="post">
+                        <!-- Right side buttons -->
+                        <div class="flex items-center">
 
-
-                                <!-- Select the Table Name -->
-                                <select class="outline block margin-50" name="table" id="">
-                                        <option value="null" selected disabled>Select Table</option>
-                                        <?php
-                                        foreach ($tables as $table) {
-
-                                        ?>
-                                                <option value="<?php echo $table; ?>">
-                                                        <?php echo $table; ?> <br> <br>
-
-                                                </option>
-
-                                        <?php } ?>
-                                </select>
-                                <!--Submit Buttons Takes You The Respective Page-->
-                                <input class="px-3 py-2 bg-gray-300 rounded " type="submit" value="Insert" name="operation">
-                                <input class="px-3 py-2 bg-black text-white rounded" type="submit" value="show" name="operation">
-                        </form>
+                                <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="../logout.php"'>Log 0ut</button>
+                        </div>
                 </div>
-        </div>
-</body>
-
-</html>
-
-<?php
-if (isset($_REQUEST['table'])) {
-        $table = $_REQUEST['table'];
-        $operation = $_REQUEST['operation'];
-        header("Location: table_$operation.php?tablename=$table");
-}
-
-
-?>

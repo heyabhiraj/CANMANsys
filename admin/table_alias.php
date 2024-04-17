@@ -8,68 +8,85 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
  *  Alias to be displayed instead of columnNames.
  *  These will be used as table headings and input labels
  */
-    switch ($tableName) {
-        case 'item_category':
-            $showAliases = [
-                'category_id' => 'Id',
-                'category_name' => 'Name',
-                'category_status' => 'Status',
-                'category_image' => 'Image'
+switch ($tableName) {
+    case 'item_category':
+        $showAliases = [
+            'category_id' => 'Id',
+            'category_name' => 'Name',
+            'category_status' => 'Status',
+            'category_image' => 'Image'
 
-            ];
-            $nameField = 'category_name';
+        ];
+        $nameField = 'category_name';       // Name field is used to identify the field that represents the record's name
+        $orderBy = " ORDER BY category_status ASC";      //for storing order by clause of the query
+        break;
 
-            break;
+    case 'item_list':
+        $showAliases = [
+            'item_id' => 'Id',
+            'category_id' => 'Category',
+            'item_name' => 'Name',
+            'item_price' => 'Price',
+            'item_status' => 'Status',
+            // 'item_description'=>'Description',
+            'prep_time' => 'Preparation Time',
+            // 'item_image' => 'Image',
+        ];
+        $nameField = 'item_name';
+        $searchField = 'category_id';     // Search Field identifies the field that can be used to categorize the records
+        $orderBy = " ORDER BY category_id ASC";      // in DB category table, categoes will be sequenced juciciously 
+        break;
 
-        case 'item_list':
-            $showAliases = [
-                'item_id' => 'Id',
-                'category_id' => 'Category',
-                'item_name' => 'Name',
-                'item_price' => 'Price',
-                'item_status' => 'Status',
-                'item_description'=>'Description',
-                'prep_time' => 'Preparation Time',
-            ];
-            $nameField = 'item_name';
-            break;
+    case 'item_schedule':
+        $showAliases = [
+            'schedule_id' => 'Id',
+            'schedule_day' => 'Select Day',
+            'schedule_status' => 'Status',
+            'item_id' => 'Item Name',
 
-        case 'item_schedule':
-            $showAliases = [
-                'schedule_id' => 'Id',
-                'schedule_day' => 'Select Day',
-                'schedule_status' => 'Status',
-                'item_id' => 'Item Name',
+        ];
+        $nameField = 'item_id';
+        $orderBy = " ORDER BY schedule_day ASC";
+        break;
 
-            ];
-            $nameField = 'item_id';
-            break;
-            
-        case 'registered_user':
-            $showAliases = [
-                'user_id' => 'Id',
-                'fname' => 'First Name',
-                'lname' => 'Last Name',
-                'email' => 'Email',         
-                'phone' => 'Phone',
+    case 'registered_user':
+        $showAliases = [
+            'user_id' => 'Id',
+            'fname' => 'First Name',
+            'lname' => 'Last Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
 
-            ];
-            $nameField = 'fname';
-            break;
+        ];
+        $nameField = 'fname';
+        $orderBy = "";
+        break;
 
-            case 'item_order':
-                $showAliases = [
-                    'order_id' => 'Id',
-                    'item_id' => 'item',
-                    'user_id' => 'email',
-                    'order_amount' => 'Order Amount',
-                    'order_status' => 'Status',
-                    'item_quantity' => 'Quantity',
-                    'order_notes' => 'Notes',
-                ];
-                $nameField = 'item_id';
-            break;
+    case 'item_order':
+        $showAliases = [
+            'order_id' => 'Id',
+            'item_id' => 'item',
+            'user_id' => 'email',
+            'order_amount' => 'Order Amount',
+            'order_status' => 'Status',
+            'item_quantity' => 'Quantity',
+            'order_notes' => 'Notes',
+        ];
+        $nameField = 'item_id';
+        $searchField = 'user_id';
+        $orderBy = " ORDER BY created_at DESC";      //for storing order by clause of the query
+        break;
 
+    case 'order_payment':
+        $showAliases = [
+            'bill_id' => 'Bill NO',
+            'user_id' => 'Email',
+            'payable_amount' => 'Total bill',
+            'payment_mode' => 'Mode of Payment',
+        ];
+        $nameField = 'bill_id';
+        $orderBy = " ORDER BY paid_at DESC";      //for storing order by clause of the query
+        break;
         /**
          *  Add more cases based on the added tables
          * 
@@ -83,69 +100,76 @@ $showAliases = [];      // for storing aliases of the table fields to be shown
          *  
          * */
 
-            // Add more cases based on the added tables
-        default:
-            break;
-    }
+        // Add more cases based on the added tables
+    default:
+        break;
+}
 //
 
 $inputAliases = [];       // same as above but for insert/edit
 /** */
-    switch ($tableName) {
-        case 'item_category':
-            $inputAliases = [
-                'category_id' => 'Id',
-                'category_name' => 'Name',
-                'category_status' => 'Status',
-                'category_image' => 'Image'
+switch ($tableName) {
+    case 'item_category':
+        $inputAliases = [
+            'category_id' => 'Id',
+            'category_name' => 'Name',
+            'category_status' => 'Status',
+            'category_image' => 'Image'
 
-            ];
+        ];
 
-            break;
+        break;
 
-        case 'item_list':
-            $inputAliases = [
-                'item_id' => 'Id',
-                'category_id' => 'Category',
-                'item_name' => 'Name',
-                'item_price' => 'Price',
-                'item_status' => 'Status',
-                'item_description'=>'Description',
-                'prep_time' => 'Preparation Time',
-                'item_image' => 'Image',
-            ];
-            break;
+    case 'item_list':
+        $inputAliases = [
+            'item_id' => 'Id',
+            'category_id' => 'Category',
+            'item_name' => 'Name',
+            'item_price' => 'Price',
+            'item_status' => 'Status',
+            'item_description' => 'Description',
+            'prep_time' => 'Preparation Time',
+            'item_image' => 'Image',
+        ];
+        break;
 
-        case 'item_schedule':
-            $inputAliases = [
-                'schedule_id' => 'Id',
-                'schedule_day' => 'Select Day',
-                'schedule_status' => 'Status',
-                'item_id' => 'Item Name',
-            ];
-            break;
-        case 'registered_user':
-            $inputAliases = [
-                'user_id' => 'Id',
-                'user_name' => 'Name',
-                'user_email' => 'Email',         
-                'user_phone' => 'Phone',
+    case 'item_schedule':
+        $inputAliases = [
+            'schedule_id' => 'Id',
+            'schedule_day' => 'Select Day',
+            'schedule_status' => 'Status',
+            'item_id' => 'Item Name',
+        ];
+        break;
+    case 'registered_user':
+        $inputAliases = [
+            'user_id' => 'Id',
+            'fname' => 'Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
 
-            ];
+        ];
 
-            break;
-            case 'item_order':
-                $inputAliases = [
-                    'order_id' => 'Id',
-                    'item_id' => 'Item',
-                    'order_amount' => 'Order Amount',
-                    'order_status' => 'Status',
-                    'order_notes' => 'Notes',
-                ];
-            break;
-        default:
-            break;
-    }
+        break;
+    case 'item_order':
+        $inputAliases = [
+            'order_id' => 'Id',
+            'item_id' => 'Item',
+            'order_status' => 'Status',
+            'order_notes' => 'Notes',
+        ];
+        break;
+    case 'order_payment':
+        $inputAliases = [
+            'bill_id' => 'Bill NO',
+            'user_id' => 'Email',
+            'payable_amount' => 'Total bill',
+            'payment_mode' => 'Mode of Payment',
+        ];
+        break;
+    default:
+        break;
+}
 //
 
 
@@ -157,61 +181,72 @@ $tableAliases = [
     'item_schedule' => 'Serve Schedule',
     'registered_user' => 'Users',
     'item_order' => 'Orders',
+    'order_payment' => 'Payments',
 ];
 
 $foreignKey = [];     // Store data of foreign keys present in the table 
 // like `related_table` => `their_primary_key_acting_as_foreign_key`
 //
 
-    switch ($tableName) {
-        case 'item_list':
-            // says that `item_list` is related to `item_category` throigh `category_id`
-            $foreignKey = [
-                'item_category' => 'category_id'
-                // Add more as more fk constraints are created
-            ];
-            break;
-        case 'item_schedule':
-            $foreignKey = [
-                'item_list' => 'item_id'
-            ];
-            break;
-            // Add more cases according to new entities and relations created
-        case 'item_order':
-            $foreignKey = [
-                'item_list' => 'item_id',
-                'registered_user' => 'user_id'
-            ];
-            break;
-        default:
-            break;
-    }
+switch ($tableName) {
+    case 'item_list':
+        // says that `item_list` is related to `item_category` throigh `category_id`
+        $foreignKey = [
+            'item_category' => 'category_id'
+            // Add more as more fk constraints are created
+        ];
+        break;
+    case 'item_schedule':
+        $foreignKey = [
+            'item_list' => 'item_id'
+        ];
+        break;
+        // Add more cases according to new entities and relations created
+    case 'item_order':
+        $foreignKey = [
+            'item_list' => 'item_id',
+            'registered_user' => 'user_id'
+        ];
+        break;
+    case 'order_payment':
+        $foreignKey = [
+            'registered_user' => 'user_id'
+        ];
+        break;
+    default:
+        break;
+}
 //
 
 
 $categoryColumnList = []; // Stores the relevant column name to be fetched using the foriegnkey
 // like `related_table` => `column_required_to_display`
-    switch ($tableName) {
-        case 'item_list':
-            $categoryColumnList = [
-                'item_category' => 'category_name'
-                // Add more but only one column from each table
-            ];
-            break;
-            case 'item_order':
-                $categoryColumnList = [
-                    'item_list' => 'item_name',
-                    'registered_user' => 'user_email'
-                ];
-                break;
-            case 'item_schedule':
-            $categoryColumnList = [
-                'item_list' => 'item_name'
-            ];
-            break;
-        default:
-            break;
-    }
+switch ($tableName) {
+    case 'item_list':
+        $categoryColumnList = [
+            'item_category' => 'category_name'
+            // Add more but only one column from each table
+        ];
+        break;
+    case 'item_order':
+        $categoryColumnList = [
+            'item_list' => 'item_name',
+            'registered_user' => 'email'
+        ];
+        break;
+    case 'item_schedule':
+        $categoryColumnList = [
+            'item_list' => 'item_name'
+        ];
+        break;
+    case 'order_payment':
+        $categoryColumnList = [
+            'registered_user' => 'email'
+        ];
+        break;
+    default:
+        break;
+}
 //
 
 /** Field Names and keywords to create 'Text Area'
@@ -228,8 +263,8 @@ $forTextArea = array(
     'NOTES',
     'REVIEWS'
     /**Add more keywords according to your need but make sure you mention them in the 
-    *columnAliases array under the right table name case in the correct format.
-    */
+ *columnAliases array under the right table name case in the correct format.
+ */
 );
 
 $forUploadFiles = array(
@@ -262,6 +297,11 @@ $toHide = array(
 
 
 /*********************```E N O U G H    S C R O L L I N G```*********************/
+/*********************```E N O U G H    S C R O L L I N G```*********************/
+/*********************```E N O U G H    S C R O L L I N G```*********************/
+
+
+
 
 
 
@@ -340,7 +380,6 @@ $select = "";       //for storing select clause of the query
 $from = "";         //for storing from clause of the query
 $groupBy = "";      //for storing group by clause of the query
 $having = "";       //for storing having clause of the query
-$orderBy = "";      //for storing order by clause of the query
 $limit = "";        //for storing limit clause of the query
 $join = "";         //for storing join clause of the query
 $group = "";        //for storing group by clause of the query

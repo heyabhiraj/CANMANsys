@@ -41,13 +41,13 @@ if (isset($_SESSION['user_id'])) {
                         <div class="mb-5">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-600">Email</label>
 
-                            <input type="email" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none " required/>
+                            <input type="email" name="email" placeholder="youremail@gmail.com" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none " required/>
                         </div>
 
                         <div class="mb-5">
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-600">Password</label>
 
-                            <input type="password" name="password" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required/>
+                            <input type="password" name="password" placeholder="Password"  class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required/>
                         </div>
                         <a href="#" class="text-gray-600">Forgot password?</a>
                         <button class="w-full p-3 mt-4 bg-black text-white rounded shadow active:bg-yellow-600">Login</button>
