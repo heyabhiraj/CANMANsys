@@ -65,6 +65,7 @@ switch ($tableName) {
     case 'item_order':
         $showAliases = [
             'order_id' => 'Id',
+            'created_at' => 'Time',
             'item_id' => 'item',
             'user_id' => 'email',
             'order_amount' => 'Order Amount',

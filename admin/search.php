@@ -109,6 +109,15 @@ $n++;
             }); 
 
 
+            // triggers when click category button
+            $(".categorySearch").click(function() {
+                var search_term = $(this).val();
+                searchRecords(search_term); // lists items of specified category
+                $("#search").val(search_term);
+                $("#search").focus();
+                $("#clearSearch").style.display = '';
+            });
+
             
             $(".img").click(function(){
                 var url = $(this).attr("src");

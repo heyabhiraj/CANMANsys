@@ -40,7 +40,7 @@ function LatestOrder()
   $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id ORDER BY item_order.created_at DESC LIMIT 5";
   $res = $conn->query($sql) or die("Could not get Orders");
   if ($res->num_rows > 0) {
-    $rows = $res->fetch_all();
+    $rows = $res->fetch_all(MYSQLI_BOTH);
   } else {
     $rows = "No Current orders";
   }
@@ -186,3 +186,6 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
   }
   return $cartItems;
 }
+
+
+

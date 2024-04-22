@@ -44,10 +44,11 @@ closeDB();
 
             <!-- Right side buttons -->
             <div class="flex items-center">
-            <?php if (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true || $_SESSION['Role'] == 'admin') {
+            <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && $_SESSION['Role'] == 'admin') {
                 echo '<a href="./admin/" class="bg-yellow-700 mr-2 text-white rounded-full px-4 py-2"> Admin </a>';
-
-            }  ?>
+            } else {
+                echo '';
+            } ?>
                 <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>Log0ut</button>
             </div>
         </div>

@@ -123,18 +123,18 @@ $row = Graphdata();
                 <li class="py-3 sm:py-4">
                 <div class="flex justify-between">
                       <span class="items-center text-base font-semibold">
-                      <?php echo $i[24];  ?>
+                      <?php echo $i['item_name'];  ?>
                     </span>
                     <div class="ml-10 items-center text-base font-semibold text-green-600">
-                    ₹ <?php echo $i[1];  ?>
+                    ₹ <?php echo $i['order_amount'];  ?>
                     </div>
                       </div>
                   <div class="flex items-center">
                       <p class="text-sm font-medium text-gray-900">
-                      <?php echo $i[12] ." ". $i[13]; ?>
+                      <?php echo $i['fname'] ." ". $i['lname']; ?>
                       </p>
                       <p class="ml-10 text-sm text-gray-500">
-                      <?php echo $i[15];  ?>
+                      <?php echo $i['email'];  ?>
                       </p>
                   </div>
 

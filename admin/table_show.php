@@ -249,6 +249,7 @@ $columnRenames = renameColumns($columnNames);
             }
 
             $("#search").focus();
+            
             // triggers when user type in search bar
             $("#search").keyup(function() {
                 var search_term = $(this).val();
