@@ -76,8 +76,9 @@ unset($_SESSION['cart']);
             $billId = BillingData($paymentMode);
             $data = saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId);
             foreach ($data as $item) {
-                echo "<div class='flex items-center justify-center m-2'><p class='text-lg text-bold text-center'>" . $item['item'][1] . "    X</p>";
-                echo "<p class='text-lg text-bold ml-3 text-center'>"   . $item['quantity'] . "</p> </div>";
+                echo "<div class='flex items-center justify-center m-2'><p class='text-lg text-bold ml-3 text-center'>"   . $item['quantity'] . "  X  &nbsp; </p> ";
+                echo "<p class='text-lg text-bold text-center'>   "  . $item['item'][1] . " </p></div>";
+
             } ?>
             <p class="text-md text-center">Your 0rder is placed Successfully...<a class="underline" href="./myorders.php"> View 0rders </a></p>
         </div>

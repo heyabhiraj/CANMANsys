@@ -26,7 +26,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION
 
       <!-- Right side buttons -->
       <div class="flex items-center">
-
         <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="../logout.php"'>Log 0ut</button>
       </div>
     </div>

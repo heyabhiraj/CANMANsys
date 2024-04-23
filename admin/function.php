@@ -18,6 +18,7 @@ function Graphdata()
   return $row;
 }
 
+// get Total sales value in a past week 
 function TotalSaleValue()
 {
   global $conn;
@@ -33,6 +34,8 @@ function TotalSaleValue()
   }
 }
 
+
+// get latest orders
 function LatestOrder()
 {
   global $conn;
@@ -40,7 +43,7 @@ function LatestOrder()
   $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id ORDER BY item_order.created_at DESC LIMIT 5";
   $res = $conn->query($sql) or die("Could not get Orders");
   if ($res->num_rows > 0) {
-    $rows = $res->fetch_all(MYSQLI_BOTH);
+    $rows = $res->fetch_all(MYSQLI_ASSOC);
   } else {
     $rows = "No Current orders";
   }
@@ -49,7 +52,7 @@ function LatestOrder()
 
 
 
-
+// veg menu items 
 function vegMenuItem()
 {
   global $conn;
@@ -63,7 +66,7 @@ function vegMenuItem()
 }
 
 
-
+//non veg menu items 
 function nvegMenuItem()
 {
   global $conn;
@@ -79,7 +82,7 @@ function nvegMenuItem()
 }
 
 /**
- *
+ *  Todays available menu items 
  * @param $day Today "Monday"
  */
 function getDayMenu()
@@ -87,6 +90,23 @@ function getDayMenu()
   global $conn;
 
   $sql = "SELECT * FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id WHERE schedule_day = DAYNAME(CURDATE());";
+  $res = $conn->query($sql) or die("Could not get Menu");
+  if ($res->num_rows > 0) {
+    $rows = $res->fetch_all();
+  } else {
+    echo "NO Menu";
+  }
+  return $rows;
+}
+/**
+ *  Todays available menu items 
+ * @param $day Today "Monday"
+ */
+function getAllMenu()
+{
+  global $conn;
+
+  $sql = "SELECT * FROM item_list;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all();
@@ -187,5 +207,46 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
   return $cartItems;
 }
 
+// get all my orders 
 
+function MyPastOrders( $page, $pageSize) {
+  global $conn;
+  $userId = $_SESSION['user_id'];
+  // Calculate the offset
+  $offset = ($page - 1) * $pageSize;
 
+  // SQL query to get past orders with pagination
+  $sql = "SELECT op.bill_id, 
+          op.payment_status,
+          io.item_quantity, 
+          io.created_at,
+          io.order_status,
+          il.item_name,
+          io.order_amount
+          FROM order_payment op 
+          JOIN item_order io ON op.bill_id = io.bill_id 
+          JOIN item_list il ON io.item_id = il.item_id
+          WHERE op.user_id = ? 
+          ORDER BY op.paid_at DESC
+          LIMIT ?, ?";
+
+  // Prepare the statement
+  $stmt = $conn->prepare($sql);
+
+  // Bind the parameters
+  $stmt->bind_param("iii",  $userId ,$offset, $pageSize);
+
+  // Execute the statement
+  $stmt->execute();
+
+  // Get the result set
+  $result = $stmt->get_result();
+
+  // Fetch the rows into an associative array
+  $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+  // Close the statement
+  $stmt->close();
+
+  return $rows;
+}

@@ -2,7 +2,7 @@
 include('sidebar.php');
 include('function.php');
 
-$row = Graphdata();
+ 
 ?>
 
 <div class="p-4 sm:ml-64 bg-orange-100">
@@ -85,10 +85,6 @@ $row = Graphdata();
               <p class="text-base font-normal text-gray-500 dark:text-gray-400">Sales this week</p>
             </div>
             <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-              12%
-              <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
-              </svg>
             </div>
           </div>
           <div id="area-chart"></div>
@@ -118,8 +114,9 @@ $row = Graphdata();
             </div>
             <div class="flow-root">
               <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-              <?php $rows = LatestOrder();
-                    foreach ( $rows as $i){ ?>
+              <?php $lorder = LatestOrder();
+            if(!empty($lorder)){
+              foreach ($lorder as $i) { ?>
                 <li class="py-3 sm:py-4">
                 <div class="flex justify-between">
                       <span class="items-center text-base font-semibold">
@@ -139,7 +136,9 @@ $row = Graphdata();
                   </div>
 
                 </li>
-                    <?php } ?>
+                    <?php } } else { 
+                      echo "NO latest Order";
+                      }?>
               </ul>
           </div>
         </div>
@@ -201,7 +200,8 @@ const options = {
   series: [
     {
       name: "Sales",
-      data: [<?php foreach($row as $r) echo" {$r[1]}, "; ?>],
+      data: [<?php  $row = Graphdata();
+if(!empty($row)){ foreach($row as $r) echo" {$r[1]}, "; } else { echo "No Data";}?>],
       color: "#1A56DB",
     },
   ],

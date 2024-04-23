@@ -201,10 +201,9 @@ $columnRenames = renameColumns($columnNames);
                             }
 
                             // 
-
                         } ?>
 
-
+                            </ul>
                             <?php  ?>
 
                     </nav>
