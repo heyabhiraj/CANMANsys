@@ -20,28 +20,29 @@ $search = trim($_POST['search']);
 $searchResults = searchbar($conn, $search ,$tableName, $columnNames);
 $n=1;
 if ($searchResults !== false) {
+  $foreignKeyValues = NULL;
   // Display search results
   foreach ($searchResults as $row) {
 
     $name = "'".$row[$nameField]."'";  
 
-    $id=$row[$columnNames[0]];
 
     echo "<tr class='p-5 bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 divide-x divide-slate-700 text-pretty'>";
-    echo ' <td class="text-center">'; echo $n; echo "</td>";
+    echo ' <td class="text-center py-2.5">'; echo $n; echo "</td>";
     foreach ($columnNames as $col) {
       if ($hidden = isHidden($col))
-      $id = $col;
 
+      $id = $row[$col];
       if (in_array($col, $foreignKey) !== false) { 
         $form = new form();
-        
-        $values = $form->getCategoryValues($col);
+        if(!isset($foreignKeyValues[$col]))
+        $foreignKeyValues[$col]= $form->getCategoryValues($col);                   
+        $values = $foreignKeyValues[$col];
         // print category_name using category_id as index
         $k = $row[$col];
 
         // if($col===$searchField)    
-        echo '<td class="text-center font-medium text-blue-400	 dark:text-blue-400 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
+        echo '<td class="text-center font-medium text-blue-400	px-4 dark:text-blue-400 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
  
         // else
         // echo '<td class="text-center "' . $hidden . '>' . $values[$k] . '</td>';
@@ -59,15 +60,21 @@ if ($searchResults !== false) {
       
       echo "<td class='text-center '".$hidden.">"  . $row[$col] . "</td>";
       }
-
-
-   echo"<td class='flex items-center px-6 py-4'>
-    <a class='font-medium text-blue-600 dark:text-blue-500 hover:underline' href='table_edit.php?tablename=$tableName&id=$id'>Edit</a>
-    <button class='font-medium text-red-600 dark:text-red-500 hover:underline ms-3' 
-    onclick=\"DeleteConfirm($name,$id)\">Delete</button>
-</td></tr>";
-$n++;
+      $n++;
+      // Options Column 
+      if($tableName!=='item_order') 
+      echo '
+      <td class="flex items-center px-6 py-4">
+          <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" 
+          href="table_edit.php?tablename='.$tableName.'&id='.$id.'">Edit</a>
+  
+          
+          <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" 
+          onclick="DeleteConfirm('.$name.','.$id.')">Delete</button>
+      </td>';
+      echo '</tr>';   
   }
+
   echo $searchResults;
 } else {
   echo "No results found.";

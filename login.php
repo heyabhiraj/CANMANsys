@@ -49,8 +49,10 @@ if (isset($_SESSION['user_id'])) {
 
                             <input type="password" name="password" placeholder="Password"  class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required/>
                         </div>
-                        <a href="#" class="text-gray-600">Forgot password?</a>
-                        <button class="w-full p-3 mt-4 bg-black text-white rounded shadow active:bg-yellow-600">Login</button>
+
+                        <a title="Please contact the canteen counter for password change." href="#" class="text-gray-600">Forgot password?</a>
+
+                        <button type="submit" class="w-full p-3 mt-4 bg-black text-white rounded shadow active:bg-yellow-600">Login</button>
                     </form>
                     <p class="font-medium text-black text-center mt-5"> <a href="register.php">Need an account ?</p>
 

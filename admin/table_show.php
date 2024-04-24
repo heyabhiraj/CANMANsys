@@ -93,10 +93,11 @@ $columnRenames = renameColumns($columnNames);
                                 <?php foreach ($columnRenames as $field => $col) {
                                     $hidden = isHidden($col);
                                     echo '<th scope="col" class="px-6 py-3"' . $hidden . '>' . $col . '</th>';
-                                } ?>
-
-                                <!-- -->
-                                <th scope="col" class="px-6 py-3">Options</th>
+                                } 
+                                
+                                if($tableName!=='item_order')
+                                echo '<th scope="col" class="px-6 py-3">Options</th>';
+                                ?>
                             </tr>
                         </thead>
 
@@ -109,17 +110,18 @@ $columnRenames = renameColumns($columnNames);
                             // Loop to print n number of rows    
                             for ($n = 0; $n < count($rows); $n++) {     // $rows is a 2D array containing the whole table
                                 $id = "";   // stores the id of the particular record for edit/delete
-                                $name = "'" . addslashes($rows[$n][$nameField]) . "'";      // stores the name that represents the particular record
+                                $name = '"' . addslashes($rows[$n][$nameField]) .'"';      // stores the name that represents the particular record
                             ?>
 
                                 <!-- Printing a row  -->
                                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 divide-x divide-slate-700">
                                     <!-- First column - Serial No. -->
-                                    <td class="text-center"><?php echo $ni;
+                                    <td class="text-center py-2.5"><?php echo $ni; $foreignKeyValues=NULL;
+
                                                             $ni++; ?> </td>
 
                                     <!-- Loop to print i number of columns -->
-                                    <?php for ($i = 0; $i < count($columnNames); $i++) {
+                                    <?php for ($i = 0; $i <count($columnNames); $i++) {
                                         // Hide id column from display 
                                         if ($hidden = isHidden($columnNames[$i]))
                                             $id = $rows[$n][$columnNames[$i]];    // storing the id to use in edit/delete
@@ -127,16 +129,17 @@ $columnRenames = renameColumns($columnNames);
                                         // checking for foreign keys
                                         if (in_array($columnNames[$i], $foreignKey) !== false) {
                                             $form = new form();
-                                            $values = $form->getCategoryValues($columnNames[$i]);
+                                            if(!isset($foreignKeyValues[$columnNames[$i]]))
+                                            $foreignKeyValues[$columnNames[$i]]= $form->getCategoryValues($columnNames[$i]);
+                                            $values = $foreignKeyValues[$columnNames[$i]];      // k stores the foreign key value for this record 
                                             $k = $rows[$n][$columnNames[$i]];       // k stores the foreign key value for this record 
-
                                             // check for name representation
                                             if ($columnNames[$i] === $nameField)
-                                                $name = "'" . addslashes($values[$k]) . "'";
+                                            $name = "'".addslashes($values[$k])."'";
 
                                             // make buttons to search category
                                             // if($columnNames[$i]===$searchField)
-                                            echo '<td class="text-center font-medium text-blue-400	 dark:text-blue-400 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
+                                            echo '<td class="text-center font-medium text-blue-400 px-4	 dark:text-blue-400 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
 
 
                                             // print fk_name using fk_id as index $fk normally
@@ -156,17 +159,22 @@ $columnRenames = renameColumns($columnNames);
                                             //  Print elements from assoc array 
                                             echo '<td class="text-center "' . $hidden . '>' .  $rows[$n][$columnNames[$i]] . '</td>';
                                     } ?>
-                                    <!-- Options Column -->
+                                        <!-- Options Column -->
+
+                                    <?php if($tableName!=='item_order') 
+                
+
+                                    echo '
                                     <td class="flex items-center px-6 py-4">
+                                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" 
+                                        href="table_edit.php?tablename='.$tableName.'&id='.$id.'">Edit</a>
 
-                                        <!-- Edit -->
-                                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="table_edit.php?<?php echo "tablename=" . $tableName . "&id=" . $id; ?>">Edit</a>
-
-                                        <!-- Delete -->
-                                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" onclick="DeleteConfirm(<?php echo $name . ',' . $id; ?>)">Delete</button>
-                                    </td>
-                                </tr>
-                            <?php } ?>
+                                        
+                                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" 
+                                        onclick="DeleteConfirm('.$name.','.$id.')">Delete</button>
+                                    </td>';
+                            echo '</tr>';    
+                       } ?>
                         </tbody>
 
                     </table>

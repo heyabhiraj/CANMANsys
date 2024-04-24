@@ -80,9 +80,9 @@ switch ($tableName) {
 
     case 'order_payment':
         $showAliases = [
-            'bill_id' => 'Bill NO',
+            'bill_id' => 'Bill No',
             'user_id' => 'Email',
-            'payable_amount' => 'Total bill',
+            'payable_amount' => 'Total Amount',
             'payment_mode' => 'Mode of Payment',
         ];
         $nameField = 'bill_id';
@@ -162,9 +162,8 @@ switch ($tableName) {
         break;
     case 'order_payment':
         $inputAliases = [
-            'bill_id' => 'Bill NO',
+            'bill_id' => 'Bill No',
             'user_id' => 'Email',
-            'payable_amount' => 'Total bill',
             'payment_mode' => 'Mode of Payment',
         ];
         break;
@@ -289,11 +288,13 @@ $forUploadFiles = array(
  */
 $toHide = array(
     'Id',
+    'Bill No',
     'order_id',
     'user_id',
     'item_id',
     'category_id',
     'schedule_id',
+    'bill_id'
 );
 
 

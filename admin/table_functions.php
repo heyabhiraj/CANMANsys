@@ -392,8 +392,8 @@ class Form
 
 
         $spell = "spellcheck=true";
-        echo "<input class='$class' type=$inputType name=$columnName 
-                    id=$columnName value='$value' $spell $required >";
+        echo '<input class="'.$class.'" type='.$inputType.' name='.$columnName.'
+                    id='.$columnName.' value="'.$value.'" '.$spell.' '.$required.' >';
     }
 
     /**
@@ -521,7 +521,7 @@ class Form
         $enum = $form->getEnumValues($tableName, $columnName);                  // Get enum values
         foreach ($enum as $value) {
             $selected = isSelected($value, $selectedValue);
-            echo "<option value=$value $selected>$value</option>";
+            echo '<option value="'.$value.'" '.$selected.'>'.$value.'</option>';
         }
         echo "</select>";
     }
