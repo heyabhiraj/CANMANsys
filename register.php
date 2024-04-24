@@ -4,6 +4,7 @@ if (isset($_SESSION['user_id'])) {
     header("Location: home.php"); // your home page
     exit();
 }
+
 function sessionData($data){
     if(isset($_SESSION["$data"]))
         echo $_SESSION["$data"];
@@ -48,7 +49,7 @@ function sessionData($data){
                             </div>
                         <div class="mb-3">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-600">Email</label>
-                            <input type="email" value="<?php sessionData("email"); ?>" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
+                            <input type="email" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
                         </div>
                         <div class="mb-3">
                             <label for="Phone" class="block mb-2 text-sm font-medium text-gray-600">Phone</label>

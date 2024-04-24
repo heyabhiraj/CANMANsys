@@ -13,6 +13,14 @@ $cabin = sanitize_input($_POST['faculty-cabin']);
 $ext = sanitize_input($_POST['faculty-ext']);
 $password = password_hash(sanitize_input($_POST['password']), PASSWORD_DEFAULT); // Securely hash password
 
+
+if(empty($cabin) && empty($ext)){
+    $utype = 'student';
+} else {
+    $utype = 'faculty';
+}
+
+
 // Validate data (example, add more validations as needed)
 $errors = [];
 if (empty($fname)) {
@@ -34,8 +42,8 @@ if (mysqli_num_rows($result) > 0) {
 
 // If no errors, insert data into database
 if (empty($errors)) {
-    $sql = "INSERT INTO registered_user (fname, lname, email, phone, pass, user_status, user_role, faculty_cabin, faculty_extension)
-            VALUES ('$fname', '$lname', '$email', '$phone', '$password','active', 'regular', '$cabin', '$ext')";
+    $sql = "INSERT INTO registered_user (fname, lname, email, phone, pass, user_status, user_role, faculty_cabin, faculty_extension, user_type)
+            VALUES ('$fname', '$lname', '$email', '$phone', '$password','active', 'regular', '$cabin', '$ext','$utype')";
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION['rsuccess'] = "Registration successful! Please log in.";
