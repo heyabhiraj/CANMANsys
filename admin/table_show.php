@@ -49,7 +49,8 @@ $columnRenames = renameColumns($columnNames);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@28,600,1,200" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 
 <body>
     <?php include('./sidebar.php'); ?>
@@ -95,7 +96,7 @@ $columnRenames = renameColumns($columnNames);
                                     echo '<th scope="col" class="px-6 py-3"' . $hidden . '>' . $col . '</th>';
                                 } 
                                 
-                                if($tableName!=='item_order')
+                                if($tableName!=='item_order' && $tableName!=='order_payment')
                                 echo '<th scope="col" class="px-6 py-3">Options</th>';
                                 ?>
                             </tr>
@@ -114,7 +115,7 @@ $columnRenames = renameColumns($columnNames);
                             ?>
 
                                 <!-- Printing a row  -->
-                                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 divide-x divide-slate-700">
+                                <tr class="bg-white border-b odd:bg-slate-950 even:bg-slate-900 dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 divide-x divide-slate-700">
                                     <!-- First column - Serial No. -->
                                     <td class="text-center py-2.5"><?php echo $ni; $foreignKeyValues=NULL;
 
@@ -139,7 +140,7 @@ $columnRenames = renameColumns($columnNames);
 
                                             // make buttons to search category
                                             // if($columnNames[$i]===$searchField)
-                                            echo '<td class="text-center font-medium text-blue-400 px-4	 dark:text-blue-400 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
+                                            echo '<td class="text-center font-medium text-red-600 px-4	 dark:text-red-600 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
 
 
                                             // print fk_name using fk_id as index $fk normally
@@ -161,7 +162,7 @@ $columnRenames = renameColumns($columnNames);
                                     } ?>
                                         <!-- Options Column -->
 
-                                    <?php if($tableName!=='item_order') 
+                                    <?php if($tableName!=='item_order' && $tableName!=='order_payment') 
                 
 
                                     echo '

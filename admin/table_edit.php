@@ -25,7 +25,8 @@ $required =  isRequired($tableName, $columnNames[0]);
     <!-- <link rel="stylesheet" href="style.scss"> -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style></style>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 
 <body><?php include('./sidebar.php'); ?>
     <div class="p-4 sm:ml-64 ">

@@ -27,7 +27,7 @@ if ($searchResults !== false) {
     $name = "'".$row[$nameField]."'";  
 
 
-    echo "<tr class='p-5 bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 divide-x divide-slate-700 text-pretty'>";
+    echo "<tr class='p-5 bg-white odd:bg-slate-950 even:bg-slate-900 border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 divide-x divide-slate-700 text-pretty'>";
     echo ' <td class="text-center py-2.5">'; echo $n; echo "</td>";
     foreach ($columnNames as $col) {
       if ($hidden = isHidden($col))
@@ -42,7 +42,7 @@ if ($searchResults !== false) {
         $k = $row[$col];
 
         // if($col===$searchField)    
-        echo '<td class="text-center font-medium text-blue-400	px-4 dark:text-blue-400 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
+        echo '<td class="text-center font-medium text-red-600	px-4 dark:text-red-600 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
  
         // else
         // echo '<td class="text-center "' . $hidden . '>' . $values[$k] . '</td>';
@@ -62,7 +62,7 @@ if ($searchResults !== false) {
       }
       $n++;
       // Options Column 
-      if($tableName!=='item_order') 
+      if($tableName!=='item_order' && $tableName!=='order_payment' ) 
       echo '
       <td class="flex items-center px-6 py-4">
           <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" 

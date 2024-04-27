@@ -2,6 +2,13 @@
 require('access.php');
 include_once('config.php');
 
+/**
+ * Count total number of records in the given table
+ *  
+ * @param $tableName - Name of the table
+ * @return $totalRecords - No. of records 
+ */
+
 function calculateRecord($tableName)
 {
    global $conn;
@@ -27,17 +34,20 @@ function calculateRecord($tableName)
 
 ?>
 
-
+<!-- Sidebar Start -->
 <div class="fixed top-0 left-0 h-screen w-64 bg-gray-800 text-white z-50 hidden md:block overflow-y-auto transition duration-300 ease-in-out">
    <div class="h-full px-3 py-4 bg-black rounded">
       <div class="flex items-center justify-between h-16 px-4">
          <a href="" class="text-xl font-bold">CANMANsys </a>
+
+         <!-- Sidebar Toggle -->
          <button id="sidebar-toggle" class="sm:hidden text-gray-400 hover:text-gray-200 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
          </button>
       </div>
+      <!-- List of Pages -->
       <ul class="space-y-2 font-medium">
          <li>
             <a href="./dashboard.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -62,7 +72,8 @@ function calculateRecord($tableName)
                   <path d="M5 13.17a3.001 3.001 0 0 0 0 5.66V20a1 1 0 1 0 2 0v-1.17a3.001 3.001 0 0 0 0-5.66V4a1 1 0 0 0-2 0v9.17ZM11 20v-9.17a3.001 3.001 0 0 1 0-5.66V4a1 1 0 1 1 2 0v1.17a3.001 3.001 0 0 1 0 5.66V20a1 1 0 1 1-2 0Zm6-1.17V20a1 1 0 1 0 2 0v-1.17a3.001 3.001 0 0 0 0-5.66V4a1 1 0 1 0-2 0v9.17a3.001 3.001 0 0 0 0 5.66Z" />
                </svg>
                <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
-               <span class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300"><?php echo calculateRecord("item_category");  ?></span>
+               <span class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                  <?php echo calculateRecord("item_category");  ?></span>
 
             </a>
          </li>

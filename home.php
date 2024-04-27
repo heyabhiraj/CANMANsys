@@ -1,9 +1,11 @@
 <?php
+$pageName = "Home";
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header("Location: login.php");
   exit;
 }
+header("Location: menu.php");
 include('./admin/function.php');
 
 ?>
@@ -20,7 +22,8 @@ include('./admin/function.php');
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 
 <body>
   <div class="h-20 p-5">

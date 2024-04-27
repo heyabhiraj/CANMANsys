@@ -17,7 +17,8 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 
 <body>
     <div class="container p-10">
@@ -26,17 +27,21 @@ if (isset($_SESSION['user_id'])) {
                 <h1 class="text-4xl text-center text-yellow-600 drop-shadow-lg font-thin mt-5"> CANMANsys </h1>
 
                 <div class="p-8">
+
+                <!-- Error or Message  -->
                     <?php 
                     if(isset($_SESSION['error'])){
                         echo "<p class='text-center text-red-500'>".$_SESSION['error']."</p>";
-                        unset($_SESSION['error']); //Clear Error after display
+                        unset($_SESSION['error']);
                     }
                     if(isset($_SESSION['rsuccess'])){
                         echo "<p class='text-center text-green-500'>".$_SESSION['rsuccess']."</p>";
-                        unset($_SESSION['rsuccess']); //Clear Success after display
+                        unset($_SESSION['rsuccess']); 
                     }
 
                     ?>
+
+                    <!-- Login Form Starts Here -->
                     <form method="POST" action="auth.php">
                         <div class="mb-5">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-600">Email</label>

@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 <body>
     <div class="h-20 p-5">
 <div class="flex p-5 mb-1 items-center justify-around bg-white ">

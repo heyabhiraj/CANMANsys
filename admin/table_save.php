@@ -3,7 +3,8 @@
 <head>
   
     <title>Saving Changes...</title>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 <body>
     
 </body>
