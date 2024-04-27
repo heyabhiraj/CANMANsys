@@ -707,7 +707,7 @@ function uploadFileType($columnName)
         case 'PIC':
         case 'PHOTO':
         case 'IMAGE':
-            return "\"image/jpg, image/png\"";
+            return "\"image/jpg, image/png, image/jpeg , image/webp\"";
         case 'PDF':
             return "application/pdf";
 

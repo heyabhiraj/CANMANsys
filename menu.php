@@ -117,14 +117,14 @@ switch ($filter) {
           <div class="w-full md:w-1/4 p-5">
             <div class="sm:flex bg-white border border-gray-200 rounded-lg shadow flex-col relative"> 
               
-              <div class="absolute h-10 pl-2 pr-2 pt-2 -left-4 -top-3 odd:bg-pink-500 even:bg-violet-500 -skew-y-3 text-white">Appetizer</div>
+              <div class="absolute h-10 pl-2 pr-2 pt-2 -left-4 -top-3 odd:bg-red-500 even:bg-violet-500 -skew-y-3 text-white"><?=$item['category_name']?></div>
               
 
-              <img class="self-center p-5 rounded-lg w-40" src="img.svg" alt="image" />
+              <img class="self-center p-5 rounded-lg object-cover h-40 w-40" src="<?=($img = $item['item_image'])?"img/$img":"img.svg"?>" alt="image" />
               <div class="px-5 pb-5">
                 <form action="menu.php" method="post">
                   <input type="hidden" name="item_id" value="<?= $item[0]; ?>">
-                  <h5 class="text-xl font-semibold tracking-tight text-gray-900"><?= $item[1];  ?></h5>
+                  <h5 class="text-xl font-semibold  tracking-tight text-gray-900"><?= $item[1];  ?></h5>
                   <p class="text-sm font-medium text-gray-900"> <?= $item[2];  ?></p>
                   <input type="hidden" id="quantity" name="quantity" value="1" min="1">
                   <div class="flex w-full items-center justify-between px-3 py-1 rounded-lg"> <span class="text-xl font-bold text-green-700">₹ <?php echo $item[3];  ?></span>
