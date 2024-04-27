@@ -140,7 +140,7 @@ $columnRenames = renameColumns($columnNames);
 
                                             // make buttons to search category
                                             // if($columnNames[$i]===$searchField)
-                                            echo '<td class="text-center font-medium text-red-600 px-4	 dark:text-red-600 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
+                                            echo '<td title="'. $values[$k] .'" class="text-center font-medium text-sky-500 px-4 dark:text-sky-500 "><input class="categorySearch cursor-pointer hover:underline max-w-20 overflow-hidden" type="button" value="' . $values[$k] . '"</input></td>';
 
 
                                             // print fk_name using fk_id as index $fk normally
@@ -158,7 +158,7 @@ $columnRenames = renameColumns($columnNames);
                                         // print cell nomally
                                         else
                                             //  Print elements from assoc array 
-                                            echo '<td class="text-center "' . $hidden . '>' .  $rows[$n][$columnNames[$i]] . '</td>';
+                                            echo '<td title="'. $rows[$n][$columnNames[$i]]  .'" class="text-center px-1 max-w-20 overflow-hidden "' . $hidden . '>' .  $rows[$n][$columnNames[$i]] . '</td>';
                                     } ?>
                                         <!-- Options Column -->
 

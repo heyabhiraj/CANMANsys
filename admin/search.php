@@ -42,7 +42,7 @@ if ($searchResults !== false) {
         $k = $row[$col];
 
         // if($col===$searchField)    
-        echo '<td class="text-center font-medium text-red-600	px-4 dark:text-red-600 "><input class="categorySearch cursor-pointer hover:underline" type="button" value="' . $values[$k] . '"</input></td>';
+        echo '<td title="'. $values[$k] .'" class="text-center font-medium text-sky-500 px-4 dark:text-sky-500 "><input class="categorySearch cursor-pointer hover:underline max-w-20 overflow-hidden" type="button" value="' . $values[$k] . '"</input></td>';
  
         // else
         // echo '<td class="text-center "' . $hidden . '>' . $values[$k] . '</td>';
@@ -58,7 +58,7 @@ if ($searchResults !== false) {
   }
       else 
       
-      echo "<td class='text-center '".$hidden.">"  . $row[$col] . "</td>";
+      echo "<td title='". $row[$col]  ."' class='text-center max-w-20 overflow-hidden px-1 '".$hidden.">"  . $row[$col] . "</td>";
       }
       $n++;
       // Options Column 

@@ -12,7 +12,7 @@ switch ($tableName) {
     case 'item_category':
         $showAliases = [
             'category_id' => 'Id',
-            'category_name' => 'Name',
+            'category_name' => 'Category Name',
             'category_status' => 'Status',
             'category_image' => 'Image'
 
@@ -25,11 +25,11 @@ switch ($tableName) {
         $showAliases = [
             'item_id' => 'Id',
             'category_id' => 'Category',
-            'item_name' => 'Name',
+            'item_name' => 'Item Name',
             'item_price' => 'Price',
             'item_status' => 'Status',
             // 'item_description'=>'Description',
-            'prep_time' => 'Preparation Time',
+            'prep_time' => 'Prep Time',
             // 'item_image' => 'Image',
         ];
         $nameField = 'item_name';
@@ -40,7 +40,7 @@ switch ($tableName) {
     case 'item_schedule':
         $showAliases = [
             'schedule_id' => 'Id',
-            'schedule_day' => 'Select Day',
+            'schedule_day' => ' Day',
             'schedule_status' => 'Status',
             'item_id' => 'Item Name',
 
@@ -66,9 +66,9 @@ switch ($tableName) {
         $showAliases = [
             'order_id' => 'Id',
             'created_at' => 'Time',
-            'item_id' => 'item',
-            'user_id' => 'email',
-            'order_amount' => 'Order Amount',
+            'item_id' => 'Item',
+            'user_id' => 'Email',
+            'order_amount' => 'Order Amt',
             'order_status' => 'Status',
             'item_quantity' => 'Quantity',
             'order_notes' => 'Notes',
@@ -82,7 +82,7 @@ switch ($tableName) {
         $showAliases = [
             'bill_id' => 'Bill No',
             'user_id' => 'Email',
-            'payable_amount' => 'Total Amount',
+            'payable_amount' => 'Total Amt',
             'payment_mode' => 'Mode of Payment',
         ];
         $nameField = 'bill_id';
