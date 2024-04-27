@@ -3,83 +3,87 @@ session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header("Location: login.php");
   exit;
-}
+}    
 
 include('./admin/function.php');
 
 $items = getDayMenu();
-
-// Function to remove item from cart
-function removeFromCart($itemId)
-{
-  foreach ($_SESSION['cart'] as $key => $cartItem) {
-    if ($cartItem['id'] == $itemId) {
-      unset($_SESSION['cart'][$key]);
-      return;
-    }
-  }
-}
-
-// Function to calculate subtotal of items in the cart
-function calculateSubtotal($cartItems)
-{
-  $subtotal = 0;
-  foreach ($cartItems as $cartItem) {
-    $subtotal += $cartItem['item'][3] * $cartItem['quantity'];
-  }
-  return $subtotal;
-}
-
-// Function to calculate total including taxes and shipping (if applicable)
-function calculateTotal($subtotal)
-{
-  // Add taxes, shipping costs, or any other additional fees to the subtotal
-  $total = $subtotal;
-  return $total;
-}
-
-// Check if item removal request is received
-if (isset($_POST['remove_item']) && isset($_POST['item_id'])) {
-  $itemId = $_POST['item_id'];
-  removeFromCart($itemId);
-  // Redirect back to cart page to reflect changes
-  header('Location: cart.php');
-  exit;
-}
-
-
-// Check if an item's quantity should be updated
-if (isset($_POST['update_quantity']) && isset($_POST['item_id']) && isset($_POST['quantity'])) {
-  $itemId = $_POST['item_id'];
-  $quantity = $_POST['quantity'];
-  updateCartItemQuantity($itemId, $quantity);
-}
-
-
-
-// Initialize cart items array
-$cartItems = array();
-
-// Check if cart session variable exists
-if (isset($_SESSION['cart'])) {
-  // Loop through cart items and retrieve details from $items array
-  foreach ($_SESSION['cart'] as $cartItem) {
-    foreach ($items as $item) {
-      if ($item[0] == $cartItem['id']) {
-        $cartItems[] = array('item' => $item, 'quantity' => $cartItem['quantity']);
-        break;
+// FUNCTIONS
+  // Function to remove item from cart
+  function removeFromCart($itemId)
+  {
+    foreach ($_SESSION['cart'] as $key => $cartItem) {
+      if ($cartItem['id'] == $itemId) {
+        unset($_SESSION['cart'][$key]);
+        return;
       }
     }
   }
-}
+
+  // Function to calculate subtotal of items in the cart
+  function calculateSubtotal($cartItems)
+  {
+    if(empty($cartItems))
+    return 0;
+    $subtotal = 0;
+    foreach ($cartItems as $cartItem) {
+      $subtotal += $cartItem['item'][3] * $cartItem['quantity'];
+    }
+    return $subtotal;
+  }
+
+  // Function to calculate total including taxes and shipping (if applicable)
+  function calculateTotal($subtotal)
+  {
+    // Add taxes, shipping costs, or any other additional fees to the subtotal
+    $total = $subtotal;
+    $_SESSION['total'] = $total;
+    return $total;
+  }
+// 
+// PROGRAM STARTS
+  // Check if item removal request is received
+  if (isset($_POST['remove_item']) && isset($_POST['item_id'])) {
+    $itemId = $_POST['item_id'];
+    removeFromCart($itemId);
+    // Redirect back to cart page to reflect changes
+    header('Location: cart.php');
+    exit;
+  }
 
 
-// Calculate subtotal
-$subtotal = calculateSubtotal($cartItems);
+  // Check if an item's quantity should be updated
+  if (isset($_POST['update_quantity']) && isset($_POST['item_id']) && isset($_POST['quantity'])) {
+    $itemId = $_POST['item_id'];
+    $quantity = $_POST['quantity'];
+    updateCartItemQuantity($itemId, $quantity);
+  }
 
-// Calculate total
-$total = calculateTotal($subtotal);
 
+
+  // Initialize cart items array
+  $cartItems = array();
+
+  // Check if cart session variable exists
+  if (isset($_SESSION['cart'])) {
+    // Loop through cart items and retrieve details from $items array
+    foreach ($_SESSION['cart'] as $cartItem) {
+      foreach ($items as $item) {
+        if ($item[0] == $cartItem['id']) {
+          $cartItems[] = array('item' => $item, 'quantity' => $cartItem['quantity']);
+          break;
+        }
+      }
+    }
+  }
+
+
+  // Calculate subtotal
+  $subtotal = calculateSubtotal($cartItems);
+
+  // Calculate total
+  $total = calculateTotal($subtotal);
+//
 ?>
 
 
@@ -94,7 +98,8 @@ $total = calculateTotal($subtotal);
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 
 <body>
   <div class="h-20 p-5">
@@ -123,9 +128,10 @@ $total = calculateTotal($subtotal);
             </a>
           <?php else : ?>
             <a href="menu.php">
-              <p class="mb-8">
-                < Back to menu</p>
+              <p class="mb-8 font-semibold underline">
+                &lt; &nbsp;Back to menu</p>
             </a>
+            
             <?php foreach ($cartItems as $cartItem) : ?>
 
               <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
@@ -165,11 +171,10 @@ $total = calculateTotal($subtotal);
           </div>
           <hr class="my-4 mb-10" />
           <div class="flex justify-between">
-            <p class="text-lg font-bold">Total</p>
+            <p class="text-lg font-bold">Total </p>
             <div class="">
-              <p name="total" class="text-xl font-bold text-green-700">₹ <?= $total; ?></p>
-              <input type="hidden" name="item_id" value="<?= $cartItem['item'][0]; ?>">
-              <input type="hidden" name="total" value="<?= $total; ?>">
+              <p name="total" class="text-xl font-bold text-green-700"> ₹ <?= $total; ?></p>
+              <input type="hidden" name="total" value="<?= $total ; ?>">
               <p class="text-sm text-gray-700">including Tax</p>
             </div>
           </div>

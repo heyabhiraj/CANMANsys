@@ -1,4 +1,5 @@
 <?php
+$pageName = "Menu";
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header("Location: login.php");
@@ -18,11 +19,12 @@ if (isset($_POST['add_to_cart']) && isset($_POST['item_id']) && isset($_POST['qu
   if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
   }
-  // Check if the item already exists in the cart
+
   $itemExists = false;
+
+  // If item exists, update the quantity
   foreach ($_SESSION['cart'] as &$cartItem) {
     if ($cartItem['id'] == $itemId) {
-      // If item exists, update the quantity
       $cartItem['quantity'] += $quantity;
       $itemExists = true;
       break;
@@ -39,22 +41,26 @@ if (isset($_POST['add_to_cart']) && isset($_POST['item_id']) && isset($_POST['qu
 
 
 // Get filter option from query string
-$filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
+$filter = isset($_GET['filter']) ? $_GET['filter'] : 'today';
 
 // Filter items based on the selected option
 switch ($filter) {
   case 'veg':
     $items = vegMenuItem();
+    $dayitems = getDayMenu();
     break;
   case 'nonveg':
     $items = nvegMenuItem();
+    $dayitems = getDayMenu();
     break;
   case 'all':
     $items = getAllMenu();
+    $dayitems = getDayMenu();
     break;
   case 'today':
   default:
     $items = getDayMenu();
+    $dayitems = getDayMenu();
     break;
 }
 ?>
@@ -70,8 +76,10 @@ switch ($filter) {
   <title>Home - <?php echo $_SESSION['fname']; ?> </title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 
 <body>
   <div class="h-20 p-5">
@@ -91,22 +99,27 @@ switch ($filter) {
       ?>
       <div class="mb-4">
         <form action="menu.php" method="get">
-          <select name="filter" class="px-2 py-2 rounded-md text-sm font-medium bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <option value="today" <?php if ($filter === 'today') echo 'selected'; ?>>Today</option>
-            <option value="all" <?php if ($filter === 'all') echo 'selected'; ?>>All</option>
-            <option value="veg" <?php if ($filter === 'veg') echo 'selected'; ?>>Veg</option>
-            <option value="nonveg" <?php if ($filter === 'nonveg') echo 'selected'; ?>>Non-Veg</option>
+          <select name="filter" id="filter" class=" px-2 py-2 rounded-md text-sm font-medium bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <option class="cursor-pointer" value="today" <?php if ($filter === 'today') echo 'selected'; ?>>Today</option>
+            <option class="cursor-pointer" value="veg" <?php if ($filter === 'veg') echo 'selected'; ?>>Veg</option>
+            <option class="cursor-pointer" value="nonveg" <?php if ($filter === 'nonveg') echo 'selected'; ?>>Non-Veg</option>
+            <option class="cursor-pointer" value="all" <?php if ($filter === 'all') echo 'selected'; ?>>All</option>
           </select>
-          <button class="p-1 bg-black text-white rounded-md" type="submit">Filter</button>
+          <!-- <button class="p-1 bg-black text-white rounded-md" type="submit">Filter</button> -->
         </form>
       </div>
 
       <div class="flex flex-wrap justify-center">
 
-        <?php
+      <?php
+      if(!empty($items)){
         foreach ($items as $item) : ?>
           <div class="w-full md:w-1/4 p-5">
-            <div class="sm:flex bg-white border border-gray-200 rounded-lg shadow flex-col">
+            <div class="sm:flex bg-white border border-gray-200 rounded-lg shadow flex-col relative"> 
+              
+              <div class="absolute h-10 pl-2 pr-2 pt-2 -left-4 -top-3 odd:bg-pink-500 even:bg-violet-500 -skew-y-3 text-white">Appetizer</div>
+              
+
               <img class="self-center p-5 rounded-lg w-40" src="img.svg" alt="image" />
               <div class="px-5 pb-5">
                 <form action="menu.php" method="post">
@@ -115,15 +128,32 @@ switch ($filter) {
                   <p class="text-sm font-medium text-gray-900"> <?= $item[2];  ?></p>
                   <input type="hidden" id="quantity" name="quantity" value="1" min="1">
                   <div class="flex w-full items-center justify-between px-3 py-1 rounded-lg"> <span class="text-xl font-bold text-green-700">₹ <?php echo $item[3];  ?></span>
-                    <button name="add_to_cart" class="text-white bg-black hover:bg-gray-600 rounded-lg text-sm px-5 py-2.5 text-center">Add to cart</button>
-                  </div>
+                  <?php
+                    if(in_array($item,$dayitems))
+                    echo '<button name="add_to_cart" class="text-white bg-black hover:bg-gray-600 rounded-lg text-sm px-5 py-2.5 text-center">Add to cart</button>';
+                    else
+                    echo '<button disabled class="text-white bg-gray-600 rounded-lg text-sm px-5 py-2.5 text-center">Unavailable</button>';
+                  ?>
+                  
+              </div>
                 </form>
               </div>
             </div>
           </div><?php endforeach; ?>
+          <?php } else  echo "No Available Items";?>
       </div>
     </div>
   </div>
+
+  <script>
+    $(document).ready(function(){
+    $('#filter').change(function(){
+        const filter = $(this).val();
+        window.location.href = "menu.php?filter=" + filter;
+    });
+});
+  </script>
 </body>
+
 
 </html>

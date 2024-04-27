@@ -49,7 +49,8 @@ unset($_SESSION['cart']);
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 
 <body>
     <div class="h-20 p-5">
@@ -73,7 +74,7 @@ unset($_SESSION['cart']);
             </div>
             <h1 class="text-3xl text-center">Congratulations !</h1>
             <?php
-            $billId = BillingData($paymentMode);
+            $billId = billingData($paymentMode);
             $data = saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId);
             foreach ($data as $item) {
                 echo "<div class='flex items-center justify-center m-2'><p class='text-lg text-bold ml-3 text-center'>"   . $item['quantity'] . "  X  &nbsp; </p> ";

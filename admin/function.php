@@ -45,7 +45,7 @@ function LatestOrder()
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_ASSOC);
   } else {
-    $rows = "No Current orders";
+    $rows = "";
   }
   return $rows;
 }
@@ -55,12 +55,12 @@ function LatestOrder()
 // veg menu items 
 function vegMenuItem()
 {
-  global $conn;
+  global $conn; $rows="";
   // SQL query to get column information
-  $sql = "SELECT * FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'YES';";
+  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'YES' AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
-    $rows = $res->fetch_all();
+    $rows = $res->fetch_all(MYSQLI_BOTH);
   }
   return $rows;
 }
@@ -69,50 +69,44 @@ function vegMenuItem()
 //non veg menu items 
 function nvegMenuItem()
 {
-  global $conn;
+  global $conn; $rows="";
   // SQL query to get column information
-  $sql = "SELECT * FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'NO';";
+  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'NO' AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
-    $rows = $res->fetch_all();
-  } else {
-    echo "NO Menu";
-  }
+    $rows = $res->fetch_all(MYSQLI_BOTH);
+  } 
   return $rows;
 }
 
 /**
  *  Todays available menu items 
- * @param $day Today "Monday"
+ * 
  */
 function getDayMenu()
 {
-  global $conn;
+  global $conn;$rows="";
 
-  $sql = "SELECT * FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id WHERE schedule_day = DAYNAME(CURDATE());";
+  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id WHERE schedule_day = DAYNAME(CURDATE()) AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
-    $rows = $res->fetch_all();
-  } else {
-    echo "NO Menu";
-  }
+    $rows = $res->fetch_all(MYSQLI_BOTH);
+  } 
   return $rows;
 }
 /**
  *  Todays available menu items 
- * @param $day Today "Monday"
+ * 
  */
 function getAllMenu()
 {
-  global $conn;
+  global $conn;$rows="";
 
-  $sql = "SELECT * FROM item_list;";
+  $sql = "SELECT DISTINCT item_list.item_id, item_name, item_description,item_price,item_image FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
-    $rows = $res->fetch_all();
-  } else {
-    echo "NO Menu";
-  }
+    $rows = $res->fetch_all(MYSQLI_BOTH);
+  } 
   return $rows;
 }
 
@@ -143,17 +137,20 @@ function updateCartItemQuantity($itemId, $quantity)
     }
   }
 }
-// Billing function to generate bill id 
+/**
+ * Billing function to generate bill id 
+ *  
+ * */
 
-function BillingData($paymentMode)
+function billingData($paymentMode)
 {
 
   global  $conn;
   // Get the current date and time
   $currentDateTime = date("Y-m-d H:i:s");
   $userid = $_SESSION['user_id'];
-  $total = $_POST['total'];
-  $status = 'paid';
+  $total = $_SESSION['total'];
+  $status = 'Pending';
 
   // Insert order details into the database
   $sql = "INSERT INTO order_payment (user_id, payable_amount, payment_mode, paid_at, payment_status) VALUES (?, ?, ?, ?, ?)";
@@ -182,7 +179,7 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
   // Get the current date and time
   $currentDateTime = date("Y-m-d H:i:s");
   $userid = $_SESSION['user_id'];
-  $itemId = $_POST['item_id'];
+  $itemId = "";
   // Calculate the total order amount and quantity
 
   $totalAmount = 0;
