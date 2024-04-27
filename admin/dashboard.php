@@ -5,9 +5,10 @@ include('function.php');
  
 ?>
 
+<!-- Start Content -->
 <div class="p-4 sm:ml-64 bg-orange-100">
 
-  <!-- Start Content -->
+  <!-- Counter Cards -->
   <div class="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
     <div class="p-4 bg-orange-300 transition-shadow border rounded-lg shadow-sm hover:shadow-lg">
       <div class="flex items-start justify-between">
@@ -70,14 +71,16 @@ include('function.php');
       </div>
     </div>
   </div>
+
   <!-- sidebar end -->
 </div>
+
 <div class="p-4 sm:ml-64 bg-orange-100 mt-5">
   <div class="flex flex-wrap justify-center">
     <div class="w-full md:w-1/2 p-4">
       <div class=" items-center justify-center">
-        <!-- charts  -->
 
+        <!-- Chart  -->
         <div class="bg-white rounded-lg shadow p-4 md:p-6">
           <div class="flex justify-between">
             <div>
@@ -90,6 +93,7 @@ include('function.php');
           <div id="area-chart"></div>
           <div class="grid grid-cols-1 items-center border-gray-200 border-t justify-between">
             <div class="flex justify-between items-center pt-5">
+              
               <!-- Button -->
               <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown" data-dropdown-placement="bottom" class="text-sm font-medium text-gray-500 hover:text-gray-900 text-center inline-flex items-center" type="button">
                 Last 7 days
@@ -101,8 +105,7 @@ include('function.php');
       </div>
     </div>
 
-        <!-- latest user  -->
-
+    <!-- Latest Orders  -->
     <div class="w-auto md:w-1/2 p-4">
       <div class="rounded-lg items-center">
           <div class="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
@@ -118,26 +121,26 @@ include('function.php');
             if(!empty($lorder)){
               foreach ($lorder as $i) { ?>
                 <li class="py-3 sm:py-4">
-                <div class="flex justify-between">
-                      <span class="items-center text-base font-semibold">
-                      <?php echo $i['item_name'];  ?>
-                    </span>
-                    <div class="ml-10 items-center text-base font-semibold text-green-600">
-                    ₹ <?php echo $i['order_amount'];  ?>
-                    </div>
+                  <div class="flex justify-between">
+                        <span class="items-center text-base font-semibold">
+                        <?php echo $i['item_name'];  ?>
+                      </span>
+                      <div class="ml-10 items-center text-base font-semibold text-green-600">
+                      ₹ <?php echo $i['order_amount'];  ?>
                       </div>
+                  </div>
                   <div class="flex items-center">
-                      <p class="text-sm font-medium text-gray-900">
-                      <?php echo $i['fname'] ." ". $i['lname']; ?>
-                      </p>
-                      <p class="ml-10 text-sm text-gray-500">
-                      <?php echo $i['email'];  ?>
-                      </p>
+                        <p class="text-sm font-medium text-gray-900">
+                        <?php echo $i['fname'] ." ". $i['lname']; ?>
+                        </p>
+                        <p class="ml-10 text-sm text-gray-500">
+                        <?php echo $i['email'];  ?>
+                        </p>
                   </div>
 
                 </li>
                     <?php } } else { 
-                      echo "NO latest Order";
+                      echo "No Latest Order";
                       }?>
               </ul>
           </div>
@@ -154,6 +157,7 @@ include('function.php');
 
 <script>
   
+// Chart Preparing
 const options = {
   chart: {
     height: "100%",
@@ -201,7 +205,7 @@ const options = {
     {
       name: "Sales",
       data: [<?php  $row = Graphdata();
-if(!empty($row)){ foreach($row as $r) echo" {$r[1]}, "; } else { echo "No Data";}?>],
+  if(!empty($row)){ foreach($row as $r) echo" {$r[1]}, "; } else { echo "No Data";}?>],
       color: "#1A56DB",
     },
   ],

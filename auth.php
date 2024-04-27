@@ -7,7 +7,7 @@ session_start();
 // Process login form submission
 
 $email = sanitize_input($_POST['email']);
-$password = $_POST['password']; 
+$password = sanitize_input($_POST['password']); 
 
 
 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
@@ -18,8 +18,10 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 
 if ( !isset($_POST['email'], $_POST['password']) ) {
 	// Could not get the data that should have been sent.
-    
-	exit('Please fill both the username and password fields!');
+    $_SESSION['error']= "Please fill both the username and password fields!";
+    header("Location : login.php");
+    exit();
+	
 }
 echo $_POST['email'];
 echo $_POST['password'];
@@ -30,7 +32,7 @@ echo $_POST['password'];
     if (!$stmt) {
         die("Error preparing statement: " . mysqli_error($conn));
     }
-    $stmt->bind_param("s", $email);
+    $stmt->bind_param("s", $email); 
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -55,14 +57,15 @@ echo $_POST['password'];
                           header("Location: home.php");
                       }
                       exit();
-        } else {
+        }   else {
             // Incorrect password
             $_SESSION['error'] = "Invalid email or password.";
-        }
-    } else {
+            }
+
+    }   else {
         // Account not found
         $_SESSION['error'] = " Account not found";
-    }
+        }
 
     mysqli_stmt_close($stmt); // Close prepared statement
     mysqli_close($conn); // Close connection

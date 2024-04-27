@@ -6,9 +6,10 @@ if (isset($_SESSION['user_id'])) {
 }
 
 /**
- * Retains form data 
+ * Retains form data in input tags from current session
  * 
  * @param $data - the name of the variable in defined in the session
+ * 
  */
 function sessionData($data){
     if(isset($_SESSION["$data"]))
@@ -28,7 +29,8 @@ function sessionData($data){
     <link rel="stylesheet" href="./style.css">
     <script src="./script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<link rel="stylesheet" href="tailwindmain.css"></head>
+
 
 <body>
     <div class="container p-10">
@@ -37,12 +39,15 @@ function sessionData($data){
                 <h1 class="text-4xl text-center text-yellow-600 drop-shadow-lg font-thin mt-5"> CANMANsys </h1>
 
                 <div class="p-8">
-                <?php
+
+    <?php
     if (isset($_SESSION['error'])) {
         echo "<p class='text-center text-red-500 mb-2'>" . $_SESSION['error'] . "</p>";
         unset($_SESSION['error']); // Clear error after displaying
     }
     ?>
+
+                    <!-- Register Form Starts Here -->
                     <form method="POST" onsubmit="return validatePasswords()" action="verify.php">
                         <div class="flex justify-center items-center">
                             <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600">First name</label>
@@ -75,7 +80,7 @@ function sessionData($data){
                             <input type="password" id="password" name="password" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none "required>
                         </div>
                         <div class="mb-3">
-                            <label for="Cpassword" class="block mb-2 text-sm font-medium text-gray-600">Confirm Password</label>
+                            <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-600">Confirm Password</label>
 
                             <input type="password" id="confirm_password" name="Cpassword" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none "required>
                         </div>
