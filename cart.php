@@ -168,7 +168,6 @@ $total = calculateTotal($subtotal);
             <p class="text-lg font-bold">Total</p>
             <div class="">
               <p name="total" class="text-xl font-bold text-green-700">₹ <?= $total; ?></p>
-              <input type="hidden" name="item_id" value="<?= $cartItem['item'][0]; ?>">
               <input type="hidden" name="total" value="<?= $total; ?>">
               <p class="text-sm text-gray-700">including Tax</p>
             </div>
