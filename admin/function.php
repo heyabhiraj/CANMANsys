@@ -180,6 +180,7 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
   $currentDateTime = date("Y-m-d H:i:s");
   $userid = $_SESSION['user_id'];
   $itemId = "";
+  $itemId = '';
   // Calculate the total order amount and quantity
 
   $totalAmount = 0;
