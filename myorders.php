@@ -98,7 +98,7 @@ if (isset($_GET["orderId"])) {
                             echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300' href='?page=" . ($page - 1) . "'>Previous</a></li>";
                         }
                         // Page number links
-                        for ($i > 1; $i <= $totalPages; $i++) {
+                        for ($i = 1; $i <= $totalPages; $i++) {
                             $activeClass = ($i == $page) ? "active" : "bg-yellow-600";
                             echo "<li class='$activeClass bg-gray-600'><a class='flex items-center justify-center px-3 h-8 text-white border border-gray-300' href='?page=" . $i . "'>" . $i . "</a></li>";
                         }
