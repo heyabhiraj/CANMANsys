@@ -10,7 +10,13 @@ include('./admin/function.php');
 
 $items = getDayMenu();
 
-
+// Check if the orderId is set in the query string
+if (isset($_GET["orderId"])) {
+    $orderId = $_GET["orderId"];
+    $newstatus = 'Cancelled';
+    updateOrderStatus($orderId , $newstatus);
+    unset($_GET["orderId"]);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +29,8 @@ $items = getDayMenu();
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+    <link rel="stylesheet" href="tailwindmain.css">
+</head>
 
 
 <body>
@@ -61,25 +68,27 @@ $items = getDayMenu();
                                 </div>
                                 <div class="flex flex-col items-center">
                                     <p class="text-xl text-center font-bold text-green-700"> ₹ <?php echo $i['order_amount'];  ?> </p>
-                                   
-                                   <?php
-                                   if ($i['order_status'] === 'pending') {
-                                    // If the order status is 'pending', render the cancel button
-                                    echo ' <span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-gray-600 rounded"> Status : '. $i['order_status'] .'</span>';
-                                    echo '<button type="button" class="mt-2 bg-red-600 hover:bg-red-700 px-2 py-1 text-white font-bold  rounded">Cancel </button>';
-                                } else if ($i['order_status'] === 'cooking'){
-                                    echo '<span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-green-700 rounded"> Status : '. $i['order_status'] . '</span>'; 
-                                } else {
-                                    echo '<span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-black rounded"> Status : '. $i['order_status'] . '</span>'; 
-                                }
-                                
-                                
-                                ?>
+
+                                    <?php
+                                        if ($i['order_status'] === 'pending') {
+                                            // If the order status is 'pending', render the cancel button
+                                            echo ' <span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-gray-600 rounded"> Status : ' . $i['order_status'] . '</span>';
+                                            echo '<a href="myorders.php?cancelled&orderId='. $i['order_id'] .'" onclick="cancelOrder()" class="mt-2 bg-red-600 hover:bg-red-700 px-2 py-1 text-white font-bold rounded" > Cancel </a>';
+                                        } else if ($i['order_status'] === 'cooking') {
+                                            echo '<span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-green-700 rounded"> Status : ' . $i['order_status'] . '</span>';
+                                        } else  if ($i['order_status'] === 'delivered') {
+                                            echo '<span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-black rounded"> Status : ' . $i['order_status'] . '</span>';
+                                        } else {
+                                            echo '<span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-gray-500 rounded"> Status : ' . $i['order_status'] . '</span>';
+                                        }
+
+
+                                    ?>
                                 </div>
                             </div>
                         </div>
                     </div> <?php }
-                    
+
                         $totalOrders = count(MyPastOrders(1, PHP_INT_MAX));
 
                         // Calculate total number of pages
@@ -88,15 +97,15 @@ $items = getDayMenu();
                         if ($page > 1) {
                             echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300' href='?page=" . ($page - 1) . "'>Previous</a></li>";
                         }
-                    // Page number links
-                    for ($i > 1; $i <= $totalPages; $i++) {
-                        $activeClass = ($i == $page) ? "active" : "bg-yellow-600";
-                        echo "<li class='$activeClass bg-gray-600'><a class='flex items-center justify-center px-3 h-8 text-white border border-gray-300' href='?page=" . $i . "'>" . $i . "</a></li>";
-                    }
-                    if ($page < $totalPages) {
-                        echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 ' href='?page=" . ($page + 1) . "'>Next</a></li>";
-                    }
-                    echo '</ul>';
+                        // Page number links
+                        for ($i > 1; $i <= $totalPages; $i++) {
+                            $activeClass = ($i == $page) ? "active" : "bg-yellow-600";
+                            echo "<li class='$activeClass bg-gray-600'><a class='flex items-center justify-center px-3 h-8 text-white border border-gray-300' href='?page=" . $i . "'>" . $i . "</a></li>";
+                        }
+                        if ($page < $totalPages) {
+                            echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 ' href='?page=" . ($page + 1) . "'>Next</a></li>";
+                        }
+                        echo '</ul>';
                     } else {
                         echo "No Past orders";
                     } ?>
@@ -106,5 +115,10 @@ $items = getDayMenu();
     </div>
     </div>
 </body>
-
+<script>
+function cancelOrder() {
+    // Add your cancel order logic here, such as sending an AJAX request to cancel the order
+    alert("Are you sure want to cancel Order !");
+}
+</script>
 </html>
