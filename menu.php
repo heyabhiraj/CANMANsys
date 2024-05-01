@@ -130,9 +130,9 @@ switch ($filter) {
                   <div class="flex w-full items-center justify-between px-3 py-1 rounded-lg"> <span class="text-xl font-bold text-green-700">₹ <?php echo $item[3];  ?></span>
                   <?php
                     if(in_array($item,$dayitems))
-                    echo '<button name="add_to_cart" class="text-white bg-black hover:bg-gray-600 rounded-lg text-sm px-5 py-2.5 text-center">Add to cart</button>';
+                    echo '<button name="add_to_cart" class="text-white bg-black hover:bg-gray-600 rounded-lg text-sm px-5 py-2.5 text-center">Add + </button>';
                     else
-                    echo '<button disabled class="text-white bg-gray-600 rounded-lg text-sm px-5 py-2.5 text-center">Unavailable</button>';
+                    echo '<button disabled class="text-white bg-gray-700 rounded-lg text-sm px-5 py-2.5 text-center"> Unavailable </button>';
                   ?>
                   
               </div>

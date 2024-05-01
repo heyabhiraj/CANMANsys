@@ -57,13 +57,25 @@ $items = getDayMenu();
                                     <span class="inline-block px-2 text-sm"> Bill ID : <?php echo $i['bill_id'];  ?> </span>
                                     <h2 class="text-md m-2 font-bold text-gray-900"> <?php echo $i['item_quantity'];  ?> X <?php echo $i['item_name'];  ?> </h2>
                                     <span class="inline-block mt-6 px-2 text-sm text-white bg-black rounded"> Date : <?php echo $i['created_at'];  ?> </span>
+                                    <span class="inline-block mt-2 px-2 text-sm rounded"> MODE : <?php echo $i['payment_mode'];  ?> </span>
                                 </div>
                                 <div class="flex flex-col items-center">
                                     <p class="text-xl text-center font-bold text-green-700"> ₹ <?php echo $i['order_amount'];  ?> </p>
-                                    <span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-gray-600 rounded"> Status : Pending...</span>
-                                    
+                                   
+                                   <?php
+                                   if ($i['order_status'] === 'pending') {
+                                    // If the order status is 'pending', render the cancel button
+                                    echo ' <span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-gray-600 rounded"> Status : '. $i['order_status'] .'</span>';
+                                    echo '<button type="button" class="mt-2 bg-red-600 hover:bg-red-700 px-2 py-1 text-white font-bold  rounded">Cancel </button>';
+                                } else if ($i['order_status'] === 'cooking'){
+                                    echo '<span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-green-700 rounded"> Status : '. $i['order_status'] . '</span>'; 
+                                } else {
+                                    echo '<span class="inline-block md:mt-10 px-2 py-1 text-sm text-white bg-black rounded"> Status : '. $i['order_status'] . '</span>'; 
+                                }
+                                
+                                
+                                ?>
                                 </div>
-
                             </div>
                         </div>
                     </div> <?php }
@@ -77,7 +89,7 @@ $items = getDayMenu();
                             echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300' href='?page=" . ($page - 1) . "'>Previous</a></li>";
                         }
                     // Page number links
-                    for ($i = 1; $i <= $totalPages; $i++) {
+                    for ($i > 1; $i <= $totalPages; $i++) {
                         $activeClass = ($i == $page) ? "active" : "bg-yellow-600";
                         echo "<li class='$activeClass bg-gray-600'><a class='flex items-center justify-center px-3 h-8 text-white border border-gray-300' href='?page=" . $i . "'>" . $i . "</a></li>";
                     }

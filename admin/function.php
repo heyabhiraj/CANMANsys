@@ -218,6 +218,7 @@ function MyPastOrders( $page, $pageSize) {
           op.payment_status,
           io.item_quantity, 
           io.created_at,
+          io.payment_mode,
           io.order_status,
           il.item_name,
           io.order_amount
