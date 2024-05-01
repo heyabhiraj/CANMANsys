@@ -74,7 +74,6 @@ include('function.php');
 
   <!-- sidebar end -->
 </div>
-
 <div class="p-4 sm:ml-64 bg-orange-100 mt-5">
   <div class="flex flex-wrap justify-center">
     <div class="w-full md:w-1/2 p-4">

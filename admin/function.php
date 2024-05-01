@@ -8,7 +8,7 @@ include_once('config.php');
  */
 function Graphdata()
 {
-  $sql = "SELECT DATE_FORMAT(created_at, '%d %b') AS order_date_formatted, SUM(item_quantity) AS total_quantity FROM item_order GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d') LIMIT 7 -- Group by date (without time) ORDER BY created_at ASC;";
+  $sql = "SELECT DATE_FORMAT(created_at, '%d %b') AS order_date_formatted, SUM(item_quantity) AS total_quantity FROM item_order WHERE order_status!='cancelled' GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d') LIMIT 7 -- Group by date (without time) ORDER BY created_at ASC;";
   global $conn;
   // Execute the query
   $res = $conn->query($sql) or die("Could not get data");
@@ -22,7 +22,7 @@ function Graphdata()
 function TotalSaleValue()
 {
   global $conn;
-  $sql = "SELECT SUM(order_amount * item_quantity) AS total_sales_value_past_week FROM item_order WHERE created_at >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY);";
+  $sql = "SELECT SUM(order_amount * item_quantity) AS total_sales_value_past_week FROM item_order WHERE order_status!='cancelled' && created_at >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY);";
   $result = $conn->query($sql) or die("Could not get Orders");
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
