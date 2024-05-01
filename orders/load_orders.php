@@ -7,8 +7,9 @@ include('order_function.php');
 echo "
 
 <main class='p-4 sm:ml-64 bg-orange-100 mt-5 flex flex-wrap justify-between'>
-    <div id='details'></div>
-    
+    <div id='details'></div>";
+    // print_r(pendingOrderCount(118));
+   echo" 
   <!-- Pending Orders -->
     <section class='w-auto md:w-1/2 p-4'>
         <div class='rounded-lg items-center'>

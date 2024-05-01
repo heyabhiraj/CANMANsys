@@ -132,6 +132,10 @@ function deliverOrder($orderId) {
     $sql = "UPDATE order_payment SET payment_status = 'Paid' WHERE bill_id = (SELECT bill_id FROM item_order WHERE order_id = $orderId)";
     $conn->query($sql) or die("Could not update payment status");
   }
+  $payable_amount = calculatePayableAmount($orderId)['payable_amount'];
+  $bill_id = calculatePayableAmount($orderId)['bill_id'];
+  $sql = "UPDATE order_payment SET payable_amount = $payable_amount WHERE bill_id = $bill_id";
+  $conn->query($sql) or die("Could not update payment amount");
 }
 
 function cancelOrder($orderId) {
@@ -150,7 +154,7 @@ function cancelOrder($orderId) {
  * @param string OrderId
  * @return integer total number of pending orders
  */
-function pendingOrderCount($orderId){
+function pendingOrderCount($orderId):int{
   global $conn; 
   $sql = "SELECT 
   COUNT(CASE WHEN bill_id = (SELECT bill_id FROM item_order WHERE order_id = $orderId) THEN order_id END) AS all_orders,
@@ -163,7 +167,21 @@ function pendingOrderCount($orderId){
   return $rows['all_orders']-$rows['completed_orders']-$rows['cancelled_orders'];
 }
 
-
+/**
+ * Calculate the payable amount of the orders delivered to the customer
+ * @param string $orderId
+ * 
+ * @return array [$bill_id,$payable_amount]
+ */
+function calculatePayableAmount($orderId): array {
+  global $conn;
+  $sql = "SELECT bill_id, SUM(order_amount)
+  AS payable_amount FROM item_order 
+  WHERE bill_id=(SELECT bill_id FROM item_order WHERE order_id = $orderId) 
+  && order_status = 'delivered';";
+  $res=$conn->query($sql);
+  return $res->fetch_assoc();
+}
 
 
 

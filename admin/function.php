@@ -149,7 +149,7 @@ function billingData($paymentMode)
   // Get the current date and time
   $currentDateTime = date("Y-m-d H:i:s");
   $userid = $_SESSION['user_id'];
-  $total = $_SESSION['total'];
+  $total = 0;
   $status = 'Pending';
 
   // Insert order details into the database
