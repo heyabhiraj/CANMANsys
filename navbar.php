@@ -38,9 +38,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="./home.php" class="rounded-md <?=($pageName==="Home")?'bg-gray-900 text-white':''?> px-3 py-2 text-sm font-medium " aria-current="page">Home</a>
-            <a href="./menu.php" class="<?=($pageName==="Menu")?'bg-gray-900 text-white':''?> rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-600 hover:text-white">Menu</a>
-            <a href="./myorders.php" class="<?=($pageName==="My Orders")?'bg-gray-900 text-white':''?> rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-600 hover:text-white">My 0rders</a>
+            <a href="./home.php" class="rounded-md <?=($pageName==="Home")?' bg-gray-900 text-white':''?> px-3 py-2 text-sm font-medium " aria-current="page">Home</a>
+            <a href="./menu.php" class="<?=($pageName==="Menu")?' bg-gray-900 text-white':''?> rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-600 hover:text-white">Menu</a>
+            <a href="./myorders.php" class="<?=($pageName==="My Orders")?' bg-gray-900 text-white':''?> rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-600 hover:text-white">My 0rders</a>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
       <a href="home.php" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Home</a>
       <a href="menu.php" class="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-400 hover:text-white">Menu</a>
       <a href="order.php" class="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-400 hover:text-white">My 0rders</a>
-      <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-400 hover:text-white">Contact Us</a>
+      <!-- <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-400 hover:text-white">Contact Us</a> -->
     </div>
   </div>
 </nav>

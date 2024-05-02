@@ -60,6 +60,7 @@ function sessionData($data){
                         <div class="mb-3">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-600">Email</label>
                             <input type="email" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
+                            <input type="email" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
                         </div>
                         <div class="mb-3">
                             <label for="Phone" class="block mb-2 text-sm font-medium text-gray-600">Phone</label>
