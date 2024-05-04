@@ -180,6 +180,7 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
   $currentDateTime = date("Y-m-d H:i:s");
   $userid = $_SESSION['user_id'];
   $itemId = "";
+  $itemId = '';
   // Calculate the total order amount and quantity
 
   $totalAmount = 0;
@@ -215,8 +216,10 @@ function MyPastOrders( $page, $pageSize) {
   // SQL query to get past orders with pagination
   $sql = "SELECT op.bill_id, 
           op.payment_status,
+          io.order_id,
           io.item_quantity, 
           io.created_at,
+          io.payment_mode,
           io.order_status,
           il.item_name,
           io.order_amount
@@ -247,3 +250,34 @@ function MyPastOrders( $page, $pageSize) {
 
   return $rows;
 }
+
+
+
+function updateOrderStatus($orderId, $newStatus)
+{
+    // Include your database connection code here
+    // Assuming you have already established a connection to your database
+    global $conn;
+    // SQL query to update the order status
+    $sql = "UPDATE item_order SET order_status = ? WHERE order_id = ?";
+
+    // Prepare the statement
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters
+    $stmt->bind_param("si", $newStatus, $orderId);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        // Order status updated successfully
+        return true;
+    } else {
+        // Error updating order status
+        return false;
+    }
+}
+
+
+
+
+?>

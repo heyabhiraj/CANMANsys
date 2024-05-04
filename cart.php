@@ -3,86 +3,86 @@ session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header("Location: login.php");
   exit;
-}    
+}
 
 include('./admin/function.php');
 
 $items = getDayMenu();
 // FUNCTIONS
-  // Function to remove item from cart
-  function removeFromCart($itemId)
-  {
-    foreach ($_SESSION['cart'] as $key => $cartItem) {
-      if ($cartItem['id'] == $itemId) {
-        unset($_SESSION['cart'][$key]);
-        return;
-      }
+// Function to remove item from cart
+function removeFromCart($itemId)
+{
+  foreach ($_SESSION['cart'] as $key => $cartItem) {
+    if ($cartItem['id'] == $itemId) {
+      unset($_SESSION['cart'][$key]);
+      return;
     }
   }
+}
 
-  // Function to calculate subtotal of items in the cart
-  function calculateSubtotal($cartItems)
-  {
-    if(empty($cartItems))
+// Function to calculate subtotal of items in the cart
+function calculateSubtotal($cartItems)
+{
+  if (empty($cartItems))
     return 0;
-    $subtotal = 0;
-    foreach ($cartItems as $cartItem) {
-      $subtotal += $cartItem['item'][3] * $cartItem['quantity'];
-    }
-    return $subtotal;
+  $subtotal = 0;
+  foreach ($cartItems as $cartItem) {
+    $subtotal += $cartItem['item'][3] * $cartItem['quantity'];
   }
+  return $subtotal;
+}
 
-  // Function to calculate total including taxes and shipping (if applicable)
-  function calculateTotal($subtotal)
-  {
-    // Add taxes, shipping costs, or any other additional fees to the subtotal
-    $total = $subtotal;
-    $_SESSION['total'] = $total;
-    return $total;
-  }
+// Function to calculate total including taxes and shipping (if applicable)
+function calculateTotal($subtotal)
+{
+  // Add taxes, shipping costs, or any other additional fees to the subtotal
+  $total = $subtotal;
+  $_SESSION['total'] = $total;
+  return $total;
+}
 // 
 // PROGRAM STARTS
-  // Check if item removal request is received
-  if (isset($_POST['remove_item']) && isset($_POST['item_id'])) {
-    $itemId = $_POST['item_id'];
-    removeFromCart($itemId);
-    // Redirect back to cart page to reflect changes
-    header('Location: cart.php');
-    exit;
-  }
+// Check if item removal request is received
+if (isset($_POST['remove_item']) && isset($_POST['item_id'])) {
+  $itemId = $_POST['item_id'];
+  removeFromCart($itemId);
+  // Redirect back to cart page to reflect changes
+  header('Location: cart.php');
+  exit;
+}
 
 
-  // Check if an item's quantity should be updated
-  if (isset($_POST['update_quantity']) && isset($_POST['item_id']) && isset($_POST['quantity'])) {
-    $itemId = $_POST['item_id'];
-    $quantity = $_POST['quantity'];
-    updateCartItemQuantity($itemId, $quantity);
-  }
+// Check if an item's quantity should be updated
+if (isset($_POST['update_quantity']) && isset($_POST['item_id']) && isset($_POST['quantity'])) {
+  $itemId = $_POST['item_id'];
+  $quantity = $_POST['quantity'];
+  updateCartItemQuantity($itemId, $quantity);
+}
 
 
 
-  // Initialize cart items array
-  $cartItems = array();
+// Initialize cart items array
+$cartItems = array();
 
-  // Check if cart session variable exists
-  if (isset($_SESSION['cart'])) {
-    // Loop through cart items and retrieve details from $items array
-    foreach ($_SESSION['cart'] as $cartItem) {
-      foreach ($items as $item) {
-        if ($item[0] == $cartItem['id']) {
-          $cartItems[] = array('item' => $item, 'quantity' => $cartItem['quantity']);
-          break;
-        }
+// Check if cart session variable exists
+if (isset($_SESSION['cart'])) {
+  // Loop through cart items and retrieve details from $items array
+  foreach ($_SESSION['cart'] as $cartItem) {
+    foreach ($items as $item) {
+      if ($item[0] == $cartItem['id']) {
+        $cartItems[] = array('item' => $item, 'quantity' => $cartItem['quantity']);
+        break;
       }
     }
   }
+}
 
 
-  // Calculate subtotal
-  $subtotal = calculateSubtotal($cartItems);
+// Calculate subtotal
+$subtotal = calculateSubtotal($cartItems);
 
-  // Calculate total
-  $total = calculateTotal($subtotal);
+// Calculate total
+$total = calculateTotal($subtotal);
 //
 ?>
 
@@ -98,7 +98,8 @@ $items = getDayMenu();
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+  <link rel="stylesheet" href="tailwindmain.css">
+</head>
 
 
 <body>
@@ -131,7 +132,7 @@ $items = getDayMenu();
               <p class="mb-8 font-semibold underline">
                 &lt; &nbsp;Back to menu</p>
             </a>
-            
+
             <?php foreach ($cartItems as $cartItem) : ?>
 
               <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
@@ -164,29 +165,36 @@ $items = getDayMenu();
         </div>
         <!-- Sub total -->
         <div class="mt-10 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
-        <form action="order.php" method="POST">
-          <div class="m-2 flex justify-between">
-            <p class="text-gray-700">Subtotal</p>
-            <p class="text-gray-700">₹ <?= $subtotal; ?></p>
-          </div>
-          <hr class="my-4 mb-10" />
-          <div class="flex justify-between">
-            <p class="text-lg font-bold">Total </p>
-            <div class="">
-              <p name="total" class="text-xl font-bold text-green-700"> ₹ <?= $total; ?></p>
-              <input type="hidden" name="total" value="<?= $total ; ?>">
-              <p class="text-sm text-gray-700">including Tax</p>
+          <form action="order.php" method="POST">
+            <div class="m-2 flex justify-between">
+              <p class="text-gray-700">Subtotal</p>
+              <p class="text-gray-700">₹ <?= $subtotal; ?></p>
             </div>
-          </div>
-          <label class="block mb-2 text-sm font-medium text-gray-900">Order notes</label>
-          <textarea name="ordernotes" rows="3" class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300" placeholder="Cooking Instruction Here..."></textarea>
-          <label class="block mt-2 text-sm font-medium text-gray-900">Payment </label>
-          <select id="payment" name="paymentmode" class=" mt-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <hr class="my-4 mb-10" />
+            <div class="flex justify-between">
+              <p class="text-lg font-bold">Total </p>
+              <div class="">
+                <p name="total" class="text-xl font-bold text-green-700">₹ <?= $total; ?></p>
+                <input type="hidden" name="total" value="<?= $total; ?>">
+                <p class="text-sm text-gray-700">including Tax</p>
+              </div>
+            </div> 
+            <label class="block mb-2 text-sm font-medium text-gray-900">Order notes</label>
+            <textarea name="ordernotes" rows="3" class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300" placeholder="Cooking Instruction Here..."></textarea>
+            <label class="block mt-2 text-sm font-medium text-gray-900">Payment </label>
+            <select id="payment" name="paymentmode" class=" mt-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
               <option> Cash On Delivery</option>
-              <option> Credit or Pay Later</option>
+
+              <?php
+              echo $_SESSION['Type'];
+              if ($_SESSION['Type'] === 'faculty') {
+                // If the user type  is 'faculty', render the paylater or credit button
+                echo '<option> Credit or Pay Later</option>';
+              }
+              ?>
             </select>
-          <button type="submit" name="place_order" class="mt-6 w-full rounded-md bg-yellow-700 py-1.5 font-medium text-blue-50 hover:bg-black">Order Now</button>
-            </form>
+            <button type="submit" name="place_order" class="mt-6 w-full rounded-md bg-yellow-700 py-1.5 font-medium text-blue-50 hover:bg-black">Order Now</button>
+          </form>
         </div>
       </div>
     </div>

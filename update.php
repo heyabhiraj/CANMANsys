@@ -11,11 +11,15 @@ $phone = sanitize_input($_POST['phone']);
 $cabin = sanitize_input($_POST['faculty-cabin']);
 $ext = sanitize_input($_POST['faculty-ext']);
 
-
+if(empty($cabin) && empty($ext)){
+    $utype = 'student';
+} else {
+    $utype = 'faculty';
+}
 // Update user details (excluding email)
-$sql = "UPDATE registered_user SET fname = ?, lname = ?, phone = ?,faculty_cabin = ?,faculty_extension = ? WHERE user_id = ?";
+$sql = "UPDATE registered_user SET fname = ?, lname = ?, phone = ?,faculty_cabin = ?,faculty_extension = ? , user_type = ? WHERE user_id = ?";
 $stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "sssssi", $first_name, $last_name, $phone,$cabin, $ext, $user_id);
+mysqli_stmt_bind_param($stmt, "ssssssi", $first_name, $last_name, $phone,$cabin, $ext, $utype, $user_id);
 $result = mysqli_stmt_execute($stmt);
 
 if ($result) {

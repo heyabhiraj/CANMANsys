@@ -28,7 +28,7 @@ echo $_POST['password'];
 
 
     // Retrieve user from database
-    $stmt = $conn->prepare("SELECT user_id, fname, email, pass, user_role FROM registered_user WHERE email = ?");
+    $stmt = $conn->prepare("SELECT user_id, fname, email, pass, user_role , user_type FROM registered_user WHERE email = ?");
     if (!$stmt) {
         die("Error preparing statement: " . mysqli_error($conn));
     }
@@ -49,6 +49,7 @@ echo $_POST['password'];
             $_SESSION['user_id'] = $id;
             $_SESSION['fname'] = $row['fname'];
             $_SESSION['Role'] = $row['user_role'];
+            $_SESSION['Type'] = $row['user_type'];
             
             // Redirect to the admin dashboard or any other page
             if ($_SESSION['Role'] == 'admin') {
