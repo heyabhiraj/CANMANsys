@@ -31,6 +31,35 @@ function calculateRecord($tableName)
    // Return total records
    return $totalRecords;
 }
+/**
+ * Count total number of records in the given table
+ *  
+ * @return $totalOrders - No. of records 
+ */
+
+ function calculatePendingOrders(): int
+ {
+    global $conn;
+ 
+    // Construct SQL query to get total records
+    $sql = "SELECT COUNT(*) AS total FROM item_order WHERE order_status = 'pending'";
+ 
+    // Execute the query
+    $totalResult = $conn->query($sql);
+ 
+    // Check for errors
+    if (!$totalResult) {
+       echo "Error fetching total records: " . $conn->error;
+       return false;
+    }
+ 
+    // Fetch total records from the result
+    $totalOrders = $totalResult->fetch_assoc()["total"];
+ 
+    // Return total records
+    return $totalOrders;
+ }
+ 
 
 ?>
 
