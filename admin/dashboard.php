@@ -1,7 +1,11 @@
 <?php
-include('sidebar.php');
 include('function.php');
 
+global $conn;
+$sql = "UPDATE item_order SET order_status = 'cancelled' where order_status != 'delivered' && DATE(created_at)  != curdate();";
+$conn->query($sql);
+
+include('sidebar.php');
  
 ?>
 
