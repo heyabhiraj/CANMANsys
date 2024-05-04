@@ -32,7 +32,7 @@ $required =  isRequired($tableName, $columnNames[0]);
     <!-- <link rel="stylesheet" href="style.scss"> -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style></style>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+ </head>
 
 
 <body><?php include('./sidebar.php'); ?>

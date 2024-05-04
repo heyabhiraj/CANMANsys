@@ -14,9 +14,8 @@ $items = getDayMenu();
 if (isset($_GET["orderId"])) {
     $orderId = $_GET["orderId"];
     $newstatus = 'Cancelled';
-    updateOrderStatus($orderId , $newstatus);
-    unset($_GET["orderId"]);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +28,15 @@ if (isset($_GET["orderId"])) {
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="tailwindmain.css">
+    <script>
+function cancelOrder() {
+    // Add your cancel order logic here, such as sending an AJAX request to cancel the order
+    var confirmCancel = confirm("Are you sure you want to cancel the order?");
+    if (confirmCancel) {
+       var a = <?php updateOrderStatus($orderId , $newstatus); ?>;
+}
+}
+</script>   
 </head>
 
 
@@ -42,10 +49,10 @@ if (isset($_GET["orderId"])) {
             <!-- Right side buttons -->
             <div class="flex items-center">
 
-                <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>Log0ut</button>
+                <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>logOut</button>
             </div>
         </div>
-        <div class="bg-orange-100 rounded-lg h-900 w-auto p-10 drop-shadow-lg">
+        <div class=" bg-orange-100 rounded-lg h-900 w-auto p-2 drop-shadow-lg">
             <?php
             include('./navbar.php');
             ?>
@@ -115,10 +122,5 @@ if (isset($_GET["orderId"])) {
     </div>
     </div>
 </body>
-<script>
-function cancelOrder() {
-    // Add your cancel order logic here, such as sending an AJAX request to cancel the order
-    alert("Are you sure want to cancel Order !");
-}
-</script>
+
 </html>

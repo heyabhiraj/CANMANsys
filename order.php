@@ -49,7 +49,7 @@ unset($_SESSION['cart']);
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+ </head>
 
 
 <body>
@@ -61,27 +61,27 @@ unset($_SESSION['cart']);
             <!-- Right side buttons -->
             <div class="flex items-center">
 
-                <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>Log0ut</button>
+                <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>Logout</button>
             </div>
         </div>
-        <div class="bg-orange-100 rounded-lg h-900 w-auto p-10 drop-shadow-lg">
+        <div class=" bg-orange-100 rounded-lg h-900 w-auto p-2 drop-shadow-lg">
             <?php
             include('./navbar.php');
             ?>
-            <div class="checkmark flex items-center justify-around"><svg class="w-100 h-100 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" viewBox="0 0 24 24">
+            <div class="checkmark flex items-center justify-around"><svg class="w-100 h-100 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
                     <path fill-rule="evenodd" d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z" clip-rule="evenodd" />
                 </svg>
             </div>
-            <h1 class="text-3xl text-center">Congratulations !</h1>
+            <h1 class="text-2xl mb-10 text-center">Congratulations !</h1>
             <?php
             $billId = billingData($paymentMode);
             $data = saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId);
             foreach ($data as $item) {
                 echo "<div class='flex items-center justify-center m-2'><p class='text-lg text-bold ml-3 text-center'>"   . $item['quantity'] . "  X  &nbsp; </p> ";
-                echo "<p class='text-lg text-bold text-center'>   "  . $item['item'][1] . " </p></div>";
+                echo "<p class='text-lg text-bold text-center'>   "  . $item['item'][1] . " - ₹ "  . $item['item'][3] . "</p></div>";
 
             } ?>
-            <p class="text-md text-center">Your 0rder is placed Successfully...<a class="underline" href="./myorders.php"> View 0rders </a></p>
+            <p class="text-md mt-10 text-center">Your Order is placed Successfully...<a class="underline" href="./myorders.php"> View Orders </a></p>
         </div>
     </div>
 </body>

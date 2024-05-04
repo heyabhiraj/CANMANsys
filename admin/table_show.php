@@ -49,7 +49,7 @@ $columnRenames = renameColumns($columnNames);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@28,600,1,200" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+ </head>
 
 
 <body>

@@ -98,7 +98,7 @@ $total = calculateTotal($subtotal);
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="tailwindmain.css">
+  
 </head>
 
 
@@ -111,10 +111,10 @@ $total = calculateTotal($subtotal);
       <!-- Right side buttons -->
       <div class="flex items-center">
 
-        <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>Log0ut</button>
+        <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>logOut</button>
       </div>
     </div>
-    <div class="bg-orange-100 rounded-lg h-900 w-auto p-10 drop-shadow-lg">
+    <div class=" bg-orange-100 rounded-lg h-900 w-auto p-2 drop-shadow-lg">
       <?php
       include('./navbar.php');
       ?>

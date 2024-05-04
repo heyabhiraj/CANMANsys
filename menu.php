@@ -78,22 +78,22 @@ switch ($filter) {
   <script src="script.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+ </head>
 
 
 <body>
   <div class="h-20 p-5">
     <div class="flex p-5 mb-1 items-center justify-around bg-white ">
       <!-- Left side Logo -->
-      <h1 class="text-4xl text-yellow-600 drop-shadow-lg"> <a href="">CANMANsys </a></h1>
+      <h1 class="text-2xl sm:text-4xl text-yellow-600 drop-shadow-lg"> <a href="">CANMANsys </a></h1>
 
       <!-- Right side buttons -->
       <div class="flex items-center">
 
-        <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>Log0ut</button>
+        <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>LogOut</button>
       </div>
     </div>
-    <div class="bg-orange-100 rounded-lg h-900 w-auto p-10 drop-shadow-lg">
+    <div class="bg-orange-100 rounded-lg h-900 w-auto p-2 drop-shadow-lg">
       <?php
       include('./navbar.php');
       ?>
@@ -118,11 +118,10 @@ switch ($filter) {
             <div class="sm:flex bg-white border border-gray-200 rounded-lg shadow flex-col relative"> 
               
               <div class="absolute h-10 pl-2 pr-2 pt-2 -left-4 -top-3 odd:bg-red-500 even:bg-violet-500 -skew-y-3 text-white"><?=$item['category_name']?></div>
-              
-
-              <img class="self-center p-5 rounded-lg object-cover h-40 w-40" src="<?=($img = $item['item_image'])?"img/$img":"img.svg"?>" alt="image" />
+              <!-- <img class="self-center p-5 rounded-lg object-cover h-40 w-40" src="<?=($img = $item['item_image'])?"img/$img":"img.svg"?>" alt="image" /> -->
               <div class="px-5 pb-5">
-                <form action="menu.php" method="post">
+              <img class="self-center p-5 rounded-lg object-cover h-40 w-40" src="<?=($img = $item['item_image'])?"img/$img":"img.svg"?>" alt="image" />
+              <form action="menu.php" method="post">
                   <input type="hidden" name="item_id" value="<?= $item[0]; ?>">
                   <h5 class="text-xl font-semibold  tracking-tight text-gray-900"><?= $item[1];  ?></h5>
                   <p class="text-sm font-medium text-gray-900"> <?= $item[2];  ?></p>

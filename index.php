@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+ </head>
 
 <body>
     <div class="h-20 p-5">

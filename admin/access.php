@@ -16,7 +16,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+ </head>
 
 
 <body>

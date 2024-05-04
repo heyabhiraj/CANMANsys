@@ -17,11 +17,11 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+ </head>
 
 
 <body>
-    <div class="container p-10">
+    <div class="container p-1 sm:p-10">
         <div class=" bg-orange-100 rounded-lg h-700 p-10 drop-shadow-lg">
             <div class="max-w-md w-full mx-auto bg-white rounded-lg overflow-hidden shadow-2xl">
                 <h1 class="text-4xl text-center text-yellow-600 drop-shadow-lg font-thin mt-5"> CANMANsys </h1>
@@ -59,7 +59,7 @@ if (isset($_SESSION['user_id'])) {
 
                         <button type="submit" class="w-full p-3 mt-4 bg-black text-white rounded shadow active:bg-yellow-600">Login</button>
                     </form>
-                    <p class="font-medium text-black text-center mt-5"> <a href="register.php">Need an account ?</p>
+                    <p class="font-medium underline text-black text-center mt-5"> <a href="register.php">Need an account ?</p>
 
                     
                 </div>

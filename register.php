@@ -29,12 +29,12 @@ function sessionData($data){
     <link rel="stylesheet" href="./style.css">
     <script src="./script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="tailwindmain.css"></head>
+ </head>
 
 
 <body>
-    <div class="container p-10">
-        <div class=" bg-orange-100 rounded-lg h-700 p-10 drop-shadow-lg">
+    <div class="container p-1 sm:p-10">
+        <div class=" bg-orange-100 rounded-lg h-700 p-5 drop-shadow-lg">
             <div class="max-w-md w-full mx-auto bg-white rounded-lg overflow-hidden shadow-2xl">
                 <h1 class="text-4xl text-center text-yellow-600 drop-shadow-lg font-thin mt-5"> CANMANsys </h1>
 
@@ -50,26 +50,25 @@ function sessionData($data){
                     <!-- Register Form Starts Here -->
                     <form method="POST" onsubmit="return validatePasswords()" action="verify.php">
                         <div class="flex justify-center items-center">
-                            <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600">First name</label>
-                            <label for="text" class="block w-full ml-5 mb-1 text-sm font-medium text-gray-600">Last name </label>
+                            <label for="fname" class="block w-full mb-1 text-sm font-medium text-gray-600">First name</label>
+                            <label for="lname" class="block w-full ml-5 mb-1 text-sm font-medium text-gray-600">Last name </label>
                         </div>
                         <div class="flex mb-3 justify-around">
-                            <input type="text" value="<?php sessionData("fname"); ?>" name="fname" class="block w-full p-3 mr-2 rounded bg-gray-200 border border-transparent focus:outline-none "required>
-                            <input type="text" value="<?php sessionData("lname"); ?>"name="lname" class="block w-full p-3 ml-2 rounded bg-gray-200 border border-transparent focus:outline-none "required>
+                            <input type="text" placeholder="john" value="<?php sessionData("fname"); ?>" name="fname" class="block w-full p-3 mr-2 rounded bg-gray-200 border border-transparent focus:outline-none "required>
+                            <input type="text" placeholder="doe" value="<?php sessionData("lname"); ?>"name="lname" class="block w-full p-3 ml-2 rounded bg-gray-200 border border-transparent focus:outline-none "required>
                             </div>
                         <div class="mb-3">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-600">Email</label>
-                            <input type="email" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
-                            <input type="email" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
+                            <input type="email" placeholder="your@email.com" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
                         </div>
                         <div class="mb-3">
                             <label for="Phone" class="block mb-2 text-sm font-medium text-gray-600">Phone</label>
-                            <input type="tel" value="<?php sessionData("phone"); ?>" name="phone" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none " required>
+                            <input type="tel" placeholder="99999-12345" value="<?php sessionData("phone"); ?>" name="phone" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none " required>
                         </div>
                         <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600 border-b"> Note below fields are 0nly for Faculty</label>
                         <div class="flex justify-center items-center">
-                        <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600">Faculty cabin</label>
-                        <label for="text" class="block w-full ml-5 mb-1 text-sm font-medium text-gray-600">Faculty Ext </label>
+                        <label for="faculty-cabin" class="block w-full mb-1 text-sm font-medium text-gray-600">Faculty cabin</label>
+                        <label for="faculty-ext" class="block w-full ml-5 mb-1 text-sm font-medium text-gray-600">Faculty Ext </label>
                             </div>
                             <div class="flex mb-3 justify-around">
                             <input type="text" placeholder="Optional "  value="<?php sessionData("cabin"); ?>" name="faculty-cabin" class="block w-full p-3 mr-2 rounded bg-gray-200 border border-transparent focus:outline-none ">
@@ -87,7 +86,7 @@ function sessionData($data){
                         </div>
                         <button type="submit" class="w-full p-3 mt-4 bg-black text-white rounded shadow active:bg-yellow-600">Create account</button>
                     </form>
-                    <p class="font-medium text-black text-center mt-5"> <a href="login.php">Already Have an account ?</p>
+                    <p class="font-medium underline text-black text-center mt-5"> <a href="login.php">Already Have an account ?</p>
 
 
                 </div>
