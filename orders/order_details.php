@@ -89,11 +89,19 @@
             <form>
                 <input id='orderId' type = 'hidden' value = ' $data[order_id] ' >
 
+<<<<<<< HEAD
                 <button  onclick='load_orders(o=>o)' type='button' id='acceptOrder' data-modal-hide='static-modal'  class=' $acceptButton text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'>Accept</button>
 
                 <button onclick='load_orders(o=>o)' type='button' id='deliverOrder' data-modal-hide='static-modal' class=' $deliverButton text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'>Deliver</button>
 
                 <button onclick='load_orders(o=>o)' type='button' id='cancelOrder' data-modal-hide='static-modal'  class='py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-white rounded-2xl border border-red-200 hover:bg-red-100 hover:text-white focus:z-10 focus:ring-4 focus:ring-red-100 dark:focus:ring-red-700 dark:bg-red-800 dark:text-white dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700'>Decline</button>
+=======
+                <button  onclick='closeModal()' id='acceptOrder' data-modal-hide='static-modal'  class=' $acceptButton text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'>Accept</button>
+
+                <button onclick='closeModal()' id='deliverOrder' data-modal-hide='static-modal' class=' $deliverButton text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'>Deliver</button>
+
+                <button onclick='closeModal()' id='cancelOrder' data-modal-hide='static-modal'  class='py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-white rounded-2xl border border-red-200 hover:bg-red-100 hover:text-white focus:z-10 focus:ring-4 focus:ring-red-100 dark:focus:ring-red-700 dark:bg-red-800 dark:text-white dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700'>Decline</button>
+>>>>>>> new
                 </form>
             </div>
         </div>
