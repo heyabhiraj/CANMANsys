@@ -53,7 +53,7 @@ function cookingOrders() : array
 {
   global $conn;
   // SQL query to get column information
-  $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id WHERE order_status = 'Cooking' ORDER BY item_order.modified_at ASC LIMIT 4 ";
+  $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id WHERE order_status = 'Cooking' ORDER BY item_order.modified_at ASC LIMIT 5 ";
   $res = $conn->query($sql) or die("Could not get Orders");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_ASSOC);
@@ -107,7 +107,6 @@ function orderDetails($orderId){
  * Function to accept new orders and send them to cooking
  * @param string $orderId 
  */
-
 function acceptOrder($orderId) {
   global $conn;
 
@@ -120,8 +119,6 @@ function acceptOrder($orderId) {
  * Mark the order as delivered and payment recived
  * @param string  $orderId 
  */
-  
-
 function deliverOrder($orderId) {
   global $conn;
   $facultyExt = orderDetails($orderId)['faculty_extension'];
