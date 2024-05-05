@@ -50,23 +50,22 @@ function sessionData($data){
                     <!-- Register Form Starts Here -->
                     <form method="POST" onsubmit="return validatePasswords()" action="verify.php">
                         <div class="flex justify-center items-center">
-                            <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600">First name</label>
-                            <label for="text" class="block w-full ml-5 mb-1 text-sm font-medium text-gray-600">Last name </label>
+                            <label for="fn" class="block w-full mb-1 text-sm font-medium text-gray-600">First name</label>
+                            <label for="ln" class="block w-full ml-5 mb-1 text-sm font-medium text-gray-600">Last name </label>
                         </div>
                         <div class="flex mb-3 justify-around">
-                            <input type="text" value="<?php sessionData("fname"); ?>" name="fname" class="block w-full p-3 mr-2 rounded bg-gray-200 border border-transparent focus:outline-none "required>
-                            <input type="text" value="<?php sessionData("lname"); ?>"name="lname" class="block w-full p-3 ml-2 rounded bg-gray-200 border border-transparent focus:outline-none "required>
+                            <input id="fn" placeholder="Abhishek" type="text" value="<?php sessionData("fname"); ?>" name="fname" class="block w-full p-3 mr-2 rounded bg-gray-200 border border-transparent focus:outline-none "required>
+                            <input id="ln" placeholder="Gupta" type="text" value="<?php sessionData("lname"); ?>"name="lname" class="block w-full p-3 ml-2 rounded bg-gray-200 border border-transparent focus:outline-none "required>
                             </div>
                         <div class="mb-3">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-600">Email</label>
-                            <input type="email" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
-                            <input type="email" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
+                            <input id="email" placeholder="email@example.com" type="email" value="<?php sessionData("email"); ?>" name="email" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none" required>
                         </div>
                         <div class="mb-3">
                             <label for="Phone" class="block mb-2 text-sm font-medium text-gray-600">Phone</label>
-                            <input type="tel" value="<?php sessionData("phone"); ?>" name="phone" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none " required>
+                            <input id="Phone" placeholder="999 999 9999" type="tel" value="<?php sessionData("phone"); ?>" name="phone" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none " required>
                         </div>
-                        <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600 border-b"> Note below fields are 0nly for Faculty</label>
+                        <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600 border-b"> Note: below fields are only for Faculty</label>
                         <div class="flex justify-center items-center">
                         <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600">Faculty cabin</label>
                         <label for="text" class="block w-full ml-5 mb-1 text-sm font-medium text-gray-600">Faculty Ext </label>
@@ -76,7 +75,7 @@ function sessionData($data){
                             <input type="text" placeholder="Optional " value="<?php sessionData("ext"); ?>"name="faculty-ext" class="block w-full p-3 ml-2 rounded bg-gray-200 border border-transparent focus:outline-none ">
                             </div>
                         <div class="mb-3">
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-600">Password</label>
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-600 border-t">Password</label>
 
                             <input type="password" id="password" name="password" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none "required>
                         </div>

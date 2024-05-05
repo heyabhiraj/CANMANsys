@@ -95,9 +95,9 @@ function calculatePendingOrders(): int
             </a>
          </li>
          <li>
-            <a href="../order/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a href="../orders/pending_payments.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <span class="material-symbols-outlined h-6 w-6 text-slate-400 text-2xl dark:group-hover:dark:text-white">payments</span>
-               <span class="flex-1 ms-3 whitespace-nowrap">Payments</span>
+               <span class="flex-1 ms-3 whitespace-nowrap">Pending Payments</span>
             </a>
          </li>
          <li>
