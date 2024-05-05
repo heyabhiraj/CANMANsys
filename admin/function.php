@@ -2,6 +2,26 @@
 include_once('config.php');
 
 
+if(isset($_POST['action']) && !empty($_POST['action'])){
+  $action = $_POST['action'];
+  $input = $_POST['input'];
+
+
+
+  switch($action){
+    case 'verifyFaculty':
+      verifyFaculty($input);
+      break;
+    case 'suspendUser':
+      suspendUser($input);
+      break;
+    case 'userDetails':
+      $data = getUserDetails($input);
+      break;
+  }
+
+}
+
 /**
  *
  * @param $conn  variable database connection
@@ -40,7 +60,7 @@ function LatestOrder()
 {
   global $conn;
   // SQL query to get column information
-  $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id ORDER BY item_order.created_at DESC LIMIT 5";
+  $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id ORDER BY item_order.created_at DESC LIMIT 4";
   $res = $conn->query($sql) or die("Could not get Orders");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_ASSOC);
@@ -177,7 +197,6 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
 
   global  $conn;
   // Get the current date and time
-  $currentDateTime = date("Y-m-d H:i:s");
   $userid = $_SESSION['user_id'];
   $itemId = "";
   $itemId = '';
@@ -187,10 +206,10 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
   $totalQuantity = 0;
 
   // Insert order details into the database
-  $sql = "INSERT INTO item_order (order_amount,item_id, user_id, order_status, created_at, modified_at, payment_mode, order_notes, item_quantity, bill_id) 
-          VALUES (?, ? ,?, 'Pending', ?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO item_order (order_amount,item_id, user_id, order_status,  payment_mode, order_notes, item_quantity, bill_id) 
+          VALUES (?, ? ,?, 'Pending', ?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("dssssssss", $totalAmount, $itemId, $userid, $currentDateTime, $currentDateTime, $paymentMode, $orderNotes, $totalQuantity, $billId);
+  $stmt->bind_param("dssssss", $totalAmount, $itemId, $userid,  $paymentMode, $orderNotes, $totalQuantity, $billId);
 
   // Execute the prepared statement for each item in the cart
   foreach ($cartItems as $cartItem) {
@@ -245,8 +264,6 @@ function MyPastOrders( $page, $pageSize) {
   // Fetch the rows into an associative array
   $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-  // Close the statement
-  $stmt->close();
 
   return $rows;
 }
@@ -275,6 +292,37 @@ function updateOrderStatus($orderId, $newStatus)
         // Error updating order status
         return false;
     }
+}
+
+function getPendingFaculty():array{
+   global $conn;
+   $sql = "SELECT user_id, fname, lname, phone, email, faculty_cabin, faculty_extension FROM registered_user WHERE user_type = 'faculty' && user_status='inactive'  ";
+   $res=$conn->query($sql);
+   return $res->fetch_all(MYSQLI_BOTH);
+}
+function getUserDetails($userId):array{
+   global $conn;
+   $sql = "SELECT user_id, created, fname, lname, phone, email, faculty_cabin, faculty_extension FROM registered_user WHERE user_id = $userId  ";
+   $res=$conn->query($sql);
+   return $res->fetch_assoc();
+}
+
+function verifyFaculty($user_id){
+  global $conn;
+  $sql = "UPDATE registered_user SET user_status='active' WHERE user_id=$user_id";
+  $conn->query($sql) or die("Could not verify faculty");
+}
+function suspendUser($user_id){
+  global $conn;
+  $sql = "UPDATE registered_user SET user_status='suspended' WHERE user_id=$user_id";
+  $conn->query($sql) or die("Could not verify faculty");
+}
+
+function getCurrentBalance($userId):int{
+  global $conn;
+  $sql = "SELECT available_limit FROM user_wallet WHERE user_id = $userId";
+  $res=$conn->query($sql);
+  return $res->fetch_assoc()['available_limit'];
 }
 
 
