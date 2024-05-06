@@ -28,7 +28,7 @@ echo $_POST['password'];
 
 
     // Retrieve user from database
-    $stmt = $conn->prepare("SELECT user_id, fname, user_status email, pass, user_role , user_type, available_balance FROM registered_user  WHERE email = ? ");
+    $stmt = $conn->prepare("SELECT user_id, fname, user_status , email, pass, user_role , user_type FROM registered_user  WHERE email = ? ");
     if (!$stmt) {
         die("Error preparing statement: " . mysqli_error($conn));
     }

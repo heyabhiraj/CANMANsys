@@ -47,12 +47,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <!-- Profile -->
         <div class="relative ml-3">
-          
-          <div class=" flex item-center">
-            <div class="m-4 px-4 text-xl" id="wallet-balance" >
-                   ₹<?php echo getCurrentBalance($_SESSION['user_id']); ?>
-                </div>
-
+          <div class=" flex item-center justify-between">
+             <div class="flex-1 hidden sm:inline-block mt-4 text-center"> Wallet balance - ₹<?php if($_SESSION['Type']==='faculty') {echo getCurrentBalance($_SESSION['user_id']);} else { echo '';} ?></div>
+ 
+            <div class="flex-2">
             <a href="profile.php" type="button" class="m-3 relative flex rounded-full bg-yellow-800 text-sm" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
               <span class="absolute -inset-1.5"></span>
               <span class="sr-only">Open user menu</span>
@@ -61,8 +59,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
               </svg>
               <span class="bg-yellow-800 text-white rounded-full px-4 py-2 mr-4">Welcome , <?php echo $_SESSION['fname']; ?>!</span>
             </a>
-
-            <div class="m-3 relative cart-logo ml-4">
+</div>
+            <div class="flex-3 m-3 relative cart-logo ml-4">
               <a href="./cart.php">
                 <div class="t-0 absolute left-5">
                   <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white"><?=getTotalQuantity();?></p>
@@ -72,7 +70,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 </svg>
               </a>
             </div>
-
           </div>
         </div>
       </div>
@@ -87,6 +84,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
       <a href="menu.php" class="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-400 hover:text-white">Menu</a>
       <a href="order.php" class="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-400 hover:text-white">My 0rders</a>
       <!-- <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-400 hover:text-white">Contact Us</a> -->
+      <span class="block mt-2 text-center"> Wallet balance - ₹<?php if($_SESSION['Type']==='faculty') {echo getCurrentBalance($_SESSION['user_id']);} else { echo '';} ?></span>
     </div>
   </div>
 </nav>
