@@ -31,6 +31,34 @@ function calculateRecord($tableName)
    // Return total records
    return $totalRecords;
 }
+/**
+ * Count total number of records in the given table
+ *  
+ * @return $totalOrders - No. of records 
+ */
+
+function calculatePendingOrders(): int
+{
+   global $conn;
+
+   // Construct SQL query to get total records
+   $sql = "SELECT COUNT(*) AS total FROM item_order WHERE order_status = 'pending'";
+
+   // Execute the query
+   $totalResult = $conn->query($sql);
+
+   // Check for errors
+   if (!$totalResult) {
+      echo "Error fetching total records: " . $conn->error;
+      return false;
+   }
+
+   // Fetch total records from the result
+   $totalOrders = $totalResult->fetch_assoc()["total"];
+
+   // Return total records
+   return $totalOrders;
+}
 
 ?>
 
@@ -61,7 +89,6 @@ function calculateRecord($tableName)
          <li>
             <a href="../orders/latest_orders.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <span class="material-symbols-outlined h-6 w-6 text-slate-400 text-2xl dark:group-hover:dark:text-white ">orders</span>
-<<<<<<< HEAD
                <span class="ms-3 flex-1 ms-3 whitespace-nowrap">Orders</span>
                <span class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full"><?php echo calculatePendingOrders();  ?></span>
 
@@ -71,15 +98,6 @@ function calculateRecord($tableName)
             <a href="../orders/pending_payments.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <span class="material-symbols-outlined h-6 w-6 text-slate-400 text-2xl dark:group-hover:dark:text-white">payments</span>
                <span class="flex-1 ms-3 whitespace-nowrap">Pending Payments</span>
-=======
-               <span class="ms-3">Orders</span>
-            </a>
-         </li>
-         <li>
-            <a href="../order/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <span class="material-symbols-outlined h-6 w-6 text-slate-400 text-2xl dark:group-hover:dark:text-white">payments</span>
-               <span class="flex-1 ms-3 whitespace-nowrap">Payments</span>
->>>>>>> new
             </a>
          </li>
          <li>

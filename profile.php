@@ -21,7 +21,6 @@ $user_data = mysqli_fetch_assoc($result);
 // Close prepared statement and connection (optional)
 mysqli_stmt_close($stmt);
 // mysqli_close($conn);
-closeDB();
 ?>
 
 <!DOCTYPE html>

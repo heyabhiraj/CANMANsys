@@ -28,7 +28,7 @@ echo $_POST['password'];
 
 
     // Retrieve user from database
-    $stmt = $conn->prepare("SELECT user_id, fname, email, pass, user_role , user_type FROM registered_user WHERE email = ?");
+    $stmt = $conn->prepare("SELECT user_id, fname, user_status , email, pass, user_role , user_type FROM registered_user  WHERE email = ? ");
     if (!$stmt) {
         die("Error preparing statement: " . mysqli_error($conn));
     }
@@ -42,6 +42,9 @@ echo $_POST['password'];
         $id = $row['user_id'];
         $hashed_password = $row['pass'];
         
+        if($row['user_status']!=="active")
+            $_SESSION['error'] = "Your account is Inactive or Suspended. Please contact the vendor.";
+
         if (password_verify($password, $hashed_password)) {
             // Verification success! User has logged in
             // Create sessions

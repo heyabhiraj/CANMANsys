@@ -14,23 +14,31 @@ $ext = sanitize_input($_POST['faculty-ext']);
 $password = password_hash(sanitize_input($_POST['password']), PASSWORD_DEFAULT); // Securely hash password
 
 
-if(empty($cabin) && empty($ext)){
+if(empty($cabin) || empty($ext)){
     $utype = 'student';
+    $cabin="NULL";
+    $ext="NULL";
+    $status = 'active';
 } else {
     $utype = 'faculty';
+    $status = 'inactive';
 }
 
 
 // Validate data (example, add more validations as needed)
 $errors = [];
-if (empty($fname)) {
-    $errors[] = "First name is required.";
+if (!preg_match("/^[a-zA-Z'-]+(\s[a-zA-Z'-]+)*$/", $fname)) {
+    $errors[] = "First name is invalid.";
 }
-if (empty($lname)) {
-    $errors[] = "Last name is required.";
+if (!preg_match("/^[a-zA-Z'-]+$/", $lname)) {
+    $errors[] = "Last name is invalid.";
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors[] = "Invalid email format.";
+}
+$phone = preg_replace("/[^0-9]/", "", $phone);
+if (!preg_match("/^[1-9][0-9]{9}$/", $phone) || strlen($phone) !== 10) {
+    $errors[] = "Invalid phone format.";
 }
 
 // Check for existing email
@@ -43,10 +51,14 @@ if (mysqli_num_rows($result) > 0) {
 // If no errors, insert data into database
 if (empty($errors)) {
     $sql = "INSERT INTO registered_user (fname, lname, email, phone, pass, user_status, user_role, faculty_cabin, faculty_extension, user_type)
-            VALUES ('$fname', '$lname', '$email', '$phone', '$password','active', 'regular', '$cabin', '$ext','$utype')";
+            VALUES ('$fname', '$lname', '$email', '$phone', '$password','$status', 'regular', '$cabin', '$ext','$utype')";
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION['rsuccess'] = "Registration successful! Please log in.";
+        if($utype === 'faculty'){
+            $userId = mysqli_insert_id($conn);
+            $sql = "INSERT INTO user_wallet (user_id) VALUES ('$userId')";
+            mysqli_query($conn, $sql);}
         header("Location: home.php"); // Redirect to login page on success
         exit();
     } else {

@@ -152,9 +152,9 @@ $total = calculateTotal($subtotal);
                           </svg></button>
                     </div>
                     <div class="flex items-center border-gray-100">
-                      <button class="rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50" type="submit" name="update_quantity" onclick="decrementQuantity(this)">-</button>
-                      <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" name="quantity" value="<?= $cartItem['quantity']; ?>">
-                      <button class="rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50" type="submit" name="update_quantity" onclick="incrementQuantity(this)">+</button>
+                      <button class="rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50"  name="update_quantity" onclick="decrementQuantity(this)">-</button>
+                      <input class="h-8 w-8 border bg-white text-center text-xs outline-none" readonly name="quantity" value="<?= $cartItem['quantity']; ?>">
+                      <button class="rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-black hover:text-blue-50"  name="update_quantity" onclick="incrementQuantity(this)">+</button>
                     </div>
                     <p class="text-xl text-center font-bold text-green-700">₹ <?= $cartItem['item'][3]; ?> </p>
                   </div>
@@ -183,21 +183,24 @@ $total = calculateTotal($subtotal);
             <textarea name="ordernotes" rows="3" class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300" placeholder="Cooking Instruction Here..."></textarea>
             <label class="block mt-2 text-sm font-medium text-gray-900">Payment </label>
             <select id="payment" name="paymentmode" class=" mt-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-              <option> Cash On Delivery</option>
-
+              
               <?php
               echo $_SESSION['Type'];
               if ($_SESSION['Type'] === 'faculty') {
                 // If the user type  is 'faculty', render the paylater or credit button
-                echo '<option> Credit or Pay Later</option>';
+                echo '<option>Credit or Pay Later</option>';
               }
               ?>
+              <option>Cash On Delivery</option>
             </select>
+            <label id='paylater' class=' w-full text-xs font-medium text-gray-600'></label>
             <button type="submit" name="place_order" class="mt-6 w-full rounded-md bg-yellow-700 py-1.5 font-medium text-blue-50 hover:bg-black">Order Now</button>
           </form>
         </div>
       </div>
     </div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
     <script>
       function incrementQuantity(button) {
         var input = button.previousElementSibling;
@@ -213,6 +216,17 @@ $total = calculateTotal($subtotal);
         }
       }
     </script>
+     <script>
+    $(document).ready(function(){
+      $('#payment').change(function(){
+          const mode = $(this).val();
+          if(mode === "Credit or Pay Later")    
+          $("#paylater").html("The amount will be deducted from your credit after delivery.");
+          else
+          $("#paylater").html("");
+      });
+});
+  </script>
 </body>
 
 </html>

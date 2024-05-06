@@ -65,7 +65,7 @@ function sessionData($data){
                             <label for="Phone" class="block mb-2 text-sm font-medium text-gray-600">Phone</label>
                             <input type="tel" placeholder="99999-12345" value="<?php sessionData("phone"); ?>" name="phone" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none " required>
                         </div>
-                        <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600 border-b"> Note below fields are 0nly for Faculty</label>
+                        <label for="text" class="block w-full mb-1 text-sm font-medium text-gray-600 border-b"> Note: below fields are only for Faculty</label>
                         <div class="flex justify-center items-center">
                         <label for="faculty-cabin" class="block w-full mb-1 text-sm font-medium text-gray-600">Faculty cabin</label>
                         <label for="faculty-ext" class="block w-full ml-5 mb-1 text-sm font-medium text-gray-600">Faculty Ext </label>
@@ -75,7 +75,7 @@ function sessionData($data){
                             <input type="text" placeholder="Optional " value="<?php sessionData("ext"); ?>"name="faculty-ext" class="block w-full p-3 ml-2 rounded bg-gray-200 border border-transparent focus:outline-none ">
                             </div>
                         <div class="mb-3">
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-600">Password</label>
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-600 border-t">Password</label>
 
                             <input type="password" id="password" name="password" class="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none "required>
                         </div>
