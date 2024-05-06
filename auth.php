@@ -42,7 +42,7 @@ echo $_POST['password'];
         $id = $row['user_id'];
         $hashed_password = $row['pass'];
         
-        if($rows['user_status']!=="active")
+        if($row['user_status']!=="active")
             $_SESSION['error'] = "Your account is Inactive or Suspended. Please contact the vendor.";
 
         if (password_verify($password, $hashed_password)) {
