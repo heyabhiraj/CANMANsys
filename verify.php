@@ -75,6 +75,9 @@ if (!empty($errors)) {
     $_SESSION['lname'] = $lname;
     $_SESSION['email'] = $email;
     $_SESSION['phone'] = $phone;
+    $_SESSION['cabin'] = $cabin;
+    $_SESSION['ext'] = $ext;
+
     $_SESSION['error'] = implode("<br>", $errors); // Combine errors into a string
     header("Location: register.php"); // Redirect back to registration form with errors
     exit();

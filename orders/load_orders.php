@@ -11,7 +11,7 @@ echo "
     // print_r(pendingOrderCount(118));
    echo" 
   <!-- Pending Orders -->
-    <section class='w-auto md:w-1/2 p-4'>
+    <section class=' w-auto md:w-1/2 p-4'>
         <div class='rounded-lg items-center'>
             <div class='p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8'>
                 <div class='flex justify-between mb-4'>
