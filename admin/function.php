@@ -2,13 +2,13 @@
 include_once('config.php');
 
 
-if(isset($_POST['action']) && !empty($_POST['action'])){
+if (isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];
   $input = $_POST['input'];
 
 
 
-  switch($action){
+  switch ($action) {
     case 'verifyFaculty':
       verifyFaculty($input);
       break;
@@ -19,7 +19,6 @@ if(isset($_POST['action']) && !empty($_POST['action'])){
       $data = getUserDetails($input);
       break;
   }
-
 }
 
 /**
@@ -75,7 +74,8 @@ function LatestOrder()
 // veg menu items 
 function vegMenuItem()
 {
-  global $conn; $rows="";
+  global $conn;
+  $rows = "";
   // SQL query to get column information
   $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'YES' AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
@@ -89,13 +89,14 @@ function vegMenuItem()
 //non veg menu items 
 function nvegMenuItem()
 {
-  global $conn; $rows="";
+  global $conn;
+  $rows = "";
   // SQL query to get column information
   $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'NO' AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_BOTH);
-  } 
+  }
   return $rows;
 }
 
@@ -105,13 +106,14 @@ function nvegMenuItem()
  */
 function getDayMenu()
 {
-  global $conn;$rows="";
+  global $conn;
+  $rows = "";
 
   $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id  WHERE schedule_day = DAYNAME(CURDATE()) AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_BOTH);
-  } 
+  }
   return $rows;
 }
 /**
@@ -120,13 +122,14 @@ function getDayMenu()
  */
 function getAllMenu()
 {
-  global $conn;$rows="";
+  global $conn;
+  $rows = "";
 
   $sql = "SELECT DISTINCT item_list.item_id, item_name, item_description,item_price,item_image, category_name FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id WHERE item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_BOTH);
-  } 
+  }
   return $rows;
 }
 
@@ -170,7 +173,7 @@ function billingData($paymentMode)
   $currentDateTime = date("Y-m-d H:i:s");
   $userid = $_SESSION['user_id'];
   $total = 0;
-  $status = 'Pending';
+  $status = 'Paid';
 
   // Insert order details into the database
   $sql = "INSERT INTO order_payment (user_id, payable_amount, payment_mode, paid_at, payment_status) VALUES (?, ?, ?, ?, ?)";
@@ -226,7 +229,8 @@ function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
 
 // get all my orders 
 
-function MyPastOrders( $page, $pageSize) {
+function MyPastOrders($page, $pageSize)
+{
   global $conn;
   $userId = $_SESSION['user_id'];
   // Calculate the offset
@@ -253,7 +257,7 @@ function MyPastOrders( $page, $pageSize) {
   $stmt = $conn->prepare($sql);
 
   // Bind the parameters
-  $stmt->bind_param("iii",  $userId ,$offset, $pageSize);
+  $stmt->bind_param("iii",  $userId, $offset, $pageSize);
 
   // Execute the statement
   $stmt->execute();
@@ -272,60 +276,96 @@ function MyPastOrders( $page, $pageSize) {
 
 function updateOrderStatus($orderId, $newStatus)
 {
-    // Include your database connection code here
-    // Assuming you have already established a connection to your database
-    global $conn;
-    // SQL query to update the order status
-    $sql = "UPDATE item_order SET order_status = ? WHERE order_id = ?";
+  // Include your database connection code here
+  // Assuming you have already established a connection to your database
+  global $conn;
+  // SQL query to update the order status
+  $sql = "UPDATE item_order SET order_status = ? WHERE order_id = ?";
 
-    // Prepare the statement
-    $stmt = $conn->prepare($sql);
+  // Prepare the statement
+  $stmt = $conn->prepare($sql);
 
-    // Bind parameters
-    $stmt->bind_param("si", $newStatus, $orderId);
+  // Bind parameters
+  $stmt->bind_param("si", $newStatus, $orderId);
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        // Order status updated successfully
-        return true;
-    } else {
-        // Error updating order status
-        return false;
-    }
+  // Execute the statement
+  if ($stmt->execute()) {
+    // Order status updated successfully
+    return true;
+  } else {
+    // Error updating order status
+    return false;
+  }
 }
 
-function getPendingFaculty():array{
-   global $conn;
-   $sql = "SELECT user_id, fname, lname, phone, email, faculty_cabin, faculty_extension FROM registered_user WHERE user_type = 'faculty' && user_status='inactive'  ";
-   $res=$conn->query($sql);
-   return $res->fetch_all(MYSQLI_BOTH);
+function getPendingFaculty(): array
+{
+  global $conn;
+  $sql = "SELECT user_id, fname, lname, phone, email, faculty_cabin, faculty_extension FROM registered_user WHERE user_type = 'faculty' && user_status='inactive'  ";
+  $res = $conn->query($sql);
+  return $res->fetch_all(MYSQLI_BOTH);
 }
-function getUserDetails($userId):array{
-   global $conn;
-   $sql = "SELECT user_id, created, fname, lname, phone, email, faculty_cabin, faculty_extension FROM registered_user WHERE user_id = $userId  ";
-   $res=$conn->query($sql);
-   return $res->fetch_assoc();
+function getUserDetails($userId): array
+{
+  global $conn;
+  $sql = "SELECT user_id, created, fname, lname, phone, email, faculty_cabin, faculty_extension FROM registered_user WHERE user_id = $userId  ";
+  $res = $conn->query($sql);
+  return $res->fetch_assoc();
 }
 
-function verifyFaculty($user_id){
+function verifyFaculty($user_id)
+{
   global $conn;
   $sql = "UPDATE registered_user SET user_status='active' WHERE user_id=$user_id";
   $conn->query($sql) or die("Could not verify faculty");
 }
-function suspendUser($user_id){
+function suspendUser($user_id)
+{
   global $conn;
   $sql = "UPDATE registered_user SET user_status='suspended' WHERE user_id=$user_id";
   $conn->query($sql) or die("Could not verify faculty");
 }
 
-function getCurrentBalance($userId):int{
+function getCurrentBalance($userId): int
+{
   global $conn;
   $sql = "SELECT available_limit FROM user_wallet WHERE user_id = $userId";
-  $res=$conn->query($sql);
+  $res = $conn->query($sql);
   return $res->fetch_assoc()['available_limit'];
 }
 
 
+function walletPayment()
+{
+  global $conn;
+
+  // SQL query to get past orders with pagination
+  $sql = "SELECT up.credit_limit,
+		      (up.credit_limit-up.available_limit) AS 'due',
+          up.available_limit,
+          io.user_id,
+          io.faculty_cabin, 
+          io.fname,
+          io.lname,
+          io.phone,
+          io.email
+          FROM user_wallet up 
+          JOIN registered_user io ON up.user_id = io.user_id ";
 
 
-?>
+  // Prepare the statement
+  $stmt = $conn->prepare($sql);
+
+
+  // Execute the statement
+  $stmt->execute();
+
+  // Get the result set
+  $result = $stmt->get_result();
+
+  // Fetch the rows into an associative array
+  $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+
+  return $rows;
+}

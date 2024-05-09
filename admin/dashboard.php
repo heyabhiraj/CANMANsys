@@ -25,9 +25,6 @@ include('sidebar.php');
           </svg>
         </div>
       </div>
-      <div>
-        <span class="inline-block px-2 text-sm text-white bg-black rounded">14%</span>
-      </div>
     </div>
     <div class="p-4 bg-blue-300 transition-shadow border rounded-lg shadow-sm hover:shadow-lg">
       <div class="flex items-start justify-between">
@@ -39,9 +36,6 @@ include('sidebar.php');
             <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd" />
           </svg>
         </div>
-      </div>
-      <div>
-        <span class="inline-block px-2 text-white bg-black text-sm v rounded">14%</span>
       </div>
     </div>
     <div class="p-4 bg-red-300 transition-shadow border rounded-lg shadow-sm hover:shadow-lg">
@@ -55,9 +49,6 @@ include('sidebar.php');
           </svg>
         </div>
       </div>
-      <div>
-        <span class="inline-block px-2 text-sm text-white bg-black rounded">14%</span>
-      </div>
     </div>
     <div class="p-4 bg-green-300 transition-shadow border rounded-lg shadow-sm hover:shadow-lg">
       <div class="flex items-start justify-between">
@@ -69,9 +60,6 @@ include('sidebar.php');
             <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd" />
           </svg>
         </div>
-      </div>
-      <div>
-        <span class="inline-block px-2 text-sm text-white bg-black rounded">14%</span>
       </div>
     </div>
   </div>
@@ -114,7 +102,7 @@ include('sidebar.php');
           <div class="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
             <div class="flex justify-between mb-4">
               <h5 class="text-xl font-bold text-gray-900 mr-15">Latest Orders</h5>
-              <a href="./table_show.php?tablename=item_order" class="text-sm font-medium text-gray-600 hover:underline">
+              <a href="../orders/latest_orders.php" class="text-sm font-medium text-gray-600 hover:underline">
                 View all
               </a>
             </div>
