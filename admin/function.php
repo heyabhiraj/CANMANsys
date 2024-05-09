@@ -328,10 +328,14 @@ function suspendUser($user_id)
 
 function getCurrentBalance($userId): int
 {
+  try {
   global $conn;
   $sql = "SELECT available_limit FROM user_wallet WHERE user_id = $userId";
   $res = $conn->query($sql);
   return $res->fetch_assoc()['available_limit'];
+  } catch (Exception $e) {
+    echo ' ' .$e->getMessage();
+  }
 }
 
 
