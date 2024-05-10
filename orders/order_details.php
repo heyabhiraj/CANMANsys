@@ -1,6 +1,6 @@
 
 <?php 
- include('order_function.php');
+ include_once('order_function.php');
  if(!isset($data) || empty($data))
   echo "Order Details Unavailable";
 

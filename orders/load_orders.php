@@ -2,7 +2,7 @@
 
 <?php 
 
-include('order_function.php');
+include_once('order_function.php');
 
 echo "
 
@@ -79,10 +79,10 @@ echo "
                                 <span title='$i[fname] $i[lname]' class=' self-center text-xs text-slate-600 font-semibold'>$i[faculty_cabin]</span>
                                 <form class='order-buttons self-center'>
                                     <input type='hidden' name='order-id' value='$i[order_id]'>
-                                    <button onclick='load_orders(o=>o)' type='button' class='deliver-order text-base font-semibold text-red-600 mr-3'>
+                                    <button onclick='load_orders()' type='button' class='deliver-order text-base font-semibold text-red-600 mr-3'>
                                         Deliver
                                     </button>
-                                    <button onclick='load_orders(o=>o)' type='button' class='order-details underline text-base font-semibold text-slate-600 mr-'>
+                                    <button type='button' class='order-details underline text-base font-semibold text-slate-600 mr-'>
                                     Details
                                     </button>
                                 </form>

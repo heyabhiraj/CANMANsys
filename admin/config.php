@@ -4,7 +4,7 @@
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
-define('DB_NAME', 'can1');
+define('DB_NAME', 'cms');
 
 $conn;
 /************ DATABASE FUNCTIONS **************/

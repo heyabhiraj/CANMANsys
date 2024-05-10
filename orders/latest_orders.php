@@ -22,27 +22,37 @@
     const closeModal = () => {
         const modal = document.getElementById("static-modal");
         modal.style.display = "none";
+        load_orders();
     }
-    function load_orders(callback){
+    const load_orders = ()=>{
             $.ajax({
                 url: 'load_orders.php',
                 type: 'POST',
                 success: function(data){
                     $("#main").html(data);
-                    var orderCount = $(".order-buttons").length;
-                    callback(orderCount); // Pass the orderCount to the callback function
+                    
                 }
             });
+            var orderCount = $(".order-buttons").length;
+            console.log("From load_orders: ",orderCount);
+            return (orderCount);
         }
     $(document).ready(function(){
-        var orderCount = 0;
+        let orderCount = load_orders();
+        let flag = true;
         
+        x = setInterval(()=>{
 
-        load_orders(function(orderCount) {
-        // Use the orderCount here, or pass it to another function
-            console.log("Total orders:", orderCount);
-        });
-        
+            if(flag){
+                flag = false;
+                console.log("from Interval: ", flag);
+                orderCount = load_orders();
+            }
+
+            console.log(" from Interval: ", orderCount,);
+            if(orderCount === 0)
+            orderCount=load_orders();
+         }, 5000);
 
         
     })

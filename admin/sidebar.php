@@ -66,7 +66,7 @@ function calculatePendingOrders(): int
 <div class="fixed top-0 left-0 h-screen w-64 bg-gray-800 text-white z-50 hidden md:block overflow-y-auto transition duration-300 ease-in-out">
    <div class="h-full px-3 py-4 bg-black rounded">
       <div class="flex items-center justify-between h-16 px-4">
-         <a href="" class="text-xl font-bold">CANMANsys </a>
+         <a href="../home.php" class="text-xl font-bold">CANMANsys </a>
 
          <!-- Sidebar Toggle -->
          <button id="sidebar-toggle" class="sm:hidden text-gray-400 hover:text-gray-200 focus:outline-none">
