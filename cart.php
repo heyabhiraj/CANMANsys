@@ -147,7 +147,7 @@ $total = calculateTotal($subtotal);
                       <form action="cart.php" method="post">
                         <input type="hidden" name="item_id" value="<?= $cartItem['item'][0]; ?>">
                         <button type="submit" name="remove_item">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 hover:text-red-500">
+                          <svg xmlns="https://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 hover:text-red-500">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                           </svg></button>
                     </div>
@@ -199,7 +199,7 @@ $total = calculateTotal($subtotal);
         </div>
       </div>
     </div>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
     <script>
       function incrementQuantity(button) {

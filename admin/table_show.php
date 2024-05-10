@@ -48,7 +48,7 @@ $columnRenames = renameColumns($columnNames);
     <title>Show <?php echo $tableAliases[$tableName]; ?> </title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@28,600,1,200" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 </head>
 
 
@@ -194,16 +194,16 @@ $columnRenames = renameColumns($columnNames);
                             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <?php
                                 if ($page > 1) {
-                                    echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700' href='table_Show.php?tablename=$tableName&page=" . ($page - 1) . "'>Previous</a></li>";
+                                    echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700' href='table_show.php?tablename=$tableName&page=" . ($page - 1) . "'>Previous</a></li>";
                                 } ?>
                             <?php
                             // Page number links
                             for ($i = 1; $i <= $totalPages; $i++) {
                                 $activeClass = ($i == $page) ? "active" : "";
-                                echo "<li class='$activeClass'><a class='flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700' href='table_Show.php?tablename=$tableName&page=" . $i . "'>" . $i . "</a></li>";
+                                echo "<li class='$activeClass'><a class='flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700' href='table_show.php?tablename=$tableName&page=" . $i . "'>" . $i . "</a></li>";
                             }
                             if ($page < $totalPages) {
-                                echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700' href='table_Show.php?tablename=$tableName&page=" . ($page + 1) . "'>Next</a></li>";
+                                echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700' href='table_show.php?tablename=$tableName&page=" . ($page + 1) . "'>Next</a></li>";
                             }
 
                             // 

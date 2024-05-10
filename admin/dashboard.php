@@ -20,7 +20,7 @@ include('sidebar.php');
           <span class="text-gray-700">Total Users</span>
           <span class="text-lg font-semibold"><?php echo calculateRecord("registered_user");  ?></span>
         </div>
-        <div><svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <div><svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="https://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd" />
           </svg>
         </div>
@@ -32,7 +32,7 @@ include('sidebar.php');
           <span class="text-gray-700">Total 0rders</span>
           <span class="text-lg font-semibold"><?php echo calculateRecord("item_order");  ?></span>
         </div>
-        <div class=""><svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <div class=""><svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="https://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd" />
           </svg>
         </div>
@@ -44,7 +44,7 @@ include('sidebar.php');
           <span class="text-gray-700">Total Payments</span>
           <span class="text-lg font-semibold"><?php echo calculateRecord("registered_user");  ?></span>
         </div>
-        <div class=""><svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <div class=""><svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="https://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd" />
           </svg>
         </div>
@@ -56,7 +56,7 @@ include('sidebar.php');
           <span class="text-gray-700">Total Items</span>
           <span class="text-lg font-semibold"><?php echo calculateRecord("item_list");  ?></span>
         </div>
-        <div class=""><svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <div class=""><svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="https://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd" />
           </svg>
         </div>
@@ -138,7 +138,7 @@ include('sidebar.php');
         </div>
       </div>
     </div>
-    <?php include_once('.\verify_faculty.php')?>
+    <?php include_once('verify_faculty.php')?>
 
 
     

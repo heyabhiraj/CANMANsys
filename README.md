@@ -64,7 +64,7 @@ This pure PHP web application equips organizations with the tools to efficiently
 4. **Run the Application:**
 
    Place the project files in a web-accessible directory on your server.
-   Access the application in your browser using the URL pointing to the index.php file (e.g., http://localhost/canteen-management-system/index.php).
+   Access the application in your browser using the URL pointing to the index.php file (e.g., https://localhost/canteen-management-system/index.php).
 
 **Usage**
 

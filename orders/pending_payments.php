@@ -10,7 +10,7 @@ $data = walletPayment();
 
 <body>
   <div class="p-4 sm:ml-64 ">
-    <div class="border-gray-200 rounded-lg">
+    <main class="border-gray-200 rounded-lg">
       <h1 class="text-yellow-700 text-2xl ">Faculty Wallet Management</h1>
       <!-- Main Section -->
       <div id="main" class="flex h-max items-center">
@@ -43,24 +43,24 @@ $data = walletPayment();
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <?php foreach($data as $rec) : ?>
-              <tr>
-                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?=$rec['fname']." ".$rec['lname']?></td>
-                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?=$rec['email']?></td>
-                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?=$rec['phone']?></td>
-                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?=$rec['faculty_cabin']?></td>
-                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?=$rec['due']?></td>
-                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?=$rec['available_limit']?></td>
-                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                  <button onclick="toggleModal(<?=$rec['user_id']?>)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Pay</button>
-                </td>
-              </tr>
-              <?php endforeach;?>
+              <?php foreach ($data as $rec) : ?>
+                <tr>
+                  <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?= $rec['fname'] . " " . $rec['lname'] ?></td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?= $rec['email'] ?></td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?= $rec['phone'] ?></td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?= $rec['faculty_cabin'] ?></td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?= $rec['due'] ?></td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?= $rec['available_limit'] ?></td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                    <button onclick="toggleModal(<?= $rec['user_id'] ?>)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Pay</button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
       </div>
-      </main>
+    </main>
 
 
       <form id="modal" action="update_payment.php" method="POST" class="hidden fixed inset-0 flex items-center justify-center z-10">
@@ -82,7 +82,7 @@ $data = walletPayment();
           <!-- Modal Body -->
           <div class="modal-body px-4 py-2">
             <p class="text-gray-700 mb-4">Please enter the amount to pay:</p>
-            <input type="text" name="totalAmount" class="w-full p-2 border-gray-300 rounded-md border"  placeholder="Enter Amount" required>
+            <input type="text" name="totalAmount" class="w-full p-2 border-gray-300 rounded-md border" placeholder="Enter Amount" required>
             <p class="text-gray-700 my-2">Payment Method:</p>
             <div class="flex items-center space-x-4">
               <input required type="radio" id="cash" name="paymentMethod" value="cash" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
@@ -97,17 +97,16 @@ $data = walletPayment();
           <div class="modal-footer flex justify-end items-center px-4 py-2 bg-gray-200">
             <button type="submit" id="payNow" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Pay Now</button>
           </div>
-        </div>
-              </form>
+        
+      </form>
+  </div>
 
-              
 </body>
 
 <script>
   const toggleModal = userId => {
     document.getElementById("modal").classList.toggle('hidden');
-    if(userId)
-    document.getElementById("userId").value = userId;
+    if (userId)
+      document.getElementById("userId").value = userId;
   }
-
 </script>

@@ -77,7 +77,7 @@ function vegMenuItem()
   global $conn;
   $rows = "";
   // SQL query to get column information
-  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'YES' AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
+  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name, item_list.category_id FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'YES' AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_BOTH);
@@ -92,7 +92,7 @@ function nvegMenuItem()
   global $conn;
   $rows = "";
   // SQL query to get column information
-  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'NO' AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
+  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name, item_list.category_id FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id WHERE schedule_day = DAYNAME(CURDATE()) AND is_vegetarian = 'NO' AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_BOTH);
@@ -109,7 +109,7 @@ function getDayMenu()
   global $conn;
   $rows = "";
 
-  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id  WHERE schedule_day = DAYNAME(CURDATE()) AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
+  $sql = "SELECT item_list.item_id, item_name, item_description,item_price,item_image, category_name, item_list.category_id FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id  WHERE schedule_day = DAYNAME(CURDATE()) AND item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC;";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_BOTH);
@@ -125,7 +125,13 @@ function getAllMenu()
   global $conn;
   $rows = "";
 
-  $sql = "SELECT DISTINCT item_list.item_id, item_name, item_description,item_price,item_image, category_name FROM item_list INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id INNER JOIN item_category ON item_list.category_id = item_category.category_id WHERE item_status != 'Unavailable' AND schedule_status != 'Inactive' ORDER BY item_list.category_id ASC";
+  $sql = "SELECT DISTINCT item_list.item_id, item_name, item_description, item_price, item_image, category_name, item_list.category_id
+  FROM item_list 
+  INNER JOIN item_schedule ON item_list.item_id = item_schedule.item_id 
+  INNER JOIN item_category ON item_list.category_id = item_category.category_id 
+  WHERE item_status != 'Unavailable' AND schedule_status != 'Inactive' 
+  ORDER BY item_list.category_id ASC
+  ";
   $res = $conn->query($sql) or die("Could not get Menu");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_BOTH);

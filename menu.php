@@ -76,7 +76,7 @@ switch ($filter) {
   <title>Home - <?php echo $_SESSION['fname']; ?> </title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
  </head>
 
@@ -117,7 +117,7 @@ switch ($filter) {
           <div class="w-full md:w-1/4 p-5">
             <div class="sm:flex bg-white border border-gray-200 rounded-lg shadow flex-col relative"> 
               
-              <div class="absolute h-10 pl-2 pr-2 pt-2 -left-4 -top-3 odd:bg-red-500 even:bg-violet-500 -skew-y-3 text-white"><?=$item['category_name']?></div>
+              <div class="absolute h-10 pl-2 pr-2 pt-2 -left-4 -t op-3 odd:bg-red-500 even:bg-violet-500 -skew-y-3 text-white"><?=$item['category_name']?></div>
               <!-- <img class="self-center p-5 rounded-lg object-cover h-40 w-40" src="<?=($img = $item['item_image'])?"img/$img":"img.svg"?>" alt="image" /> -->
               <div class="px-5 pb-5">
               <img class="self-center p-5 rounded-lg object-cover h-40 w-40" src="<?=($img = $item['item_image'])?"img/$img":"img.svg"?>" alt="image" />
