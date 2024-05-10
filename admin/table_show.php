@@ -49,7 +49,7 @@ $columnRenames = renameColumns($columnNames);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@28,600,1,200" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
- </head>
+</head>
 
 
 <body>
@@ -57,35 +57,32 @@ $columnRenames = renameColumns($columnNames);
     <div class="p-4 sm:ml-64 ">
         <div class="border-gray-200 rounded-lg">
 
-            <!-- Main Section -->
-            <div id="main" class="flex h-max justify-center items-center">
 
+            <!-- Main Section -->
+            <div id="main" class="flex h-max items-center">
 
                 <!-- Content Here -->
-                <div class="m-2 p-5 relative overflow-x-auto shadow-2xl sm:rounded-lg">
-
-                    <!-- Name of the table -->
-                    <h2 class="font-bold text-center text-2xl text-yellow-700 border-b"><?php echo $tableAliases[$tableName]; ?> </h2>
-
+                <div class="m-2 p-5 relative overflow-x-auto shadow-2xl sm:rounded-lg">            <!-- Name of the table -->
+            <h2 class="ml-10 text-center text-yellow-700 text-2xl "><?php echo $tableAliases[$tableName]; ?> </h2>
 
                     <!-- Search Area  -->
-                    <div class="m-2  relative ">
+                    <div class="m-4 relative ">
                         <!-- Search Icon -->
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 1"> <span class="text-white material-symbols-outlined border-white">search</span> </div>
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 "> <span class="text-black material-symbols-outlined border-white">search</span> </div>
 
                         <!-- Search Bar-->
-                        <input type="text" id="search" class="block w-full p-4 ps-10 text-sm text-gray-900 rounded-3xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Anything" />
+                        <input type="text" id="search" class="block w-full p-4 ps-10 text-sm text-gray-900 rounded-3xl bg-slate-200 focus:ring-blue-500 focus:border-blue-500" placeholder="Search Anything ..." />
 
                         <!-- X icon -->
-                        <div id="clearSearch" class="absolute inset-y-0 end-5 flex items-center cursor-pointer "><span class="text-white material-symbols-outlined">close</span> </div>
+                        <div id="clearSearch" class="absolute inset-y-0 end-5 flex items-center cursor-pointer "><span class="text-black material-symbols-outlined">close</span> </div>
 
                     </div>
 
                     <!-- Table Starts Here -->
-                    <table class="w-max text-pretty text-sm text-left rtl:text-right text-gray-500 dark:text-gray-100">
+                    <table class="w-max mt-2 text-pretty text-sm text-left rtl:text-right text-gray-500">
 
                         <!-- Column Names/ Headings -->
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                             <tr class="divide-x divide-gray-600">
                                 <!--  -->
                                 <th scope="col" class="px-6 py-3">Serial No.</th>
@@ -94,10 +91,10 @@ $columnRenames = renameColumns($columnNames);
                                 <?php foreach ($columnRenames as $field => $col) {
                                     $hidden = isHidden($col);
                                     echo '<th scope="col" class="px-6 py-3"' . $hidden . '>' . $col . '</th>';
-                                } 
-                                
-                                if($tableName!=='item_order' && $tableName!=='order_payment')
-                                echo '<th scope="col" class="px-6 py-3">Options</th>';
+                                }
+
+                                if ($tableName !== 'item_order' && $tableName !== 'order_payment')
+                                    echo '<th scope="col" class="px-6 py-3">Options</th>';
                                 ?>
                             </tr>
                         </thead>
@@ -111,18 +108,19 @@ $columnRenames = renameColumns($columnNames);
                             // Loop to print n number of rows    
                             for ($n = 0; $n < count($rows); $n++) {     // $rows is a 2D array containing the whole table
                                 $id = "";   // stores the id of the particular record for edit/delete
-                                $name = '"' . addslashes($rows[$n][$nameField]) .'"';      // stores the name that represents the particular record
+                                $name = '"' . addslashes($rows[$n][$nameField]) . '"';      // stores the name that represents the particular record
                             ?>
 
                                 <!-- Printing a row  -->
-                                <tr class="bg-white border-b odd:bg-slate-950 even:bg-slate-900 dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 divide-x divide-slate-700">
+                                <tr class="bg-white border-b odd:bg-gray-50 even:bg-gray-200 hover:bg-slate-300">
                                     <!-- First column - Serial No. -->
-                                    <td class="text-center py-2.5"><?php echo $ni; $foreignKeyValues=NULL;
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900"><?php echo $ni;
+                                                                    $foreignKeyValues = NULL;
 
-                                                            $ni++; ?> </td>
+                                                                    $ni++; ?> </td>
 
                                     <!-- Loop to print i number of columns -->
-                                    <?php for ($i = 0; $i <count($columnNames); $i++) {
+                                    <?php for ($i = 0; $i < count($columnNames); $i++) {
                                         // Hide id column from display 
                                         if ($hidden = isHidden($columnNames[$i]))
                                             $id = $rows[$n][$columnNames[$i]];    // storing the id to use in edit/delete
@@ -130,17 +128,17 @@ $columnRenames = renameColumns($columnNames);
                                         // checking for foreign keys
                                         if (in_array($columnNames[$i], $foreignKey) !== false) {
                                             $form = new form();
-                                            if(!isset($foreignKeyValues[$columnNames[$i]]))
-                                            $foreignKeyValues[$columnNames[$i]]= $form->getCategoryValues($columnNames[$i]);
+                                            if (!isset($foreignKeyValues[$columnNames[$i]]))
+                                                $foreignKeyValues[$columnNames[$i]] = $form->getCategoryValues($columnNames[$i]);
                                             $values = $foreignKeyValues[$columnNames[$i]];      // k stores the foreign key value for this record 
                                             $k = $rows[$n][$columnNames[$i]];       // k stores the foreign key value for this record 
                                             // check for name representation
                                             if ($columnNames[$i] === $nameField)
-                                            $name = "'".addslashes($values[$k])."'";
+                                                $name = "'" . addslashes($values[$k]) . "'";
 
                                             // make buttons to search category
                                             // if($columnNames[$i]===$searchField)
-                                            echo '<td title="'. $values[$k] .'" class="text-center font-medium text-sky-500 px-4 dark:text-sky-500 "><input class="categorySearch cursor-pointer hover:underline max-w-20 overflow-hidden" type="button" value="' . $values[$k] . '"</input></td>';
+                                            echo '<td title="' . $values[$k] . '" class="text-center font-medium text-sky-500 p-2 "><input class="categorySearch cursor-pointer hover:underline max-w-auto overflow-hidden" type="button" value="' . $values[$k] . '"</input></td>';
 
 
                                             // print fk_name using fk_id as index $fk normally
@@ -153,29 +151,29 @@ $columnRenames = renameColumns($columnNames);
                                             $file =  $rows[$n][$columnNames[$i]];
                                             $link = '../img/' . addslashes($file);
                                             // echo '<td class="text-center"'."".'> <button onclick=openPopup("'.$link.'")>'. "$file" . '</button></td>';
-                                            echo '<td class="text-center"' . "" . '> <img class="img cursor-pointer h-20 w-20 object-cover rounded-full" alt="' . $file . '" src=' . $link . '>' . '</img></td>';
+                                            echo '<td class="text-center"' . "" . '> <img class="img cursor-pointer h-20 w-auto object-cover rounded-full" alt="' . $file . '" src=' . $link . '>' . '</img></td>';
                                         }
                                         // print cell nomally
                                         else
                                             //  Print elements from assoc array 
-                                            echo '<td title="'. $rows[$n][$columnNames[$i]]  .'" class="text-center px-1 max-w-20 overflow-hidden "' . $hidden . '>' .  $rows[$n][$columnNames[$i]] . '</td>';
+                                            echo '<td title="' . $rows[$n][$columnNames[$i]]  . '" class="text-center px-1 max-w-auto overflow-hidden "' . $hidden . '>' .  $rows[$n][$columnNames[$i]] . '</td>';
                                     } ?>
-                                        <!-- Options Column -->
+                                    <!-- Options Column -->
 
-                                    <?php if($tableName!=='item_order' && $tableName!=='order_payment') 
-                
+                                <?php if ($tableName !== 'item_order' && $tableName !== 'order_payment')
+
 
                                     echo '
                                     <td class="flex items-center px-6 py-4">
-                                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" 
-                                        href="table_edit.php?tablename='.$tableName.'&id='.$id.'">Edit</a>
+                                        <a class="font-medium px-3 py-2 rounded bg-black text-white hover:underline" 
+                                        href="table_edit.php?tablename=' . $tableName . '&id=' . $id . '">Edit</a>
 
                                         
-                                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" 
-                                        onclick="DeleteConfirm('.$name.','.$id.')">Delete</button>
+                                        <button class="font-medium rounded px-3 py-2 bg-red-600 text-white hover:underline ms-3" 
+                                        onclick="DeleteConfirm(' . $name . ',' . $id . ')">Delete</button>
                                     </td>';
-                            echo '</tr>';    
-                       } ?>
+                                echo '</tr>';
+                            } ?>
                         </tbody>
 
                     </table>
@@ -186,8 +184,7 @@ $columnRenames = renameColumns($columnNames);
 
                         <!-- Add more entries -->
                         <?php if (!in_array($tableName, $blockEntries)) echo
-                        '<a href="table_Insert.php?tablename=' . $tableName . '" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Add + </a>'; ?>
-
+                        '<a href="table_Insert.php?tablename=' . $tableName . '" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 bg-gray-800 ">Add + </a>'; ?>
                         <!-- If multiple pages -->
                         <?php
                         $totalPages = calculatePaginationInfo($tableName, $where, $limit);
@@ -197,16 +194,16 @@ $columnRenames = renameColumns($columnNames);
                             <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <?php
                                 if ($page > 1) {
-                                    echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' href='table_Show.php?tablename=$tableName&page=" . ($page - 1) . "'>Previous</a></li>";
+                                    echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700' href='table_Show.php?tablename=$tableName&page=" . ($page - 1) . "'>Previous</a></li>";
                                 } ?>
                             <?php
                             // Page number links
                             for ($i = 1; $i <= $totalPages; $i++) {
                                 $activeClass = ($i == $page) ? "active" : "";
-                                echo "<li class='$activeClass'><a class='flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white' href='table_Show.php?tablename=$tableName&page=" . $i . "'>" . $i . "</a></li>";
+                                echo "<li class='$activeClass'><a class='flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700' href='table_Show.php?tablename=$tableName&page=" . $i . "'>" . $i . "</a></li>";
                             }
                             if ($page < $totalPages) {
-                                echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white' href='table_Show.php?tablename=$tableName&page=" . ($page + 1) . "'>Next</a></li>";
+                                echo "<li><a class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700' href='table_Show.php?tablename=$tableName&page=" . ($page + 1) . "'>Next</a></li>";
                             }
 
                             // 
@@ -257,7 +254,7 @@ $columnRenames = renameColumns($columnNames);
             }
 
             $("#search").focus();
-            
+
             // triggers when user type in search bar
             $("#search").keyup(function() {
                 var search_term = $(this).val();

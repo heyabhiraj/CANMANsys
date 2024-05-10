@@ -23,8 +23,6 @@ if ( !isset($_POST['email'], $_POST['password']) ) {
     exit();
 	
 }
-echo $_POST['email'];
-echo $_POST['password'];
 
 
     // Retrieve user from database

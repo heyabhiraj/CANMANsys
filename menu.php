@@ -90,7 +90,7 @@ switch ($filter) {
       <!-- Right side buttons -->
       <div class="flex items-center">
 
-        <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="Logout.php"'>LogOut</button>
+        <button class="bg-black text-white rounded-full px-4 py-2" onclick='window.location.href="logout.php"'>LogOut</button>
       </div>
     </div>
     <div class="bg-orange-100 rounded-lg h-900 w-auto p-2 drop-shadow-lg">
