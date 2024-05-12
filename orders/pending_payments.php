@@ -4,7 +4,6 @@ include_once('../admin/function.php');
 
 $data = walletPayment();
 
-
 ?>
 
 
@@ -19,6 +18,12 @@ $data = walletPayment();
         <div class="m-2 p-5 relative overflow-x-auto shadow-2xl sm:rounded-lg">
 
           <table class="min-w-full divide-y divide-gray-200">
+          <?php
+    if (isset($_SESSION['errors'])) {
+        echo "<p class='text-center text-red-500 mb-2'>" . $_SESSION['errors'] . "</p>";
+        unset($_SESSION['errors']); // Clear error after displaying
+    }
+    ?>
             <thead>
               <tr>
                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
