@@ -27,7 +27,18 @@ if (isset($_POST['action']) && !empty($_POST['action'])) {
  */
 function Graphdata()
 {
-  $sql = "SELECT DATE_FORMAT(created_at, '%d %b') AS order_date_formatted, SUM(item_quantity) AS total_quantity FROM item_order WHERE order_status!='cancelled' GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d') LIMIT 7 -- Group by date (without time) ORDER BY created_at ASC;";
+  $sql = "SELECT order_date_formatted, SUM(total_quantity) AS total_quantity
+  FROM (
+      SELECT DATE_FORMAT(created_at, '%d %b') AS order_date_formatted, 
+             SUM(item_quantity) AS total_quantity,
+             MIN(created_at) AS min_created_at
+      FROM item_order 
+      WHERE order_status != 'cancelled' 
+      GROUP BY DATE_FORMAT(created_at, '%d %b') -- Group by formatted date
+  ) AS subquery
+  GROUP BY order_date_formatted
+  ORDER BY min_created_at ASC 
+  LIMIT 7;";
   global $conn;
   // Execute the query
   $res = $conn->query($sql) or die("Could not get data");
@@ -37,6 +48,36 @@ function Graphdata()
   return $row;
 }
 
+
+function saleGraphdata()
+{
+  $sql = "SELECT DATE(op.paid_at) AS transaction_date, COUNT(io.order_id) AS total_orders, SUM(io.order_amount) AS total_sales_amount FROM order_payment op JOIN item_order io ON op.bill_id = io.bill_id WHERE op.payment_status = 'paid' GROUP BY DATE(op.paid_at) ORDER BY DATE(op.paid_at) LIMIT 10";
+  global $conn;
+  // Execute the query
+  $res = $conn->query($sql) or die("Could not get data");
+  if ($res->num_rows > 0) {
+    $rows = $res->fetch_all(MYSQLI_ASSOC);
+  }
+  return $rows;
+}
+
+//menu performnce
+function Menuperform()
+{
+  $sql = "SELECT il.item_id, il.item_name, COUNT(io.order_id) AS total_orders, SUM(io.order_amount) AS total_sales_amount
+  FROM item_list il
+  JOIN item_order io ON il.item_id = io.item_id
+  GROUP BY il.item_id, il.item_name
+  ORDER BY total_sales_amount DESC LIMIt 5;
+  ";
+  global $conn;
+  // Execute the query
+  $res = $conn->query($sql) or die("Could not get data");
+  if ($res->num_rows > 0) {
+    $rows = $res->fetch_all(MYSQLI_ASSOC);
+  }
+  return $rows;
+}
 // get Total sales value in a past week 
 function TotalSaleValue()
 {
@@ -51,6 +92,25 @@ function TotalSaleValue()
   } else {
     echo "No sales data found for the past week.";
   }
+}
+
+function allTimesale(){
+  global $conn;
+  $sql = "SELECT SUM(order_amount) AS total_sales_value FROM item_order";
+
+// Execute the query
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Fetch the result row
+    $row = $result->fetch_assoc();
+    // Total sales value till date
+    $total_sales_value = $row['total_sales_value'];
+    // Output the total sales value
+    return $total_sales_value;
+} else {
+    echo "No sales data available.";
+}
 }
 
 

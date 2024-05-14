@@ -138,11 +138,8 @@ include('sidebar.php');
         </div>
       </div>
     </div>
-    <?php include_once('verify_faculty.php')?>
-
-
-    
   </div>
+  <?php include_once('verify_faculty.php')?>
 </div>
 
 </body>
