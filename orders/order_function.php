@@ -53,7 +53,7 @@ function cookingOrders() : array
 {
   global $conn;
   // SQL query to get column information
-  $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id WHERE order_status = 'Cooking' ORDER BY item_order.modified_at ASC LIMIT 5 ";
+  $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id WHERE order_status = 'Cooking' ORDER BY item_order.modified_at ASC LIMIT 7 ";
   $res = $conn->query($sql) or die("Could not get Orders");
   if ($res->num_rows > 0) {
     $rows = $res->fetch_all(MYSQLI_ASSOC);
@@ -72,7 +72,7 @@ function deliveredOrders() : array
 {
   global $conn;
   // SQL query to get column information
-  $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id WHERE order_status = 'Delivered' ORDER BY item_order.created_at DESC LIMIT 4 ";
+  $sql = "SELECT * FROM item_order INNER JOIN registered_user ON item_order.user_id = registered_user.user_id INNER JOIN item_list ON item_order.item_id = item_list.item_id WHERE order_status = 'Delivered' ORDER BY item_order.created_at DESC LIMIT 7 ";
   $res = $conn->query($sql) or die("Could not get Orders");
 
 
@@ -151,7 +151,7 @@ function deliverOrder($orderId) {
       $userId = orderDetails($orderId)['user_id'];
       $sql = "UPDATE user_wallet SET available_limit = available_limit - ? WHERE wallet_id = (SELECT wallet_id FROM user_wallet WHERE user_id = ?)";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("di", $amt, $userId);
+      $stmt->bind_param("ii", $amt, $userId);
       $stmt->execute();
       $stmt->close();
   }
