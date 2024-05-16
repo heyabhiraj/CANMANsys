@@ -263,10 +263,11 @@ function billingData($paymentMode)
 // @2darray $cartItems 
 function saveOrderDetails($cartItems, $paymentMode, $orderNotes, $billId)
 {
-
+  
   global  $conn;
   // Get the current date and time
   $userid = $_SESSION['user_id'];
+  
   $itemId = "";
   $itemId = '';
   // Calculate the total order amount and quantity
@@ -398,7 +399,10 @@ function getCurrentBalance($userId): int
   global $conn;
   $sql = "SELECT available_limit FROM user_wallet WHERE user_id = $userId";
   $res = $conn->query($sql);
+  if($res)
   return $res->fetch_assoc()['available_limit'];
+  else 
+  return "";
   } catch (Exception $e) {
     echo ' ' .$e->getMessage();
   }

@@ -119,7 +119,13 @@ $total = calculateTotal($subtotal);
       include('./navbar.php');
       ?>
 
+<?php if (isset($_SESSION['error'])) {
+                            echo "<p class='text-center text-red-500'>" . $_SESSION['error'] . "</p>";
+                            unset($_SESSION['error']); //Clear Error after display
+                        }
+                      ?>
       <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+
 
         <div class="rounded-lg md:w-2/3">
           <?php if (empty($cartItems)) : ?>

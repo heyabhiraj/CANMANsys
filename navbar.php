@@ -48,7 +48,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <!-- Profile -->
         <div class="relative ml-3">
           <div class=" flex item-center justify-between">
-             <div class="flex-1 hidden sm:inline-block mt-4 text-center">  <?php if($_SESSION['Type']==='faculty') {echo "Wallet balance:₹". getCurrentBalance($_SESSION['user_id']);} else { echo '';} ?></div>
+             <div class="flex-1 hidden sm:inline-block mt-4 text-center">  <?php if($_SESSION['Type']==='faculty') {echo "Wallet balance - ₹". getCurrentBalance($_SESSION['user_id']);} else { echo '';} ?></div>
  
             <div class="flex-2">
               <a href="profile.php" type="button" class="m-3 relative flex rounded-full bg-yellow-800 text-sm" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
@@ -89,7 +89,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                                               ($current_balance = getCurrentBalance($_SESSION['user_id'])) !== null
                                             ) {
                                               // ... if getCurrentBalance doesn't return null
-                                              echo "Wallet balance - ₹";
+                                              echo 'Wallet balance - ₹';
                                               echo $current_balance;
                                             } else {
                                               echo '';

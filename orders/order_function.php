@@ -149,11 +149,21 @@ function deliverOrder($orderId) {
   if ($mode === "Credit or Pay Later") {
       $amt = orderDetails($orderId)['order_amount'];
       $userId = orderDetails($orderId)['user_id'];
-      $sql = "UPDATE user_wallet SET available_limit = available_limit - ? WHERE wallet_id = (SELECT wallet_id FROM user_wallet WHERE user_id = ?)";
-      $stmt = $conn->prepare($sql);
-      $stmt->bind_param("ii", $amt, $userId);
+      $sql = "UPDATE user_wallet 
+      SET available_limit = available_limit - ? 
+      WHERE wallet_id = (
+          SELECT wallet_id 
+          FROM (
+              SELECT wallet_id 
+              FROM user_wallet 
+              WHERE user_id = ?
+          ) AS temp_table
+      )";
+  $stmt = $conn->prepare($sql);
+      $stmt->bind_param("di", $amt, $userId);
       $stmt->execute();
       $stmt->close();
+      
   }
   
   // Update payable amount in order_payment table

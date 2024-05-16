@@ -12,6 +12,17 @@ $items = getDayMenu();
 
 // Retrieve cart items from session
 if (isset($_SESSION['cart'])) {
+    
+    $balance = getCurrentBalance($_SESSION['user_id']) ;
+    $totalAmount = $_POST['total'];
+    $paymentMode = $_POST['paymentmode'];
+    if($paymentMode==="Credit or Pay Later" && $balance < $totalAmount ){
+        $_SESSION['error'] = "Low Balance! Could not place order.";
+    
+        unset($_SESSION['total']);
+        header("Location: cart.php");
+        exit;
+    }
     // Loop through cart items and retrieve details from $items array
     foreach ($_SESSION['cart'] as $cartItem) {
         foreach ($items as $item) {

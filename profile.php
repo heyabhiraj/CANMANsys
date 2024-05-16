@@ -40,7 +40,7 @@ mysqli_stmt_close($stmt);
     <div class="h-20 p-5">
         <div class="flex p-5 mb-1 items-center justify-around bg-white ">
             <!-- Left side Logo -->
-            <h1 class="text-4xl text-yellow-600 drop-shadow-lg"> <a href="">CANMANsys </a></h1>
+            <h1 class="text-2xl text-yellow-600 drop-shadow-lg"> <a href="">CANMANsys </a></h1>
 
             <!-- Right side buttons -->
             <div class="flex items-center">
