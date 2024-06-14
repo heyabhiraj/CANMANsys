@@ -12,14 +12,14 @@ $password = sanitize_input($_POST['password']);
 
 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
     $_SESSION['error']= "Invalid Email ";
-    header("Location : login.php");
+    header("Location: login.php");
     exit();
 }
 
 if ( !isset($_POST['email'], $_POST['password']) ) {
 	// Could not get the data that should have been sent.
     $_SESSION['error']= "Please fill both the username and password fields!";
-    header("Location : login.php");
+    header("Location: login.php");
     exit();
 	
 }
@@ -63,14 +63,10 @@ if ( !isset($_POST['email'], $_POST['password']) ) {
             // Incorrect password
             $_SESSION['error'] = "Invalid email or password.";
             }
-
     }   else {
         // Account not found
         $_SESSION['error'] = " Account not found";
         }
-
-    mysqli_stmt_close($stmt); // Close prepared statement
-    mysqli_close($conn); // Close connection
     
     header("Location: login.php"); // Redirect back to login form with error (if not successful)
     exit();

@@ -19,7 +19,6 @@ function connectToDB(){
         die("Connection failed: " . $conn->connect_error);
     }
 }
-
 function closeDB(){
     global $conn;
     $conn->close();

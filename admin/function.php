@@ -312,6 +312,7 @@ function MyPastOrders($page, $pageSize)
           io.payment_mode,
           io.order_status,
           il.item_name,
+          il.item_image,
           io.order_amount
           FROM order_payment op 
           JOIN item_order io ON op.bill_id = io.bill_id 

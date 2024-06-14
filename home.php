@@ -50,7 +50,7 @@ include('./admin/function.php');
         <div class="w-full md:w-1/2 p-4">
           <div class="rounded-lg flex items-center justify-center">
           <div class="object-fit drop-shadow-xl">
-          <img src="img.svg">
+
         </div>
           </div>
         </div>
