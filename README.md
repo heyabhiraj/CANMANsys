@@ -1,5 +1,5 @@
 **Canteen Management System (PHP)**
-
+**DEMO** ([https://www.netapp.mooo.com/](Demo ))
 This pure PHP web application equips organizations with the tools to efficiently manage canteen operations. It offers a user-friendly interface for:
 
 * **Inventory Management:**
