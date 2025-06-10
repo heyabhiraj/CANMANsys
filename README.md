@@ -1,6 +1,6 @@
 **Canteen Management System (PHP)**
 This pure PHP web application equips organizations with the tools to efficiently manage canteen operations. It offers a user-friendly interface for:
-* **DEMO** ([Demo link](https://netapp.mooo.com/))
+* **DEMO** ([Demo link]([https://canmansys.littledoiknow.com/]))
  Admin Login
 ```bash
 
