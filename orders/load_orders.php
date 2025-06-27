@@ -4,7 +4,6 @@ include_once('order_function.php');
 echo "
 <main class='p-4 sm:ml-64 bg-orange-100 mt-5 flex flex-wrap justify-between'>
     <div id='details'></div>";
-    // print_r(pendingOrderCount(118));
    echo" 
   <!-- Pending Orders -->
     <section class='w-auto md:w-1/2 p-4'>
@@ -126,7 +125,6 @@ $(document).ready(function() {
                 type: "POST",
                 data: { action: 'acceptOrder', input: orderId },
                 success: function(response) {
-                    // alert('Order accepted successfully!');
                     location.reload();
                 },
                 error: function(xhr, status, error) {
@@ -144,7 +142,6 @@ $(document).ready(function() {
                 type: "POST",
                 data: { action: 'deliverOrder', input: orderId },
                 success: function(response) {
-                    // alert('Order marked as delivered!');
                     location.reload();
                 },
                 error: function(xhr, status, error) {
