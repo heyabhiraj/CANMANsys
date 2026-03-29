@@ -1,15 +1,7 @@
-**Canteen Management System (PHP)**
-This pure PHP web application equips organizations with the tools to efficiently manage canteen operations. It offers a user-friendly interface for:
-* **DEMO** ([Demo link]([https://canmansys.littledoiknow.com/]))
- Admin Login
-```bash
+# **Canteen Management System (PHP)** 
 
-admin@example.com
-12345678
-```
-* **Inventory Management:**
-    - Add, edit, and remove canteen items (food and beverages) with ease.
-    - Generate reports detailing inventory usage for informed purchasing decisions.
+This pure PHP web application equips organizations with the tools to efficiently manage canteen operations. It offers a user-friendly interface for:
+
 * **Sales Management:**
     - Process customer orders for canteen items seamlessly.
     - Calculate bills accurately to ensure fair pricing.
@@ -19,9 +11,17 @@ admin@example.com
     - Generate informative reports on sales, revenue, and popularity of items.
     - Gain valuable data-driven insights into customer preferences to tailor your offerings.
     - Identify best-selling items and adjust inventory accordingly.
+ 
+## Demo:
+
+
+https://github.com/user-attachments/assets/97e06430-0703-4553-a9e2-151ca5b16f96
+
+
 
 **Benefits:**
 
+* **Implementing [AutoCrud](https://github.com/heyabhiraj/autocrud):** Dynamically generating CRUD pages based on tables in your database.
 * **Enhanced Efficiency:** Streamline manual tasks and automate inventory tracking.
 * **Improved Accuracy:** Reduce errors in order processing and billing.
 * **Data-Driven Decisions:** Make informed choices based on sales and inventory data.
